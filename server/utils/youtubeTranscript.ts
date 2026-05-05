@@ -6,6 +6,11 @@ type CaptionTrack = {
   languageCode?: string
 }
 
+type CaptionFetchResult = {
+  body: string
+  format: 'xml' | 'json3' | 'vtt'
+}
+
 // Final output shape for each subtitle item.
 export type TranscriptItem = {
   // Start time in seconds.
@@ -54,98 +59,27 @@ function extractVideoId(videoUrl: string): string {
   throw new Error('Could not extract YouTube videoId from URL')
 }
 
-// STEP 2: Fetch YouTube homepage HTML.
-async function fetchYouTubeHomeHtml(): Promise<string> {
-  // Request the main YouTube page.
-  const response = await fetch('https://www.youtube.com')
-
-  // If request fails, throw a readable error.
+// STEP 2: Fetch YouTube watch-page HTML for one specific video.
+async function fetchWatchPageHtml(videoId: string): Promise<string> {
+  const response = await fetch(`https://www.youtube.com/watch?v=${videoId}`, {
+    headers: {
+      'Accept-Language': 'en-US,en;q=0.9'
+    }
+  })
   if (!response.ok) {
-    throw new Error(`Failed to fetch YouTube homepage: ${response.status}`)
+    throw new Error(`Failed to fetch YouTube watch page: ${response.status}`)
   }
-  // Return page HTML as string.
   return response.text()
 }
 
-// STEP 2 (continued): Extract INNERTUBE_API_KEY from homepage HTML.
-function extractInnertubeApiKey(html: string): string {
-  // Match key from JSON-like text embedded in HTML.
-  const match = html.match(/"INNERTUBE_API_KEY":"([^"]+)"/)
-
-  // Throw if key is not found.
+// STEP 3: Parse ytInitialPlayerResponse JSON from watch-page HTML.
+function extractPlayerResponseFromWatchHtml(html: string): any {
+  const match = html.match(/ytInitialPlayerResponse\s*=\s*(\{[\s\S]*?\});/)
   if (!match?.[1]) {
-    throw new Error('INNERTUBE_API_KEY not found in YouTube homepage HTML')
+    throw new Error('ytInitialPlayerResponse not found in watch page HTML')
   }
-  // Return extracted key.
-  return match[1]
+  return JSON.parse(match[1])
 }
-
-// STEP 2 (continued): Extract INNERTUBE_CLIENT_VERSION from homepage HTML.
-function extractInnertubeClientVersion(html: string): string {
-  const match = html.match(/"INNERTUBE_CLIENT_VERSION":"([^"]+)"/)
-  if (!match?.[1]) {
-    throw new Error('INNERTUBE_CLIENT_VERSION not found in YouTube homepage HTML')
-  }
-  return match[1]
-}
-
-// STEP 3: Call YouTube player endpoint with videoId.
-async function fetchPlayerResponse(
-  apiKey: string,
-  clientVersion: string,
-  videoId: string
-): Promise<any> {
-  // POST player request using extracted API key.
-  const response = await fetch(`https://www.youtube.com/youtubei/v1/player?key=${apiKey}`, {
-    method: 'POST',
-    headers: {
-      // Send JSON body.
-      'Content-Type': 'application/json',
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-      'Accept-Language': 'en-US,en;q=0.9',
-      Origin: 'https://www.youtube.com',
-      Referer: 'https://www.youtube.com/'
-    },
-    body: JSON.stringify({
-      // Video we want caption data for.
-      videoId,
-      context: {
-        client: {
-          // Use web client context.
-          clientName: 'WEB',
-          clientVersion,
-          hl: 'vi',
-          gl: 'VN'
-        }
-      }
-    })
-  })
-
-  // Stop if request failed.
-  if (!response.ok) {
-    throw new Error(`Failed to fetch YouTube player data: ${response.status}`)
-  }
-
-  // Return parsed JSON response.
-  const data = await response.json()
-
-  const status = data?.playabilityStatus?.status
-
-    console.log('apiKey:', apiKey)
-  console.log('clientVersion:', clientVersion)
-  console.log('videoId:', videoId)
-  console.log('data', data)
-  if (status && status !== 'OK') {
-    const reason = data?.playabilityStatus?.reason || 'Unknown reason'
-    throw new Error(`YouTube playability check failed: ${status} (${reason})`)
-  }
-
-
-
-  return data
-}
-
 // STEP 4: Read captionTracks from player response.
 function getCaptionTracks(playerResponse: any): CaptionTrack[] {
   // Safely access nested path; return empty array if missing.
@@ -182,16 +116,34 @@ function pickCaptionTrack(tracks: CaptionTrack[], lang?: string): CaptionTrack {
 }
 
 // STEP 6: Fetch caption XML from selected track `baseUrl`.
-async function fetchCaptionXml(baseUrl: string): Promise<string> {
-  // Download caption XML.
-  const response = await fetch(baseUrl)
+async function fetchCaptionWithFallback(baseUrl: string): Promise<CaptionFetchResult> {
+  const attempts: Array<{ format: CaptionFetchResult['format']; url: string }> = [
+    { format: 'xml', url: baseUrl },
+    { format: 'json3', url: `${baseUrl}&fmt=json3` },
+    { format: 'vtt', url: `${baseUrl}&fmt=vtt` }
+  ]
+  const debug: string[] = []
 
-  // Stop if XML request failed.
-  if (!response.ok) {
-    throw new Error(`Failed to fetch caption XML: ${response.status}`)
+  for (const attempt of attempts) {
+    const response = await fetch(attempt.url)
+    const contentType = response.headers.get('content-type') || 'unknown'
+
+    if (!response.ok) {
+      debug.push(`${attempt.format}: status=${response.status}, contentType=${contentType}`)
+      continue
+    }
+
+    const body = await response.text()
+    const bodyLength = body.trim().length
+    if (bodyLength > 0) {
+      return { body, format: attempt.format }
+    }
+    debug.push(`${attempt.format}: status=${response.status}, contentType=${contentType}, body=empty`)
   }
-  // Return XML string.
-  return response.text()
+
+  throw new Error(
+    `Failed to fetch caption content. All subtitle formats returned empty or failed. Details: ${debug.join(' | ')}`
+  )
 }
 
 // Helper: decode common XML entities to normal text.
@@ -248,25 +200,117 @@ function parseCaptionXml(xml: string): TranscriptItem[] {
   return items
 }
 
+// STEP 7 (fallback): Parse JSON3 caption payload into transcript items.
+function parseCaptionJson3(json3: string): TranscriptItem[] {
+  const payload = JSON.parse(json3)
+  const events = Array.isArray(payload?.events) ? payload.events : []
+  const items: TranscriptItem[] = []
+
+  for (const event of events) {
+    const segs = Array.isArray(event?.segs) ? event.segs : []
+    const text = segs
+      .map((seg: any) => String(seg?.utf8 ?? ''))
+      .join('')
+      .replace(/\n+/g, ' ')
+      .trim()
+    if (!text) {
+      continue
+    }
+
+    const start = Number(event?.tStartMs ?? 0) / 1000
+    const duration = Number(event?.dDurationMs ?? 0) / 1000
+    items.push({ start, duration, text })
+  }
+
+  return items
+}
+
+function parseVttTimestamp(value: string): number {
+  const match = value.trim().match(/(?:(\d+):)?(\d{2}):(\d{2})\.(\d{3})/)
+  if (!match) {
+    return 0
+  }
+
+  const hours = Number(match[1] ?? '0')
+  const minutes = Number(match[2] ?? '0')
+  const seconds = Number(match[3] ?? '0')
+  const millis = Number(match[4] ?? '0')
+  return hours * 3600 + minutes * 60 + seconds + millis / 1000
+}
+
+// STEP 7 (fallback): Parse VTT into transcript items.
+function parseCaptionVtt(vtt: string): TranscriptItem[] {
+  const normalized = vtt.replace(/\r/g, '')
+  const blocks = normalized.split('\n\n')
+  const items: TranscriptItem[] = []
+
+  for (const block of blocks) {
+    const lines = block
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean)
+    if (!lines.length) {
+      continue
+    }
+
+    const timeLineIndex = lines.findIndex((line) => line.includes('-->'))
+    if (timeLineIndex < 0) {
+      continue
+    }
+
+    const timeLine = lines[timeLineIndex]
+    const timing = timeLine.match(/(.+?)\s+-->\s+(.+?)(?:\s|$)/)
+    if (!timing?.[1] || !timing?.[2]) {
+      continue
+    }
+
+    const start = parseVttTimestamp(timing[1])
+    const end = parseVttTimestamp(timing[2])
+    const duration = Math.max(0, end - start)
+    const text = lines
+      .slice(timeLineIndex + 1)
+      .join(' ')
+      .trim()
+
+    if (!text) {
+      continue
+    }
+
+    items.push({ start, duration, text })
+  }
+
+  return items
+}
+
+function parseCaptionByFormat(payload: CaptionFetchResult): TranscriptItem[] {
+  if (payload.format === 'json3') {
+    return parseCaptionJson3(payload.body)
+  }
+  if (payload.format === 'vtt') {
+    return parseCaptionVtt(payload.body)
+  }
+  return parseCaptionXml(payload.body)
+}
+
 // Public function: run STEP 1 -> STEP 7 in order.
 export async function getTranscript(videoUrl: string, lang?: string): Promise<TranscriptItem[]> {
   // STEP 1
   const videoId = extractVideoId(videoUrl)
   // STEP 2
-  const homeHtml = await fetchYouTubeHomeHtml()
+  const watchHtml = await fetchWatchPageHtml(videoId)
   // STEP 2
-  const apiKey = extractInnertubeApiKey(homeHtml)
-  // STEP 2
-  const clientVersion = extractInnertubeClientVersion(homeHtml)
-
   // STEP 3
-  const playerResponse = await fetchPlayerResponse(apiKey, clientVersion, videoId)
+  const playerResponse = extractPlayerResponseFromWatchHtml(watchHtml)
   // STEP 4
   const captionTracks = getCaptionTracks(playerResponse)
   // STEP 5
   const selectedTrack = pickCaptionTrack(captionTracks, lang)
   // STEP 6
-  const captionXml = await fetchCaptionXml(selectedTrack.baseUrl)
+  const captionPayload = await fetchCaptionWithFallback(selectedTrack.baseUrl)
   // STEP 7
-  return parseCaptionXml(captionXml)
+  const items = parseCaptionByFormat(captionPayload)
+  if (!items.length) {
+    throw new Error(`Caption content was downloaded as ${captionPayload.format} but parsed to 0 transcript items`)
+  }
+  return items
 }

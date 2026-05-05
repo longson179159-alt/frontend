@@ -33,7 +33,7 @@
         <img src="/icons/header/contact.svg" alt="contact" />
         <span>Contact</span>
       </NuxtLink>
-      <NuxtLink to="/login" class="w-full inline-flex hover:bg-gray-200 gap-2 px-2 py-3 h-12 items-center">
+      <NuxtLink @click="logout" class="w-full inline-flex hover:bg-gray-200 gap-2 px-2 py-3 h-12 items-center">
         <img src="/icons/header/logout.svg" alt="logout" class="h-4 w-4 ml-0.5"/>
         <span>Log out</span>
       </NuxtLink>
@@ -65,5 +65,34 @@ const isOpen = ref(!props.showMain)
 const handleToggleLeftSide = () => {
   isOpen.value = !isOpen.value
   emit('sending-toggle', !isOpen.value)
+}
+
+
+const router = useRouter();
+const {getCsrfToken} = useCsrf();
+const logout = async () => {
+  try {
+    const response  = await fetch(`/api/logout/`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+                'X-CSRFToken': getCsrfToken()
+            }
+    })
+
+    if (response.ok) {
+      console.log('Logout successful');
+      router.push('/login')
+    } else {
+      const data = await response.json()
+      const message = data?.message || 'Failed to logout'
+      console.log('message', message)
+    }
+  }
+
+  catch (error) {
+      const message = error?.data?.message || 'Failed to logout'
+      console.log('message', message)
+  }
 }
 </script>
