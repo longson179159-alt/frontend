@@ -1,4 +1,8 @@
+
+
 export default defineEventHandler(async (event) => {
+
+
   const config = useRuntimeConfig();
   const method = getMethod(event);
   const query = getQuery(event);

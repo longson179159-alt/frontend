@@ -33,10 +33,10 @@
         <img src="/icons/header/contact.svg" alt="contact" />
         <span>Contact</span>
       </NuxtLink>
-      <NuxtLink @click="logout" class="w-full inline-flex hover:bg-gray-200 gap-2 px-2 py-3 h-12 items-center">
+      <button @click="logout" class="w-full inline-flex hover:bg-gray-200 gap-2 px-2 py-3 h-12 items-center">
         <img src="/icons/header/logout.svg" alt="logout" class="h-4 w-4 ml-0.5"/>
         <span>Log out</span>
-      </NuxtLink>
+      </button>
 
       <span class="block text-center ">GET THE MOBILE APP</span>
 

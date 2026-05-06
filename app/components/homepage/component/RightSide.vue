@@ -109,15 +109,16 @@
           <span>90</span>
         </button>
 
-        <NuxtLink to="" class="flex w-full px-2 py-4 rounded-lg justify-start h-5 items-center gap-2 hover:bg-gray-200">
+        <!-- make it pointer like a button -->
+        <NuxtLink to="" class="cursor-pointer flex w-full px-2 py-4 rounded-lg justify-start h-5 items-center gap-2 hover:bg-gray-200">
            <img src="/icons/header/settings.svg" alt="settings" class="h-4"/>
            <span>Settings</span>
         </NuxtLink>
 
-        <NuxtLink to="" class="flex w-full px-2 py-4 rounded-lg justify-start h-5 items-center gap-2 hover:bg-gray-200">
+        <button @click="logout" class="flex w-full px-2 py-4 rounded-lg justify-start h-5 items-center gap-2 hover:bg-gray-200">
            <img src="/icons/header/logout.svg" alt="notificaitons" class="h-4"/>
            <span>Log out</span>
-        </NuxtLink>
+        </button>
       </div>
     </div>
 
@@ -142,32 +143,7 @@ const props = defineProps({
   showPropgress: {type: Boolean, default: true}
 })
 
-const demoprogressCoreData = [
-   {
-    name: 'Today Activity',
-    lingqCreated: 10,
-    knownWords: 30,
-    goal: 120
-  },
-   {
-    name: 'Last 7 days Activity',
-    lingqCreated: 10,
-    knownWords: 20,
-    goal: 120
-  },
-   {
-    name: 'Last 30 days Activity',
-    lingqCreated: 10,
-    knownWords: 40,
-    goal: 120
-  },
-   {
-    name: 'Last 3 Monthly Activity',
-    lingqCreated: 10,
-    knownWords: 40,
-    goal: 120
-  },
-]
+
 
 const coreData = ref([])
 const progressData = ref([])
@@ -176,6 +152,7 @@ const getBackEndData = async() => {
   if (!props.showPropgress) return
   let dataBackend = null
   try {
+   
     dataBackend = await $fetch(`/api/get_progress_data/`, {
     method: "GET",
     credentials: 'include'
@@ -189,9 +166,9 @@ const getBackEndData = async() => {
     // alert(messageErr)
   }
 
-  coreData.value = dataBackend || demoprogressCoreData
+  coreData.value = dataBackend || []
 
-  // console.log('databackend', dataBackend)
+
 
   progressData.value = coreData.value.map(
     item => {
@@ -254,6 +231,36 @@ const handleClickOutside = (e) => {
     openSetting.value = false
   }
 }
+
+
+const router = useRouter();
+const {getCsrfToken} = useCsrf();
+const logout = async () => {
+  try {
+    const response  = await fetch(`/api/logout/`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+                'X-CSRFToken': getCsrfToken()
+            }
+    })
+
+    if (response.ok) {
+      console.log('Logout successful');
+      router.push('/login')
+    } else {
+      const data = await response.json()
+      const message = data?.message || 'Failed to logout'
+      console.log('message', message)
+    }
+  }
+
+  catch (error) {
+      const message = error?.data?.message || 'Failed to logout'
+      console.log('message', message)
+  }
+}
+
 
 onMounted( async () => {
   await getBackEndData()
