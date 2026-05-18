@@ -205,9 +205,12 @@ const saveAndGenerate = async () => {
 
   // create lesson manually
   formData.append("lesson_name", lessonName.value.trim() )
-  formData.append("course_name", listCourse.value[idxCourse.value] ?? 'default')
+  formData.append(
+    "course_name",
+    idxCourse.value >= 0 ? listCourse.value[idxCourse.value].name : "default"
+  )
   // formData.append('lesson_description', lessonDescription.value)
-  // formData.append("language", language.value)
+  formData.append("language", language.value)
   // formData.append('level', level.value)
   if (pictureFile.value) formData.append('picture', pictureFile.value)
   if (audioFile.value) formData.append('audiofile', audioFile.value)
