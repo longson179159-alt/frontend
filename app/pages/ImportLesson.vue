@@ -143,6 +143,7 @@ const course_name = ref('')
 const lesson_name = ref('')
 const router = useRouter()
 
+const {getCsrfToken} = useCsrf()
 const saveAndGenerate = async () => {
 
 
@@ -166,7 +167,10 @@ const saveAndGenerate = async () => {
       const result = await $fetch(`/api/create_youtube_lesson/`, {
         method: 'POST', 
         body: data,
-        credentials: "include"
+        credentials: "include",
+        headers: {
+                'X-CSRFToken': getCsrfToken()
+            }
       })
 
       course_name.value = result.course_name
@@ -221,7 +225,11 @@ const saveAndGenerate = async () => {
     const result = await $fetch(`/api/create_lesson_manually/`, {
       method: 'POST',
       body: formData,
-      credentials: "include"
+      credentials: "include" ,
+      headers: {
+                'X-CSRFToken': getCsrfToken()
+            }
+
     })
 
     course_name.value = result.course_name
