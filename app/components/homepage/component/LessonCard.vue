@@ -110,6 +110,7 @@ import {ref, computed} from 'vue'
 const showUnder = ref(false)
 const hoverPlusButton = ref(false)
 // const config = useRuntimeConfig()
+const { getCsrfToken } = useCsrf()
 
 
 const props = defineProps({
@@ -202,7 +203,10 @@ const deleteLesson = async() =>{
                 lesson_name : props.lessonName,
                 course_name : props.courseName
             },
-            credentials : 'include'
+            credentials : 'include',
+            headers: {
+                'X-CSRFToken': getCsrfToken()
+            }
         })
         removeFromContinuingLesson()
     }
