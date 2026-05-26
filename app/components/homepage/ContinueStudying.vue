@@ -135,6 +135,7 @@ const getCourseCardsData = async () => {
             ...(dataBackend?.["dataCourseCards"] ?? [])
         ]
         data.value = dataCourseCards.value
+        console.log('dataCourseCards.value', dataCourseCards.value)
 
         const paginationInfo = dataBackend?.["pagination"] ?? {}
         courseTotalPage.value = paginationInfo.totalPages ?? 1

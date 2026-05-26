@@ -6,7 +6,7 @@
             :class="showUnder && 'border-gray-300'">
             <!-- UPPER   -->
             <div class=" relative aspect-[3/2] border bg-cover bg-center "
-                :style="{ backgroundImage: `url(${normalizedCourseImgUrl.value} )` }">
+                :style="{ backgroundImage: `url(${normalizedCourseImgUrl} )` }">
                 <div
                     class="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/40 via-black/20 to-transparent">
                 </div>

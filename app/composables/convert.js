@@ -32,7 +32,7 @@ const cleanWord = (word)=> {
   // Remove non-alphanumeric characters except apostrophes.
   // Python regex: r"[^\w\s']", ""
   // JS equivalent: keep [A-Za-z0-9_], whitespace, and apostrophes.
-  w = w.replace(/[^\w\s']/g, "");
+  w = w.replace(/[^\w\s'-]/g, "");
   return w;
 }
 
