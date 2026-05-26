@@ -54,6 +54,9 @@ const showCourse = async (courseName) => {
       credentials: "include"
     })
     // console.log('picture Course url', data?.dataCourseCard?.imgUrl?? 'There is no img url')
+
+    console.log('dataCourseCard', dataCourseCard.value)
+    console.log('dataLessonCards', dataLessonCards.value)
     dataCourseCard.value = data?.dataCourseCard ?? dataCourseCardsDemo[0]
     dataLessonCards.value = data?.dataLessonCards ?? dataLessonCardsDemo
 
