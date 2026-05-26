@@ -152,7 +152,7 @@ const numberUniqueWords = computed(() => props.dataCourse.numberUniqueWords)
 
 
 const normalizedCourseImgUrl = computed(() => {
-  const input = props.courseImgUrl
+  const input = courseImgUrl.value
   if (!input || typeof input !== 'string') return '/images/course.png'
 
   // already relative media path

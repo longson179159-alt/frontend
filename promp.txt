@@ -1,4 +1,3 @@
-Please review my codebase and find bugs, errors, bad logic, broken imports, wrong paths, and anything that may cause runtime problems.
 
 For every issue, give me:
 
@@ -15,3 +14,7 @@ Important:
 - Give results in a clickable format with file paths and line numbers, for example:
   src/components/Header.vue:25
 - Make sure clicking the file/line can take me directly to the issue in VS Code.
+
+
+
+Please review my codebase and find bugs, errors, bad logic, broken imports, wrong paths, and anything that may cause runtime problems.
