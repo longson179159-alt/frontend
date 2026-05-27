@@ -323,7 +323,16 @@ const handleDragging = (e) => {
 
 
 const handleKeyBoard = (e) => {
-  const listKeys = ['Escape', '<', ">", 'Shift + >', 'Shift + <']
+
+  const target = e.target
+  const isTypingTarget =
+    target instanceof HTMLElement &&
+    (target.tagName === 'INPUT' ||
+     target.tagName === 'TEXTAREA' ||
+     target.isContentEditable)
+
+  if (isTypingTarget) return
+  const listKeys = ['Escape', '<', ">"]
 
   if (!listKeys.includes(e.key)) {
     return

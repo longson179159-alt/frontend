@@ -30,6 +30,7 @@ import {ref, onMounted, onBeforeUnmount} from 'vue'
 
 // import AudioBox from './component/AudioBox.vue';
 import AudioYoutubeBox from './component/AudioYoutubeBox.vue';
+
 const openAudioBox = ref(false)
 const isSentenceView = ref(false)
 
@@ -37,6 +38,32 @@ const isSentenceView = ref(false)
 
 const props = defineProps({
     youtubeData : {type: Object}
+})
+
+const handleKeyDown = (e) => {
+    const target = e.target
+    const isTypingTarget =
+        target instanceof HTMLElement &&
+        (target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable)
+
+    if (isTypingTarget) return
+    if (openAudioBox.value === true) {
+        return
+    }
+    if (e.key !== 'Escape') {
+        return
+    }
+    openAudioBox.value = true
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeyDown)
 })
 
 </script>
