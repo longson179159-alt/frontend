@@ -62,7 +62,7 @@
                         </div>
                         <!-- progress bar -->
                         <div class="h-2 w-full bg-gray-200 rounded">
-                            <div class="h-full bg-yellow-300 rounded" :style="{width: (numberTotalWords? (numberLingQs / numberUniqueWords) * 100  : 0) + '%'}"></div>
+                            <div class="h-full bg-yellow-300 rounded" :style="{width: (numberUniqueWords? (numberLingQs / numberUniqueWords) * 100  : 0) + '%'}"></div>
                         </div>
                     </div>
                     <!--  number KnownWords -->
@@ -74,7 +74,7 @@
                         </div>
                         <!-- progress bar -->
                         <div class="h-2 w-full bg-gray-200 border rounded">
-                            <div class="h-full bg-white rounded" :style="{width: (numberTotalWords ? ( numberKnownWords / numberUniqueWords) * 100 : 0) + '%'}"></div>
+                            <div class="h-full bg-white rounded" :style="{width: (numberUniqueWords ? ( numberKnownWords / numberUniqueWords) * 100 : 0) + '%'}"></div>
                         </div>
                     </div>
 
@@ -102,6 +102,7 @@
                 <LessonInCourse
                 class="py-3 z-50 bg-white"
                 v-for="item in dataLessons"
+                :key="`${item.courseName}-${item.lessonNumber}-${item.lessonName}`"
                 :lesson-img-url="item.imgUrl || '/images/lesson.png'"
                 :course-name="item.courseName"
                 :lesson-name="item.lessonName"
@@ -130,7 +131,7 @@ const listReferences = ['literature', 'audiobooks', 'books', 'kids', 'children',
 const emit = defineEmits(['showCourseInfos'])
 
 const props = defineProps({
-    dataCourse: {type: Object, default: () => {}},
+    dataCourse: { type: Object, default: () => ({}) },
     dataLessons: {type: Array, default : () => []},
 
     level: {type:String, default: "Intermediate 1"},

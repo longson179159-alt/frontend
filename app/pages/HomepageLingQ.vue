@@ -46,7 +46,7 @@ const dataLessonCards = ref([])
 const showCourse = async (courseName) => {
   try {
 
-    const data = await $fetch(`${config.public.apiBase}/show_course_infos/`, {
+    const data = await $fetch(`/api/show_course_infos/`, {
       method: "GET",
       query: {
         course_name: courseName
