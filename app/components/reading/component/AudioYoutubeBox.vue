@@ -116,7 +116,7 @@ const speedLists = [2, 1.5, 1.25, 1, 0.85, 0.75, 0.6, 0.5]
 const openAudioOptions = ref(false)
 const audioSpeed = ref(speedLists[3])
 
-const emit = defineEmits(['closeAudioBox'])
+const emit = defineEmits(['closeAudioBox', 'sendCurrentTimeToParent'])
 
 
 
@@ -202,7 +202,6 @@ const playAudio = () => {
     player?.playVideo?.()
   }
 
-  // isPlaying.value = !isPlaying.value
 
 }
 
@@ -324,7 +323,7 @@ const handleDragging = (e) => {
 }
 
 
-const handleKeyBoard = (e) => {
+const handleKeyboard = (e) => {
 
   const target = e.target
   const isTypingTarget =
@@ -334,7 +333,7 @@ const handleKeyBoard = (e) => {
      target.isContentEditable)
 
   if (isTypingTarget) return
-  const listKeys = ['Escape', '<', ">", " "]
+  const listKeys = ['Escape', '<', ">", " ", 'd']
 
   if (!listKeys.includes(e.key)) {
     return
@@ -342,6 +341,10 @@ const handleKeyBoard = (e) => {
 
   if (e.key === 'Escape' || e.key === ' ') {
     playAudio()
+  }
+
+  if (e.key === 'd') {
+    emit('sendCurrentTimeToParent', currentTime.value)
   }
 
   // crearte short cut with "shirft + >"
@@ -400,7 +403,7 @@ onMounted( async () => {
     }
   })
 
-  window.addEventListener('keydown', handleKeyBoard)
+  window.addEventListener('keydown', handleKeyboard)
 })
 
 
@@ -410,6 +413,6 @@ onBeforeUnmount(() => {
   stopTracking();
   player?.destroy?.()
   player = null
-  window.removeEventListener('keydown', handleKeyBoard)
+  window.removeEventListener('keydown', handleKeyboard)
 })
 </script>

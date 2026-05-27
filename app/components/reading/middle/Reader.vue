@@ -98,7 +98,8 @@ const props = defineProps({
   listSentence : {type: Array, default : () => []},
   statusTagsMeanings: {type: Object, default: () => []},
   coreData: {type: Array, default: () => []},
-  currentPhraseStatus :{type: Number }
+  currentPhraseStatus :{type: Number },
+  audioCurrentTime: {type: Number, default: 0}
 })
 const lessondata = ref(props.lessonData)
 
@@ -124,12 +125,15 @@ const currentPage = computed({
   set: (v) => emit('update:currentValue', v)
 })
 
-// run changePageStatus only when currentPage and newStatusDict chanage, but scroller always run when currentPage change
 
 watch(currentPage, (newVal) => {
     scrollNewPage(newVal);
 
-    // changePageStatus()
+})
+
+watch(() => props.audioCurrentTime, (newTime) => {
+    // find the sentence match the current time
+    
 })
 
 watch([currentPage, newStatusDict], () => {

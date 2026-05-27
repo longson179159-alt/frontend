@@ -7,7 +7,9 @@
     <div v-if="openAudioBox && props.youtubeData?.youtube_id" class="absolute -top-8 left-5 z-10  bg-white">
         <AudioYoutubeBox 
         @close-audio-box="openAudioBox = $event" 
-        :youtube-data="props.youtubeData"/>
+        :youtube-data="props.youtubeData"
+        @send-current-time-to-parent="emit('sendCurrentTimeToParent', $event)"
+        />
         <!-- <AudioBox v-else @close-audio-box="openAudioBox = $send" :audioURL="audioURL"/> -->
     </div>
     
@@ -39,6 +41,8 @@ const isSentenceView = ref(false)
 const props = defineProps({
     youtubeData : {type: Object}
 })
+
+const emit = defineEmits(['sendCurrentTimeToParent'])
 
 const handleKeyDown = (e) => {
     // debug if this code run

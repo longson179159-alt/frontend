@@ -23,6 +23,7 @@
                         :status-tags-meanings="statusTagsMeanings"
                         :core-data="core_data"
                         v-model:current-value="current" 
+                        :audio-current-time="audioCurrentTime"
                         @send-total-page="total = $event"
                         @selected="onSelected"
                         @send-status-from-reader="currentPhraseData.status = $event"
@@ -53,6 +54,7 @@
                     @pointermove.stop
                     @pointerup.stop
                     :youtube-data="youtubeData"
+                    @send-current-time-to-parent="audioCurrentTime = $event"
                 />
             </div>
 
@@ -65,7 +67,6 @@
                     :valid-phrase="validCurrentPhrase"
                     
                 />
-                <!-- @update-previous="handleUpdatePrevisous" -->
 
         </div>
     
@@ -101,12 +102,13 @@ const messure = () => {
 
 }
 
-
 const lessondata = ref( [])
 const listSentence = ref([])
 const core_data = ref([])
 const statusTagsMeanings = ref({})
 const youtubeData = ref({})
+
+const audioCurrentTime = ref()
 
 
 
@@ -173,13 +175,6 @@ watch(currentPhraseData, (newVal) => {
 
 
 
-// const handleUpdatePrevisous = (data) => {
-
-//     // console.log('data', data)
-//     statusTagsMeanings.value[data.phrase].your_meanings = data.your_meanings?? []
-//     statusTagsMeanings.value[data.phrase].status = data.status ?? 1
-// }
-
 const onSelected = (data) => {
 
     validCurrentPhrase.value  = data.valid
@@ -230,6 +225,7 @@ const finishLesson = async () => {
         console.log("there is an error with finish lesson", error)
    }
 }
+
 
 
 onMounted(async () => {
