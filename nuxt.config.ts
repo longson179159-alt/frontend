@@ -14,14 +14,14 @@ runtimeConfig: {
   // 1) NUXT_API_PROXY_BASE (server-only env)
   // 2) NUXT_PUBLIC_API_BASE (public env fallback)
   // 3) "http://localhost:8000" (local default fallback)
-  apiProxyBase: process.env.NUXT_API_PROXY_BASE  || "http://localhost:8000",
+  apiProxyBase: process.env.NUXT_API_PROXY_BASE || process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8000",
 
   // Public runtime config: exposed to browser + server.
   public: {
     // Base URL used by frontend API calls.
     // If env not set, use internal proxy path "/api".
     // apiBase: process.env.NUXT_PUBLIC_API_BASE || "/api",
-    apiBase:  "/api",
+    apiBase: process.env.NUXT_PUBLIC_API_BASE || "/api",
   },
 },
 
