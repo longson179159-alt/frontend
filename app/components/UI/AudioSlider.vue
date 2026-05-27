@@ -44,9 +44,9 @@ watch(() => props.inputValue, (newVal) => {
 const percent = computed(() => 
     maxValue.value > 0 ? (inputValue.value / maxValue.value) * 100 : 0
 )
-watchEffect(() => {
-  console.log('value=', inputValue.value, 'max=', maxValue.value, 'percent=', percent.value)
-})
+// watchEffect(() => {
+//   console.log('value=', inputValue.value, 'max=', maxValue.value, 'percent=', percent.value)
+// })
 
 const emit = defineEmits(['update:inputValue'])
 const emitUpdate = () => {

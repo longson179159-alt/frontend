@@ -90,7 +90,6 @@ const props = defineProps({
     youtubeData : {type : Object}
 })
 
-// console.log('youtubeData', props.youtubeData)
 
 const currentTime = ref(props.youtubeData.youtube_start_time?? 0)
 const duration = ref(0)
@@ -108,6 +107,7 @@ const waitForDuration = () => {
 const isPlayRready = ref(false)
 
 const isPlaying = ref(false)
+
 const isUserSeeking = ref(false)
 const isLoop = ref(false)
 
@@ -193,6 +193,7 @@ const handleStateChange = (e)=> {
 // PAUSD AND PLAY
 
 const playAudio = () => {
+  
   if (isPlaying.value) {
     player?.pauseVideo?.()
   }
@@ -201,7 +202,8 @@ const playAudio = () => {
     player?.playVideo?.()
   }
 
-  isPlaying.value = !isPlaying.value
+  // isPlaying.value = !isPlaying.value
+
 }
 
 
@@ -332,13 +334,13 @@ const handleKeyBoard = (e) => {
      target.isContentEditable)
 
   if (isTypingTarget) return
-  const listKeys = ['Escape', '<', ">"]
+  const listKeys = ['Escape', '<', ">", " "]
 
   if (!listKeys.includes(e.key)) {
     return
   }
 
-  if (e.key === 'Escape') {
+  if (e.key === 'Escape' || e.key === ' ') {
     playAudio()
   }
 

@@ -41,6 +41,8 @@ const props = defineProps({
 })
 
 const handleKeyDown = (e) => {
+    // debug if this code run
+    console.log('key down', e.key)
     const target = e.target
     const isTypingTarget =
         target instanceof HTMLElement &&
@@ -52,10 +54,13 @@ const handleKeyDown = (e) => {
     if (openAudioBox.value === true) {
         return
     }
-    if (e.key !== 'Escape') {
+    if (e.key === 'Escape' || e.key === ' ') {
+        console.log('open audio box')
+        openAudioBox.value = true
+        // console.log('key is not escape')
         return
     }
-    openAudioBox.value = true
+    
 }
 
 onMounted(() => {
