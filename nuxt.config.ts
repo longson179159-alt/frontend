@@ -21,7 +21,7 @@ runtimeConfig: {
     // Base URL used by frontend API calls.
     // If env not set, use internal proxy path "/api".
     // apiBase: process.env.NUXT_PUBLIC_API_BASE || "/api",
-    apiBase: process.env.NUXT_PUBLIC_API_BASE || "/api",
+    apiBase: "/api",
   },
 },
 
