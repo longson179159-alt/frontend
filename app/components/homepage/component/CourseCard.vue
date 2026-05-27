@@ -1,8 +1,9 @@
+
 <template>
   <!-- <div class="max-w-md border m-5 mx-auto flex items-center justify-center "> -->
     <div @click="emit('showCourseInfos', courseName)" class="relative cursor-pointer min-w-52 mb-3 inline-flex items-center justify-between" @mouseenter="showUnder = true"
         @mouseleave="showUnder = false">
-        <div class=" z-10 bg-white min-h-64 max-w-80 block border w-full rounded-2xl overflow-hidden group shrink-0 shadow-md"
+        <div class=" z-10 bg-white min-h-64  block border w-full rounded-2xl overflow-hidden group shrink-0 shadow-md"
             :class="showUnder && 'border-gray-300'">
             <!-- UPPER   -->
             <div class=" relative aspect-[3/2] border bg-cover bg-center "
@@ -71,8 +72,8 @@
                     words Beginner 1 </div>
                 <div class="flex justify-between ">
                     <span class="truncate max-w-40">LingQ Mini Stories - France histoir Une nouvelle maison</span>
-                    <span class="inline-flex gap-1 whitespace-nowrap "><img src="/icons/header/importAudio.svg" />
-                        3:03</span>
+                    <!-- <span class="inline-flex gap-1 whitespace-nowrap "><img src="/icons/header/importAudio.svg" />
+                        3:03</span> -->
                 </div>
 
                 <div class="inline-flex gap-1 my-1">

@@ -9,7 +9,7 @@
         
     }"
         :preserve-scroll="true"
-        class=" z-10 mb-3 bg-white min-h-64 max-w-80 block border w-full rounded-2xl overflow-hidden shadow-md group shrink-0"
+        class=" z-10 mb-3 bg-white min-h-64  block border w-full rounded-2xl overflow-hidden shadow-md group shrink-0"
         :class="showUnder && 'border-gray-300'"> 
         <!-- UPPER   -->
         <div class=" relative aspect-[3/2] border bg-cover bg-center "
@@ -88,8 +88,8 @@
                 words Intermediate 1 </div>
             <div class="flex justify-between ">
                 <span class="truncate max-w-40">LingQ Mini Stories - France histoir Une nouvelle maison</span>
-                <span class="inline-flex gap-1 whitespace-nowrap "><img src="/icons/header/importAudio.svg" />
-                    3:03</span>
+                <!-- <span class="inline-flex gap-1 whitespace-nowrap "><img src="/icons/header/importAudio.svg" />
+                    3:03</span> -->
             </div>
 
             <span class="inline-block my-2 text-gray-500 truncate">{{ courseName }}</span>

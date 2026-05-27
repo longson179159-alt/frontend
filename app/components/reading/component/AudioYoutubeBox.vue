@@ -133,46 +133,7 @@ const loadYoutubeAPI = () =>
 
 
 
-//  videoId: 'o4w8yAHWDEU',
-onMounted( async () => {
 
-  videoPosition.value.x = Math.max(12, window.innerWidth - 288 - 12)
-  videoPosition.value.y = Math.max(12, window.innerHeight - 162 -12)
-
-  await loadYoutubeAPI()
- 
-  player = new YT.Player(videoRef.value, {
-    videoId: props.youtubeData.youtube_id?? '', 
-
-    playerVars : {
-      controls: 1,// Hiện thanh điều khiển
-      modestbranding: 1, // Giảm logo YouTube
-      rel:0 // Không gợi ý video liên quan
-    },
-
-    events: {
-      onReady:  () => {
-
-        const id = props.youtubeData.youtube_id ?? ''
-        const start = props.youtubeData.youtube_start_time ?? 0
-
-        // Force metadata load without autoplay
-        player.cueVideoById({ videoId: id, startSeconds: start })
-
-         waitForDuration()
-
-        
-        isPlayRready.value = duration.value > 0
-
-        const startTime = props.youtubeData.youtube_start_time?? 0
-        player.seekTo(startTime, true)
-        player.pauseVideo()
-      },
-
-      onStateChange: handleStateChange
-    }
-  })
-})
 
 
 const stopTracking = () => {
@@ -266,7 +227,7 @@ const back = () => {
 
  keepIsPlayingState()
 }
-
+// this funcion increment currentime by 5 seconds
 const next = () => {
   if (!player) return
 
@@ -359,11 +320,78 @@ const handleDragging = (e) => {
     videoPosition.value.x = Math.min(Math.max(0, newLeft) , window.innerWidth - w)
     videoPosition.value.y = Math.min(Math.max(0, newTop) , window.innerHeight - h)
 }
+
+
+const handleKeyBoard = (e) => {
+  const listKeys = ['Escape', '<', ">", 'Shift + >', 'Shift + <']
+
+  if (!listKeys.includes(e.key)) {
+    return
+  }
+
+  if (e.key === 'Escape') {
+    playAudio()
+  }
+
+  // crearte short cut with "shirft + >"
+  if (e.shiftKey && e.key === '>') {
+    next()
+  }
+
+  if (e.shiftKey && e.key === '<') {
+    back()
+  }
+}
+
 const handlePointerUp = () => {
     isDragging.value = false
     window.removeEventListener('pointermove', handleDragging)
     window.removeEventListener('pointerup', handlePointerUp)
 }
+
+//  videoId: 'o4w8yAHWDEU',
+onMounted( async () => {
+
+  videoPosition.value.x = Math.max(12, window.innerWidth - 288 - 12)
+  videoPosition.value.y = Math.max(12, window.innerHeight - 162 -12)
+
+  await loadYoutubeAPI()
+ 
+  player = new YT.Player(videoRef.value, {
+    videoId: props.youtubeData.youtube_id?? '', 
+
+    playerVars : {
+      controls: 1,// Hiện thanh điều khiển
+      modestbranding: 1, // Giảm logo YouTube
+      rel:0 // Không gợi ý video liên quan
+    },
+
+    events: {
+      onReady:  () => {
+
+        const id = props.youtubeData.youtube_id ?? ''
+        const start = props.youtubeData.youtube_start_time ?? 0
+
+        // Force metadata load without autoplay
+        player.cueVideoById({ videoId: id, startSeconds: start })
+
+         waitForDuration()
+
+        
+        isPlayRready.value = duration.value > 0
+
+        const startTime = props.youtubeData.youtube_start_time?? 0
+        player.seekTo(startTime, true)
+        player.pauseVideo()
+      },
+
+      onStateChange: handleStateChange
+    }
+  })
+
+  window.addEventListener('keydown', handleKeyBoard)
+})
+
 
 
 onBeforeUnmount(() => {
@@ -371,5 +399,6 @@ onBeforeUnmount(() => {
   stopTracking();
   player?.destroy?.()
   player = null
+  window.removeEventListener('keydown', handleKeyBoard)
 })
 </script>

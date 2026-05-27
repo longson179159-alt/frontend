@@ -104,7 +104,7 @@ kill 225842 -->
 
 
 <!-- $env:NUXT_API_PROXY_BASE="http://3.26.146.123"
-$env:NUXT_PUBLIC_API_BASE="/api"
+
 npm run dev -->
 
 
