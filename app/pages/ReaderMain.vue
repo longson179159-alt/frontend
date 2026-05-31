@@ -56,7 +56,7 @@
                     @pointermove.stop
                     @pointerup.stop
                     :youtube-data="youtubeData"
-                    @send-current-time-to-parent="audioCurrentTime = $event"
+                    @send-current-time-to-parent="audioCurrentTime = $event; ; console.log('reader main received current time from footerReader!', $event)"
                 />
             </div>
 

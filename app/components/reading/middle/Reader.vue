@@ -136,7 +136,18 @@ watch(currentPage, (newVal) => {
 
 // sync audio time from youtube video to parent component
 watch(() => props.audioCurrentTime, (newTime) => {
+    console.log('[reader-sync] watch triggered', {
+      newTime,
+      isYoutubeVideo: props.isYoutubeVideo,
+      timestampCount: Array.isArray(props.timestamp) ? props.timestamp.length : 'not-array'
+    })
+  
     if (!props.isYoutubeVideo || !Array.isArray(props.timestamp) || props.timestamp.length === 0) {
+      console.log('[reader-sync] exit: invalid youtube/timestamp state', {
+        isYoutubeVideo: props.isYoutubeVideo,
+        isTimestampArray: Array.isArray(props.timestamp),
+        timestampCount: Array.isArray(props.timestamp) ? props.timestamp.length : null
+      })
       return
     }
 
@@ -145,26 +156,59 @@ watch(() => props.audioCurrentTime, (newTime) => {
     )
     const matchedTimestamp = currentTimestampIdx === -1 ? null : props.timestamp[currentTimestampIdx]
     let targetParagraphIdx = currentTimestampIdx === -1 ? null :  matchedTimestamp.ts_idx
+    console.log('[reader-sync] timestamp match result', {
+      currentTimestampIdx,
+      matchedTimestamp,
+      targetParagraphIdx
+    })
     if (currentTimestampIdx === -1) {
       
       if (newTime < props.timestamp[0].start) {
           targetParagraphIdx = props.timestamp[0].ts_idx
+          console.log('[reader-sync] clamped to first timestamp', {
+            firstTimestamp: props.timestamp[0],
+            targetParagraphIdx
+          })
       }
       else if  (newTime > props.timestamp[props.timestamp.length -1].end) {
         targetParagraphIdx = props.timestamp[props.timestamp.length -1].ts_idx
+        console.log('[reader-sync] clamped to last timestamp', {
+          lastTimestamp: props.timestamp[props.timestamp.length - 1],
+          targetParagraphIdx
+        })
       }
     }
 
     // find the the first http word lesson, what p_idx is currentTimestampIdx
-    if (!prose.value) return
+    if (!prose.value) {
+      console.log('[reader-sync] exit: prose ref is missing')
+      return
+    }
     const items = prose.value.querySelectorAll(".word-item")
+    console.log('[reader-sync] rendered word items', {
+      count: items.length,
+      targetParagraphIdx
+    })
     const firstWordElement = Array.from(items).find(item => parseInt(item.dataset.pIdx) === targetParagraphIdx )
     // caculate the offset top of this word
-    if (!firstWordElement) return
+    if (!firstWordElement) {
+      console.log('[reader-sync] exit: no word element found for paragraph', {
+        targetParagraphIdx
+      })
+      return
+    }
     const offsetTop = firstWordElement.offsetTop
     // caculate which page this offset top is in
     const page = Math.floor(offsetTop / view.value) + 1
+    console.log('[reader-sync] page resolved', {
+      offsetTop,
+      viewHeight: view.value,
+      page
+    })
     currentPage.value = page
+    console.log('[reader-sync] currentPage updated', {
+      currentPage: currentPage.value
+    })
 
 
 })
