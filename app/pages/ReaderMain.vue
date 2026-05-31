@@ -22,6 +22,8 @@
                         :current-phrase-status="currentPhraseData.status"
                         :status-tags-meanings="statusTagsMeanings"
                         :core-data="core_data"
+                        :timestamp="timestamp"
+                        :is-youtube-video="youtubeData.youtube_id ? true : false"
                         v-model:current-value="current" 
                         :audio-current-time="audioCurrentTime"
                         @send-total-page="total = $event"
@@ -107,6 +109,7 @@ const listSentence = ref([])
 const core_data = ref([])
 const statusTagsMeanings = ref({})
 const youtubeData = ref({})
+const timestamp = ref([])
 
 const audioCurrentTime = ref()
 
@@ -135,6 +138,7 @@ const getLesson = async () => {
     statusTagsMeanings.value = data.Tags_Meanings ?? {}
     core_data.value = data.core_data?? []
     youtubeData.value = data.youtube_data?? []
+    timestamp.value = data.timestamp ?? null
     }
 
     catch (error) {
@@ -169,6 +173,7 @@ watch(currentPhraseData, (newVal) => {
         "global_tags": newVal.global_tags,
         "global_meanings": newVal.global_meanings,
         "status": newVal.status,
+
     }
 
 }, {deep: true})

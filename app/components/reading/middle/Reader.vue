@@ -68,6 +68,7 @@ import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import Popup from './Popup.vue'
 
 
+
 /* =========================================================
    Composables / Data Sources
    - Keep these near the top so readers know “where data comes from”
@@ -99,6 +100,8 @@ const props = defineProps({
   statusTagsMeanings: {type: Object, default: () => []},
   coreData: {type: Array, default: () => []},
   currentPhraseStatus :{type: Number },
+  isYoutubeVideo: {type: Boolean, default: false},
+  timestamp: {type: Array, default: () => []},
   audioCurrentTime: {type: Number, default: 0}
 })
 const lessondata = ref(props.lessonData)
@@ -131,9 +134,39 @@ watch(currentPage, (newVal) => {
 
 })
 
+// sync audio time from youtube video to parent component
 watch(() => props.audioCurrentTime, (newTime) => {
-    // find the sentence match the current time
-    
+    if (!props.isYoutubeVideo || !Array.isArray(props.timestamp) || props.timestamp.length === 0) {
+      return
+    }
+
+    let currentTimestampIdx = props.timestamp.findIndex(
+      item => item.start <= newTime && item.end >= newTime
+    )
+    const matchedTimestamp = currentTimestampIdx === -1 ? null : props.timestamp[currentTimestampIdx]
+    let targetParagraphIdx = currentTimestampIdx === -1 ? null :  matchedTimestamp.ts_idx
+    if (currentTimestampIdx === -1) {
+      
+      if (newTime < props.timestamp[0].start) {
+          targetParagraphIdx = props.timestamp[0].ts_idx
+      }
+      else if  (newTime > props.timestamp[props.timestamp.length -1].end) {
+        targetParagraphIdx = props.timestamp[props.timestamp.length -1].ts_idx
+      }
+    }
+
+    // find the the first http word lesson, what p_idx is currentTimestampIdx
+    if (!prose.value) return
+    const items = prose.value.querySelectorAll(".word-item")
+    const firstWordElement = Array.from(items).find(item => parseInt(item.dataset.pIdx) === targetParagraphIdx )
+    // caculate the offset top of this word
+    if (!firstWordElement) return
+    const offsetTop = firstWordElement.offsetTop
+    // caculate which page this offset top is in
+    const page = Math.floor(offsetTop / view.value) + 1
+    currentPage.value = page
+
+
 })
 
 watch([currentPage, newStatusDict], () => {
@@ -167,7 +200,7 @@ const emitStatus = (keyboard) => {
    - Keep “what the UI shows” separate from “what actions do”
 ========================================================= */
 const selected = computed(() => {
-  // Guard: selection not started or not updated
+  // Guard: selection not started or not updated   
   if (!startPointer.value || !currentPointer.value) return {text: '', valid: false, error: 'empty'}
 
   // Guard: do not allow cross-sentence selection

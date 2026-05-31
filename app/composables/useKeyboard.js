@@ -17,11 +17,7 @@ const changePageStatus =  () => {
   const firstEl = Array.from(items).find(el => el.offsetTop >= scrollTop)
   const lastEl = Array.from(items).findLast(el => el.offsetTop < scrollBottom)
 
-  // console.log('scrollTop', scrollTop, 'scrollBottom', scrollBottom, 'view.value', view.value)
 
-  // console.log("First element text:", firstEl?.textContent, "sIdx:", firstEl?.dataset?.sIdx);
-  // console.log("Last element text:", lastEl?.textContent, "sIdx:", lastEl?.dataset?.sIdx);
-  
 
   const indexParaStart = Number(firstEl?.dataset?.pIdx)
   const indexParaEnd = Number(lastEl?.dataset?.pIdx)

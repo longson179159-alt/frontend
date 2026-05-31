@@ -62,7 +62,7 @@
                         </button>
                     </div>
                 </div>
-                <NuxtLink class="h-8 px-1 hover:bg-gray-300 rounded-lg flex items-center justify-center"><img src="/icons/reader/zoomIn.svg" alt="zoomIn"/></NuxtLink>
+                <button @click="emit('closeAudioBox', false)" class="h-8 px-1 hover:bg-gray-300 rounded-lg flex items-center justify-center"><img src="/icons/reader/sync.svg" alt="sync"/></button>
             </div>
 
       </div>
