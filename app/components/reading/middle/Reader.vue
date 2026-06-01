@@ -21,8 +21,9 @@
               v-show="word['visible_in_phrase']">
 
               <span
-                :class="['status-' + word['status'], word['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
-                class="border border-transparent  word-item " :id="`w-${word['w_idx']}`" :data-w-idx="word['w_idx']" :data-s-idx="word['s_idx']"
+                :class="['status-' + word['status'],
+                 word['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
+                class="border border-transparent  word-item " :id="`w-${word['w_idx']}`" :data-w-idx="word['w_idx']" :data-s-idx="word['s_idx']"                
                 :data-idx-w-in-s="word['idx_w_in_s']" :data-p-idx="word['p_idx']">
                 {{ word['word'] }}
               </span>
@@ -33,7 +34,8 @@
           <span v-else
             :class="['flex  h-[35px]  items-center px-1 -blue-400 ', (isActice(item['w_idx']) && isOpenPopup) && 'bg-blue-400']">
             <span :id="`w-${item['w_idx']}`"
-              :class="['status-' + item['status'], 'border border-transparent word-item', item['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
+              :class="[item['status']===-1 ? 'pointer-events-none cursor-default' : 'status-' + item['status'], 'border border-transparent word-item', item['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
+              :data-clickable="item['status'] !== -1"
               :data-w-idx="item['w_idx']" :data-s-idx="item['s_idx']" :data-idx-w-in-s="item['idx_w_in_s']"
               :data-p-idx="item['p_idx']">
               {{ item['word'] }}
@@ -294,7 +296,7 @@ watch( () => props.currentPhraseStatus,  (newVal) => {
    Local UI State
 ========================================================= */
 const popupCoordinates = ref({ x: 0, y: 0, downward: true })
-const currentSentence = ref('')
+
 
 
 
@@ -345,6 +347,10 @@ const isActice = (wordIndex) => {
   const b = Math.max(startPointer.value[0], currentPointer.value[0])
 
   return wordIndex >= a && wordIndex <= b
+}
+
+const isCurrentPara = () => {
+  
 }
 
 /**

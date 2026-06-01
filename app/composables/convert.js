@@ -29,16 +29,25 @@ const cleanWord = (word)=> {
   // Replace smart apostrophe and dash variants
   w = w.replace(/’/g, "'").replace(/[–—]/g, "-");
 
-  // Remove non-alphanumeric characters except apostrophes.
-  // Python regex: r"[^\w\s']", ""
-  // JS equivalent: keep [A-Za-z0-9_], whitespace, and apostrophes.
   w = w.replace(/[^\w\s'-]/g, "");
   return w;
 }
 
-// check if word only contains alphabets, or '-' or ''', and it has any alphabet in it.
+
+// Why this one:
+
+// allows letters only
+// allows internal apostrophe or hyphen
+// rejects leading/trailing ' or -
+// rejects repeated separators like -- or ''
+// rejects digits
+// Examples:
+
+// valid: hello, don't, well-known
+// invalid: -hello, hello-, rock--solid, mp3, can''t
+
 const isValidWord = (word) => {
-  return /^[a-zA-Z'-]+$/.test(word) && /[a-zA-Z]/.test(word);
+  return /^[a-z]+(?:['-][a-z]+)*$/.test(String(word).toLowerCase().trim())
 }
 
   return {

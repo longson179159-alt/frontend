@@ -62,7 +62,7 @@
                         </button>
                     </div>
                 </div>
-                <button @click=" emit('sendCurrentTimeToParent', currentTime); console.log('emited this data already', currentTime)" class="h-8 px-1 hover:bg-gray-300 rounded-lg flex items-center justify-center"><img src="/icons/reader/sync.svg" alt="sync"/></button>
+                <button @click=" emit('sendCurrentTimeToParent', {currentTime: currentTime, syncTimeToText : true}); console.log('emited this data already', currentTime)" class="h-8 px-1 hover:bg-gray-300 rounded-lg flex items-center justify-center"><img src="/icons/reader/sync.svg" alt="sync"/></button>
             </div>
 
       </div>

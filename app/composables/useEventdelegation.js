@@ -39,6 +39,8 @@ const getitemData = (e) => {
   // console.log("Clicked element text:", WordEl?.textContent, "offsetTop:", WordEl?.offsetTop);
 
   if (WordEl) {
+    if (WordEl.dataset.clickable === 'false') return null
+
       return {
       w_idx : Number(WordEl.dataset.wIdx),
       s_idx : Number(WordEl.dataset.sIdx),
