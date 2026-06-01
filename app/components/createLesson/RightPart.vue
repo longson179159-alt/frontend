@@ -37,18 +37,7 @@
             src="/icons/others/urlIcon.svg" alt="importAudio" class="inline-block" /> Original URL</button>
       </div>
       <div class="flex items-center gap-3">
-        <button @click="toggleYoutube"  class="h-10 w-10 rounded-full bg-gray-100 hover:bg-gray-300 flex items-center justify-center">
-          <img v-if="youtubeUrl" src="/icons/others/trash.svg" alt="trash">
-          <font-awesome v-else icon="plus" />
-        </button>
-        <div  class="cursor-pointer h-10 px-3 flex items-center gap-1 hover:bg-gray-300 justify-center rounded-md">
-          <span v-if="youtubeUrl" class="inline-flex items-center gap-1">
-            <img src="/icons/others/urlIcon.svg" alt="link"/>{{youtubeUrl}}
-          </span>
-          <span v-else>
-            <img src="/icons/others/youtubeIcon.svg" alt="importAudio" class="inline-block" /> Youtube URL
-          </span>
-        </div>
+       
       </div>
     </div>
 
@@ -85,33 +74,7 @@
       </div>
     </div>
 
-    <!-- IMPORT YOUTUBE URL PART -->
-     <div v-if="openAddYoutubeUrl" class="fixed inset-0 h-screen w-full p-4 bg-gray-500/50 flex items-center justify-center">
-        <div class="max-w-[660px] md:w-[660px]  bg-white border border-gray-400 shadow-md rounded-3xl">
-            <div class="p-5 flex items-center justify-between">
-                <div class="flex items-center gap-1">
-                    <img src="/icons/others/link.svg" alt="link">
-                    <span>Add Original URL</span>
-                </div>
-                <button @click="openAddYoutubeUrl = false; inputYoutube = youtubeUrl" class="h-10 w-10 hover:bg-gray-300 rounded-full shrink-0"><font-awesome icon='times'/></button>
-            </div>
-            <div class="p-4 border-y border-y-gray-300" >
-                <input type="text" v-model="inputYoutube"
-                maxlength="500"
-                @input="showWarning = false"
-                class="px-3 py-2  w-full rounded-lg border 
-                placeholder:text-gray-700 focus:outline-none focus:ring-2  focus:shadow-lg"
-                placeholder="Add url 500 charaters max"
-                :class="showWarning ? 'border-red-400 focus:ring-red-300' : 'border-gray-200 hover:border-gray-400 focus:ring-gray-300 focus:border-gray-400'"
-                >
-                <span v-if="showWarning" class="block ml-2 mt-1 text-sm text-red-600 italic">Invalid Url</span>
-            </div>
-            <div  class="flex gap-2 items-center justify-end p-4">
-                <button @click="openAddYoutubeUrl = false; inputYoutube = youtubeUrl" class="underline px-3 py-[6px] hover:bg-gray-200 rounded-md">Close</button>
-                <button @click="AddYoutubeUrl"  class="px-3 py-1 border-2 rounded-md hover:border-gray-400">Add</button>
-            </div>
-        </div>
-    </div>
+
   </div>
 </template>
 
@@ -125,49 +88,6 @@ import { ref , watch} from 'vue'
 
 
 const { minutesSeconds, seconds } = useConvert()
-
-const youtubeUrl = ref("")
-const openAddYoutubeUrl = ref(false)
-const inputYoutube = ref("")
-const showWarning = ref(false)
-
-const isValidHttpUrl = (url) => {
-  try {
-    const u = new URL(url);
-    return u.protocol === "http:" || u.protocol === 'https:'
-  }
-
-  catch {
-    return false
-  }
-}
-
-
-const AddYoutubeUrl = () => {
-    const url = inputYoutube.value.trim()
-
-    if (!isValidHttpUrl(url)) {
-      showWarning.value = true
-      return
-    }
-
-    youtubeUrl.value = url
-    openAddYoutubeUrl.value = false
-    emit("sendYoutubeUrl", youtubeUrl.value)
-}
-
-const toggleYoutube = () => {
-  if (!youtubeUrl.value) {
-    openAddYoutubeUrl.value = true
-  }
-  else {
-
-    youtubeUrl.value = ''
-    showWarning.value = false
-    inputYoutube.value = ""
-    emit("sendYoutubeUrl", youtubeUrl.value)
-  }
-}
 
 
 
@@ -229,6 +149,6 @@ const handleUploadText = (e) => {
   emit('sendTextFile', textFile.value)
 }
 
-const emit = defineEmits(['sendAudioFile', 'sendTextFile', 'sendInputText', 'sendYoutubeUrl'])
+const emit = defineEmits(['sendAudioFile', 'sendTextFile', 'sendInputText'])
 
 </script>

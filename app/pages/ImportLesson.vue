@@ -68,10 +68,10 @@
         </div>
 
         <RightPart 
-        @sendAudioFile="audioFile=$event"
+
         @sendTextFile="textFile=$event"
         @sendInputText="inputText=$event"
-        @send-youtube-url="youtubeUrl = $event"
+      
         />
       </div>
     </div>
@@ -121,7 +121,6 @@ const addNewCouse = (data) => {
 }
 
 const loading = ref(false)
-const youtubeUrl = ref("")
 
 const idxCourse = ref(-1)
 const openSelectCourse = ref(false)
@@ -149,42 +148,6 @@ const saveAndGenerate = async () => {
 
   messageCreateLesson.value = ''
   
-
-  // create with youtube
-  if (youtubeUrl.value.trim()) {
-    loading.value = true
-
-    // console.log('course_name', listCourse.value[idxCourse.value].name)
-    try {
-      const data = {
-          "course_name": listCourse.value[idxCourse.value].name ?? 'default',
-          "youtube_url": youtubeUrl.value.trim()
-        }
-
-      if (lessonName.value.trim()) {
-        data.lesson_name = lessonName.value.trim()
-      }
-      const result = await $fetch(`/api/create_youtube_lesson/`, {
-        method: 'POST', 
-        body: data,
-        credentials: "include",
-        headers: {
-                'X-CSRFToken': getCsrfToken()
-            }
-      })
-
-      course_name.value = result.course_name
-      lesson_name.value = result.lesson_name
-      messageCreateLesson.value = result?.message || "Create lesson successfully!"
-      createLessonSuccessfully.value = true
-    }
-    catch (error) {
-      messageCreateLesson.value = error?.data?.message || "Can't create lesson with this youtube url \nChoose one of two option: \n1. Change youtube url. \n2. Create lesson manually."
-    }
-    loading.value = false
-
-    return
-  }
 
 
   // check lesson name

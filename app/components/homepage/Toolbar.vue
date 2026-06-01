@@ -56,10 +56,15 @@
           <img src="/icons/header/importLesson.svg" alt="ImportLesson" />
           <span class="text-black">Lesson</span>
         </nuxt-link>
-        <button @click="OpenUpload('youtube')" class="flex justify-start items-center gap-4 hover:bg-gray-200 px-2 py-2">
+        <a 
+          href="https://chromewebstore.google.com/detail/langoda/kpblnhhcheigaooflkijekahfflpamaf"
+          target="_blank"
+          rel="noopener noreferrer"
+          @click="openImport = false"
+           class="flex justify-start items-center gap-4 hover:bg-gray-200 px-2 py-2">
           <img src="/icons/others/youtubeIcon.svg" alt="ImportVocabulary" />
           <span class="text-black">Youtube</span>
-        </button>
+        </a>
         <button @click="OpenUpload('newword')" class="flex justify-start items-center gap-4 hover:bg-gray-200 px-2 py-2" >
           <img src="/icons/header/importVocabulary.svg" alt="ImportVocabulary" />
           <span class="text-black">Vocabulary</span>
@@ -77,7 +82,6 @@
       <import-text v-if="uploadObject === 'text'" @send-message="uploadObject=$event"/>
       <import-audio v-if="uploadObject === 'audio'" @send-message="uploadObject=$event"/>
       <import-vocabulary v-if="uploadObject === 'newword' " @send-message="uploadObject=$event"/>
-      <ImportYoutube v-if="uploadObject === 'youtube'" @send-message="uploadObject=$event"/>
     </div>
 
    
@@ -92,16 +96,16 @@ import '@vueform/slider/themes/default.css'
 import ImportText from './component/ImportText.vue'
 import ImportAudio from './component/ImportAudio.vue'
 import importVocabulary from './component/importVocabulary.vue'
-import ImportYoutube from './component/ImportYoutube.vue'
+
 const range = ref([3, 5])
 const Levels = ["Beginner 1", "Beginner 2", "Intermediate 1", "Intermediate 2", "Advanced 1", "Advanced 2"]
 const importElement = ref(null)
 const currentPage = ref("library")
-const router = useRouter()
+
 
 const moveToOtherPage = (pageName) => {
   currentPage.value = pageName
-  // router.push(`/${pageName}`)
+ 
 }
 
 const openImport = ref(false)
