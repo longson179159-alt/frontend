@@ -7,7 +7,7 @@
       <div v-for="(para, idPara) in lessondata" :key="idPara" 
       class="text-3xl flex flex-wrap gap-y-7 px-2  text-start "  >
 
-        <span v-for="(item, idItem) in para" :key="idItem" :class="['h-[44px] flex items-center]']">
+        <span v-for="(item, idItem) in para" :key="idItem" :class="['h-[44px] flex items-center']">
           <span v-if="item['type'] === 'phrase'" v-show="item['visible']"
             class="phrase-item flex  gap-y-7 h-full  items-center  rounded  ring-2 ring-inset ring-transparent hover:ring-yellow-400"
             :class="['status-' + item['status'],  isActivePara(idPara) && 'border-b-2 border-gray-400']" 
@@ -20,7 +20,7 @@
             :data-end-idx-w-in-s="item['phrase'][item['phrase'].length - 1]['idx_w_in_s']"
             :data-end-p-idx="item['phrase'][item['phrase'].length - 1]['p_idx']">
             <span v-for="(word) in item['phrase']"
-              :class="['inline-flex items-center h-[35px]  px-1', (isActice(word['w_idx']) && isOpenPopup) && 'bg-blue-400', isActivePara(idPara) && 'border-b-2 border-gray-400']"
+              :class="['inline-flex items-center h-[35px]  px-1', (isActice(word['w_idx']) && isOpenPopup) && 'bg-blue-400']"
               v-show="word['visible_in_phrase']">
 
               <span
@@ -43,7 +43,7 @@
           </span>
 
           <span v-else
-            :class="['flex  h-[35px]  items-center px-1 -blue-400 ', (isActice(item['w_idx']) && isOpenPopup) && 'bg-blue-400']">
+            :class="['flex  h-[35px]  items-center px-1 -blue-400 ', (isActice(item['w_idx']) && isOpenPopup) && 'bg-blue-400', isActivePara(idPara) && 'border-b-2 border-gray-400']">
             <span :id="`w-${item['w_idx']}`"
               :class="[item['status']===-1 ? 'pointer-events-none cursor-default' : 'status-' + item['status'], 'border border-transparent word-item', item['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
               :data-clickable="item['status'] !== -1"
@@ -159,7 +159,7 @@ const targetParagraphIdx = ref(null)
 // sync audio time from youtube video to parent component
 watch(() => props.audioCurrentTime, (newVal) => {
     const currentTime = newVal.currentTime
-    const syncTimeToText = newVal.syncTimeToText
+    const syncTimeToText = newVal.syncTimeToText + 0.5
 
   
     if (!props.isYoutubeVideo || !Array.isArray(props.timestamp) || props.timestamp.length === 0) {
