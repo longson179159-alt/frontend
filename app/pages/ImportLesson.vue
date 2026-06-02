@@ -177,7 +177,7 @@ const saveAndGenerate = async () => {
     idxCourse.value >= 0 ? listCourse.value[idxCourse.value].name : "default"
   )
   // formData.append('lesson_description', lessonDescription.value)
-  formData.append("language", language.value)
+  formData.append("language", 'en')
   // formData.append('level', level.value)
   if (pictureFile.value) formData.append('picture', pictureFile.value)
   if (audioFile.value) formData.append('audiofile', audioFile.value)
