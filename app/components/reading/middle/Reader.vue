@@ -4,20 +4,23 @@
     <div class="relative  overflow-hidden flex flex-wrap gap-y-7" ref="prose" 
       @pointerdown.prevent="handlePointerDown"
       @pointermove="handlePointerEnter">
-      <div v-for="(para, idPara) in lessondata" :key="idPara" class="text-3xl flex flex-wrap gap-y-7 px-2  text-start">
+      <div v-for="(para, idPara) in lessondata" :key="idPara" 
+      class="text-3xl flex flex-wrap gap-y-7 px-2  text-start "  >
 
-        <span v-for="(item, idItem) in para" :key="idItem" class="h-[44px] flex items-center">
+        <span v-for="(item, idItem) in para" :key="idItem" :class="['h-[44px] flex items-center]']">
           <span v-if="item['type'] === 'phrase'" v-show="item['visible']"
             class="phrase-item flex  gap-y-7 h-full  items-center  rounded  ring-2 ring-inset ring-transparent hover:ring-yellow-400"
-            :class="['status-' + item['status']]" :data-first-w-idx="item['phrase'][0]['w_idx']"
-            :data-first-s-idx="item['phrase'][0]['s_idx']" :data-first-idx-w-in-s="item['phrase'][0]['idx_w_in_s']"
+            :class="['status-' + item['status'],  isActivePara(idPara) && 'border-b-2 border-gray-400']" 
+            :data-first-w-idx="item['phrase'][0]['w_idx']"
+            :data-first-s-idx="item['phrase'][0]['s_idx']" 
+            :data-first-idx-w-in-s="item['phrase'][0]['idx_w_in_s']"
             :data-first-p-idx="item['phrase'][0]['p_idx']"
             :data-end-w-idx="item['phrase'][item['phrase'].length - 1]['w_idx']"
             :data-end-s-idx="item['phrase'][item['phrase'].length - 1]['s_idx']"
             :data-end-idx-w-in-s="item['phrase'][item['phrase'].length - 1]['idx_w_in_s']"
             :data-end-p-idx="item['phrase'][item['phrase'].length - 1]['p_idx']">
             <span v-for="(word) in item['phrase']"
-              :class="['inline-flex items-center h-[35px]  px-1', (isActice(word['w_idx']) && isOpenPopup) && 'bg-blue-400']"
+              :class="['inline-flex items-center h-[35px]  px-1', (isActice(word['w_idx']) && isOpenPopup) && 'bg-blue-400', isActivePara(idPara) && 'border-b-2 border-gray-400']"
               v-show="word['visible_in_phrase']">
 
               <span
@@ -25,7 +28,7 @@
                 :class="[
                   'status-' + word['status'],
                   'border border-transparent word-item',
-                  isActivePara(word['p_idx']) && 'shadow-[0_1px_0_0_rgb(0,0,0)]',
+                 
                   word['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600'
                 ]"
                 :data-w-idx="word['w_idx']"
@@ -42,7 +45,7 @@
           <span v-else
             :class="['flex  h-[35px]  items-center px-1 -blue-400 ', (isActice(item['w_idx']) && isOpenPopup) && 'bg-blue-400']">
             <span :id="`w-${item['w_idx']}`"
-              :class="[item['status']===-1 ? 'pointer-events-none cursor-default' : 'status-' + item['status'], 'border border-transparent word-item', isActivePara(item['p_idx']) && 'shadow-[0_1px_0_0_rgb(0,0,0)]' , item['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
+              :class="[item['status']===-1 ? 'pointer-events-none cursor-default' : 'status-' + item['status'], 'border border-transparent word-item', item['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
               :data-clickable="item['status'] !== -1"
               :data-w-idx="item['w_idx']" :data-s-idx="item['s_idx']" :data-idx-w-in-s="item['idx_w_in_s']"
               :data-p-idx="item['p_idx']">
@@ -209,9 +212,7 @@ watch(() => props.audioCurrentTime, (newVal) => {
 })
 
 const isActivePara = (p_idx) => {
-  if (p_idx === 0) {
-    console.log('compare', p_idx, typeof p_idx, targetParagraphIdx.value, typeof targetParagraphIdx.value)
-  }
+
   
   return p_idx === targetParagraphIdx.value
 }
