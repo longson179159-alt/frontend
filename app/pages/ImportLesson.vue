@@ -171,9 +171,9 @@ const saveAndGenerate = async () => {
 
 
   // create lesson manually
-  formData.append("lesson_name", lessonName.value.trim() )
+  formData.append("lessonName", lessonName.value.trim() )
   formData.append(
-    "course_name",
+    "courseName",
     idxCourse.value >= 0 ? listCourse.value[idxCourse.value].name : "default"
   )
   // formData.append('lesson_description', lessonDescription.value)
