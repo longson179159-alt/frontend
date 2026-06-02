@@ -21,10 +21,18 @@
               v-show="word['visible_in_phrase']">
 
               <span
-                :class="['status-' + word['status'],
-                 word['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
-                class="border border-transparent  word-item " :id="`w-${word['w_idx']}`" :data-w-idx="word['w_idx']" :data-s-idx="word['s_idx']"                
-                :data-idx-w-in-s="word['idx_w_in_s']" :data-p-idx="word['p_idx']">
+                :id="`w-${word['w_idx']}`"
+                :class="[
+                  'status-' + word['status'],
+                  'border border-transparent word-item',
+                  isActivePara(word['p_idx']) && 'shadow-[0_1px_0_0_rgb(0,0,0)]',
+                  word['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600'
+                ]"
+                :data-w-idx="word['w_idx']"
+                :data-s-idx="word['s_idx']"
+                :data-idx-w-in-s="word['idx_w_in_s']"
+                :data-p-idx="word['p_idx']"
+                >
                 {{ word['word'] }}
               </span>
 
@@ -34,7 +42,7 @@
           <span v-else
             :class="['flex  h-[35px]  items-center px-1 -blue-400 ', (isActice(item['w_idx']) && isOpenPopup) && 'bg-blue-400']">
             <span :id="`w-${item['w_idx']}`"
-              :class="[item['status']===-1 ? 'pointer-events-none cursor-default' : 'status-' + item['status'], 'border border-transparent word-item', item['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
+              :class="[item['status']===-1 ? 'pointer-events-none cursor-default' : 'status-' + item['status'], 'border border-transparent word-item', isActivePara(item['p_idx']) && 'shadow-[0_1px_0_0_rgb(0,0,0)]' , item['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
               :data-clickable="item['status'] !== -1"
               :data-w-idx="item['w_idx']" :data-s-idx="item['s_idx']" :data-idx-w-in-s="item['idx_w_in_s']"
               :data-p-idx="item['p_idx']">
@@ -104,8 +112,14 @@ const props = defineProps({
   currentPhraseStatus :{type: Number },
   isYoutubeVideo: {type: Boolean, default: false},
   timestamp: {type: Array, default: () => []},
-  audioCurrentTime: {type: Number, default: 0}
-})
+  audioCurrentTime: {
+    type: Object,
+    default: () => ({
+      currentTime: 0,
+      syncTimeToText: false
+    })
+  }}
+)
 const lessondata = ref(props.lessonData)
 
 
@@ -136,84 +150,71 @@ watch(currentPage, (newVal) => {
 
 })
 
+
+
+const targetParagraphIdx = ref(null)
 // sync audio time from youtube video to parent component
-watch(() => props.audioCurrentTime, (newTime) => {
-    console.log('[reader-sync] watch triggered', {
-      newTime,
-      isYoutubeVideo: props.isYoutubeVideo,
-      timestampCount: Array.isArray(props.timestamp) ? props.timestamp.length : 'not-array'
-    })
+watch(() => props.audioCurrentTime, (newVal) => {
+    const currentTime = newVal.currentTime
+    const syncTimeToText = newVal.syncTimeToText
+
   
     if (!props.isYoutubeVideo || !Array.isArray(props.timestamp) || props.timestamp.length === 0) {
-      console.log('[reader-sync] exit: invalid youtube/timestamp state', {
-        isYoutubeVideo: props.isYoutubeVideo,
-        isTimestampArray: Array.isArray(props.timestamp),
-        timestampCount: Array.isArray(props.timestamp) ? props.timestamp.length : null
-      })
+
       return
     }
 
     let currentTimestampIdx = props.timestamp.findIndex(
-      item => item.start <= newTime && item.end >= newTime
+      item => item.start <= currentTime && item.end >= currentTime
     )
     const matchedTimestamp = currentTimestampIdx === -1 ? null : props.timestamp[currentTimestampIdx]
-    let targetParagraphIdx = currentTimestampIdx === -1 ? null :  matchedTimestamp.ts_idx
-    console.log('[reader-sync] timestamp match result', {
-      currentTimestampIdx,
-      matchedTimestamp,
-      targetParagraphIdx
-    })
+    targetParagraphIdx.value = currentTimestampIdx === -1 ? null :  matchedTimestamp.ts_idx
+
     if (currentTimestampIdx === -1) {
       
-      if (newTime < props.timestamp[0].start) {
-          targetParagraphIdx = props.timestamp[0].ts_idx
-          console.log('[reader-sync] clamped to first timestamp', {
-            firstTimestamp: props.timestamp[0],
-            targetParagraphIdx
-          })
+      if (currentTime < props.timestamp[0].start) {
+          targetParagraphIdx.value = props.timestamp[0].ts_idx
+      
       }
-      else if  (newTime > props.timestamp[props.timestamp.length -1].end) {
-        targetParagraphIdx = props.timestamp[props.timestamp.length -1].ts_idx
-        console.log('[reader-sync] clamped to last timestamp', {
-          lastTimestamp: props.timestamp[props.timestamp.length - 1],
-          targetParagraphIdx
-        })
+      else if  (currentTime > props.timestamp[props.timestamp.length -1].end) {
+        targetParagraphIdx.value = props.timestamp[props.timestamp.length -1].ts_idx
+    
       }
     }
 
-    // find the the first http word lesson, what p_idx is currentTimestampIdx
+
+    
+    console.log('paragraph idx', targetParagraphIdx.value)
+
+    if (!syncTimeToText) return
     if (!prose.value) {
-      console.log('[reader-sync] exit: prose ref is missing')
+  
       return
     }
     const items = prose.value.querySelectorAll(".word-item")
-    console.log('[reader-sync] rendered word items', {
-      count: items.length,
-      targetParagraphIdx
-    })
-    const firstWordElement = Array.from(items).find(item => parseInt(item.dataset.pIdx) === targetParagraphIdx )
+
+    const firstWordElement = Array.from(items).find(item => parseInt(item.dataset.pIdx) === targetParagraphIdx.value )
     // caculate the offset top of this word
     if (!firstWordElement) {
-      console.log('[reader-sync] exit: no word element found for paragraph', {
-        targetParagraphIdx
-      })
+
       return
     }
     const offsetTop = firstWordElement.offsetTop
     // caculate which page this offset top is in
     const page = Math.floor(offsetTop / view.value) + 1
-    console.log('[reader-sync] page resolved', {
-      offsetTop,
-      viewHeight: view.value,
-      page
-    })
+ 
     currentPage.value = page
-    console.log('[reader-sync] currentPage updated', {
-      currentPage: currentPage.value
-    })
 
 
 })
+
+const isActivePara = (p_idx) => {
+  if (p_idx === 0) {
+    console.log('compare', p_idx, typeof p_idx, targetParagraphIdx.value, typeof targetParagraphIdx.value)
+  }
+  
+  return p_idx === targetParagraphIdx.value
+}
 
 watch([currentPage, newStatusDict], () => {
   changePageStatus()
@@ -349,9 +350,6 @@ const isActice = (wordIndex) => {
   return wordIndex >= a && wordIndex <= b
 }
 
-const isCurrentPara = () => {
-  
-}
 
 /**
  * Move next or previous page by keyborad.

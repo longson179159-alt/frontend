@@ -8,7 +8,7 @@
         <AudioYoutubeBox 
         @close-audio-box="openAudioBox = $event" 
         :youtube-data="props.youtubeData"
-        @send-current-time-to-parent="emit('sendCurrentTimeToParent', $event); console.log('footer reader emited currentime to ReaderMain!', $event)"
+        @send-current-time-to-parent="emit('sendCurrentTimeToParent', $event)"
         />
         <!-- <AudioBox v-else @close-audio-box="openAudioBox = $send" :audioURL="audioURL"/> -->
     </div>
