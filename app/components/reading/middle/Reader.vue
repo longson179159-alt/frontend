@@ -5,7 +5,7 @@
       @pointerdown.prevent="handlePointerDown"
       @pointermove="handlePointerEnter">
       <div v-for="(para, idPara) in lessondata" :key="idPara" 
-      class="text-3xl flex flex-wrap gap-y-7 px-2  text-start "  >
+      class="w-full text-3xl flex flex-wrap gap-y-7 px-2  text-start "  >
 
         <span v-for="(item, idItem) in para" :key="idItem" :class="['h-[44px] flex items-center']">
           <span v-if="item['type'] === 'phrase'" v-show="item['visible']"
@@ -158,8 +158,8 @@ watch(currentPage, (newVal) => {
 const targetParagraphIdx = ref(null)
 // sync audio time from youtube video to parent component
 watch(() => props.audioCurrentTime, (newVal) => {
-    const currentTime = newVal.currentTime
-    const syncTimeToText = newVal.syncTimeToText + 0.5
+    const currentTime = newVal.currentTime+ 0.5
+    const syncTimeToText = newVal.syncTimeToText 
 
   
     if (!props.isYoutubeVideo || !Array.isArray(props.timestamp) || props.timestamp.length === 0) {
