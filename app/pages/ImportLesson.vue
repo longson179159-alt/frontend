@@ -69,7 +69,7 @@
 
         <RightPart 
 
-        @sendTextFile="textFile=$event"
+        @sendTextFile="frontend_text_file=$event"
         @sendInputText="inputText=$event"
       
         />
@@ -135,7 +135,7 @@ const pictureFile = ref(null)
 const level = ref('')
 const language = ref("")
 const audioFile = ref(null)
-const textFile = ref(null)
+const frontend_text_file = ref(null)
 const inputText = ref("")
 
 const course_name = ref('')
@@ -158,8 +158,8 @@ const saveAndGenerate = async () => {
   const formData = new FormData()
 
   // check existing text
-  if (textFile.value) {
-      formData.append("textfile", textFile.value)
+  if (frontend_text_file.value) {
+      formData.append("textfile", frontend_text_file.value)
   }
   else if (inputText.value.trim()) {
     formData.append('inputText', inputText.value.trim())
