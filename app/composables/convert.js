@@ -3,8 +3,10 @@
 export function useConvert() {
 // Convert seconds -> "M:SS"
 const minutesSeconds = (sec) => {
-  const m = Math.floor(sec / 60)
+  const h = Math.floor(sec / 3600)
+  const m = Math.floor((sec - h * 3600) / 60)
   const s = (sec % 60).toString().padStart(2, "0")
+  if (h >=1) return `${h}:${m.toString().padStart(2, '0')}:${s}`
   return `${m}:${s}`
 }
 
@@ -34,17 +36,7 @@ const cleanWord = (word)=> {
 }
 
 
-// Why this one:
 
-// allows letters only
-// allows internal apostrophe or hyphen
-// rejects leading/trailing ' or -
-// rejects repeated separators like -- or ''
-// rejects digits
-// Examples:
-
-// valid: hello, don't, well-known
-// invalid: -hello, hello-, rock--solid, mp3, can''t
 
 const isValidWord = (word) => {
   return /^[a-z]+(?:['-][a-z]+)*$/.test(String(word).toLowerCase().trim())

@@ -332,9 +332,10 @@ const handleKeyboard = (e) => {
   const target = e.target
   const isTypingTarget =
     target instanceof HTMLElement &&
-    (target.tagName === 'INPUT' ||
+    (target.tagName === 'INPUT' && target.getAttribute('type') !== 'range') ||
      target.tagName === 'TEXTAREA' ||
-     target.isContentEditable)
+     target.isContentEditable
+    
 
   if (isTypingTarget) return
   const listKeys = ['Escape', '<', ">", " ", 'd']
@@ -348,7 +349,8 @@ const handleKeyboard = (e) => {
   }
 
   if (e.key === 'd') {
-    emit('sendCurrentTimeToParent', {currentTime: currentTime.value, syncTimeToText : True})
+    console.log('try to send current time to parent through d keyboard')
+    emit('sendCurrentTimeToParent', {currentTime: currentTime.value, syncTimeToText : true})
     // console.log('emit this data already', currentTime.value)
   }
 
