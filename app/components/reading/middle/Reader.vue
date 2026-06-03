@@ -47,7 +47,7 @@
             <span :id="`w-${item['w_idx']}`"
               :class="[item['status'] === -1 ? 'pointer-events-none cursor-default' : 'status-' + item['status'], 'border border-transparent word-item', item['status'] === 6 ? 'hover:border-blue-600' : 'hover:border-yellow-600']"
               :data-clickable="item['status'] !== -1"
-              :data-w-idx="item['w_idx']" :data-s-idx="item['s_idx']" :data-idx-w-in-s="item['idx_w_in_s']"
+              :data-w-idx="item['w_idx']" :data-s-idx="item['s_idx']" :data-idx-w-in-s="item['idx_w_in_s']"  :data-status="item['status']"
               :data-p-idx="item['p_idx']">
               {{ item['word'] }}
             </span>
@@ -126,6 +126,7 @@ const props = defineProps({
 const lessondata = ref(props.lessonData)
 
 
+
 const core_data = props.coreData
 
 const newStatusDict = computed(() => {
@@ -187,7 +188,7 @@ watch(() => props.audioCurrentTime, (newVal) => {
 
 
     
-    console.log('paragraph idx', targetParagraphIdx.value)
+    // console.log('paragraph idx', targetParagraphIdx.value)
 
     if (!syncTimeToText) return
     if (!prose.value) {
@@ -216,6 +217,7 @@ const isActivePara = (p_idx) => {
   
   return p_idx === targetParagraphIdx.value
 }
+
 
 watch([currentPage, newStatusDict], () => {
   changePageStatus()
@@ -290,7 +292,10 @@ watch(selected, (newVal) => {
 const {changePageStatus,changePageStatusByKeyborad, moveNextPrevious} = useKeyboard(startPointer,currentPointer, prose, view, core_data, newStatusDict , lessondata, currentPage, totalPage,  emitStatus, selected)
 
 
+
+
 watch( () => props.currentPhraseStatus,  (newVal) => {
+
   changePageStatus(newVal)
 
 })

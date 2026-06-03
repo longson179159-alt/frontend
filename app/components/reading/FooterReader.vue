@@ -45,8 +45,7 @@ const props = defineProps({
 const emit = defineEmits(['sendCurrentTimeToParent'])
 
 const handleKeyDown = (e) => {
-    // debug if this code run
-    console.log('key down', e.key)
+    
     const target = e.target
     const isTypingTarget =
         target instanceof HTMLElement &&
@@ -59,9 +58,9 @@ const handleKeyDown = (e) => {
         return
     }
     if (e.key === 'Escape' || e.key === ' ') {
-        console.log('open audio box')
+       
         openAudioBox.value = true
-        // console.log('key is not escape')
+       
         return
     }
     

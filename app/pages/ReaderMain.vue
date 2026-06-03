@@ -140,19 +140,6 @@ const getLesson = async () => {
     youtubeData.value = data.youtube_data?? []
     timestamp.value = data.timestamp ?? null
 
-    // find all elements with status -1 in lessondata
-    let abnormalWords = []
-    for (const paraData of lessondata.value) {
-      
-            for (const wordData of paraData) {
-                if (wordData.status === -1) {
-                    abnormalWords.push({word: wordData.word, status : wordData.status, wordIdx: wordData.w_idx})
-                }
-            }
-
-    }
-
-    console.log("abnormal words", abnormalWords)
 
 
 }

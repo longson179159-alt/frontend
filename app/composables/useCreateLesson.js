@@ -108,7 +108,7 @@ const lessondataChunk = core_data.slice(indexParaStart, indexParaEnd).map(
                 const updatedSentenceArr = sentenceArr.map(
                     wordObject => ({
                         ...wordObject,
-                        status: statusDict.value[wordObject.cleaned] ?? 6
+                        status: statusDict.value[wordObject.cleaned] ?? -1 
                     })
                 )
                 return getSentenceData(updatedSentenceArr, phraseArr, phraseStatusDict)

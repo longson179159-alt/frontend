@@ -35,10 +35,9 @@ const getitemData = (e) => {
   if (!(target instanceof HTMLElement)) return null
   const WordEl = target.closest('.word-item')
 
-  // print text and its offsetTop of WordEl
-  // console.log("Clicked element text:", WordEl?.textContent, "offsetTop:", WordEl?.offsetTop);
 
   if (WordEl) {
+ 
     if (WordEl.dataset.clickable === 'false') return null
 
       return {
