@@ -344,8 +344,19 @@ const handleKeyboard = (e) => {
     return
   }
 
-  if (e.key === 'Escape' || e.key === ' ') {
+
+    if (e.key === 'Escape') {
+    e.preventDefault()
+    if (e.repeat) return
+    player?.pauseVideo?.()
+    return
+  }
+
+  if (e.key === ' ') {
+    e.preventDefault()
+    if (e.repeat) return
     playAudio()
+    return
   }
 
   if (e.key === 'd') {
@@ -354,7 +365,7 @@ const handleKeyboard = (e) => {
    
   }
 
-  // crearte short cut with "shirft + >"
+ 
   if (e.shiftKey && e.key === '>') {
     next()
   }
