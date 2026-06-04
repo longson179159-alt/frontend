@@ -129,6 +129,7 @@ const props = defineProps({
 const lessondata = ref(props.lessonData)
 const core_data = props.coreData
 const lastReadWordIdx = ref(props.lastReadWordIdx)
+console.log("lastReadWordIdx in reader.vue", lastReadWordIdx.value)
 
 const moveToLastReadingPage = () => {
   if (!prose.value) return
@@ -175,7 +176,8 @@ const saveLastReadWordIdx = debounce(
         body: JSON.stringify({ 
           lessonName: props.lessonAndCourseName.lessonName,
           courseName: props.lessonAndCourseName.courseName,
-          lastReadWordIdx: newLastReadWordIdx 
+          lastReadWordIdx: newLastReadWordIdx,
+          youtubeStartTime: props.audioCurrentTime
         }),
       })
     } catch (error) {
