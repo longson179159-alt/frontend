@@ -177,7 +177,7 @@ const saveLastReadWordIdx = debounce(
           lessonName: props.lessonAndCourseName.lessonName,
           courseName: props.lessonAndCourseName.courseName,
           lastReadWordIdx: newLastReadWordIdx,
-          youtubeStartTime: props.audioCurrentTime
+          youtubeStartTime: props.audioCurrentTime.currentTime
         }),
       })
     } catch (error) {
