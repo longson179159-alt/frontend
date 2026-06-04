@@ -23,6 +23,11 @@
                         :status-tags-meanings="statusTagsMeanings"
                         :core-data="core_data"
                         :timestamp="timestamp"
+                        :last-read-word-idx="lastReadWordIdx"
+                        :lesson-and-course-name="{
+                            lessonName: lesson_name,
+                            courseName: course_name
+                        }"
                         :is-youtube-video="youtubeData.youtube_id ? true : false"
                         v-model:current-value="current" 
                         :audio-current-time="audioCurrentTime"
@@ -110,6 +115,7 @@ const core_data = ref([])
 const statusTagsMeanings = ref({})
 const youtubeData = ref({})
 const timestamp = ref([])
+const lastReadWordIdx = ref(0)
 
 const audioCurrentTime = ref()
 
@@ -139,6 +145,7 @@ const getLesson = async () => {
     core_data.value = data.core_data?? []
     youtubeData.value = data.youtube_data?? []
     timestamp.value = data.timestamp ?? null
+    lastReadWordIdx.value = data.lastReadWordIdx ?? 0
 
 
 

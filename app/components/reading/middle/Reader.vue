@@ -79,7 +79,8 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 
 import Popup from './Popup.vue'
-
+import debounce from "lodash/debounce";
+const { getCsrfToken } = useCsrf()
 
 
 /* =========================================================
@@ -115,6 +116,8 @@ const props = defineProps({
   currentPhraseStatus :{type: Number },
   isYoutubeVideo: {type: Boolean, default: false},
   timestamp: {type: Array, default: () => []},
+  lastReadWordIdx: {type: Number, default: 1},
+  lessonAndCourseName: {type: Object, default: () => ({})},
   audioCurrentTime: {
     type: Object,
     default: () => ({
@@ -124,10 +127,21 @@ const props = defineProps({
   }}
 )
 const lessondata = ref(props.lessonData)
-
-
-
 const core_data = props.coreData
+const lastReadWordIdx = ref(props.lastReadWordIdx)
+
+const moveToLastReadingPage = () => {
+  if (!prose.value) return
+  const wordItems = prose.value.querySelectorAll('.word-item')
+  // find the word-item with data-w-idx equal to lastReadWordIdx
+  const targetWord = Array.from(wordItems).find(item => parseInt(item.dataset.wIdx) === lastReadWordIdx.value)
+  // calculate the offset top of this word
+  if (!targetWord || !prose.value) return
+  const offsetTop = targetWord.offsetTop
+  // calculate which page this offset top is in
+  const page = Math.floor(offsetTop / view.value) + 1
+  currentPage.value = page
+}
 
 const newStatusDict = computed(() => {
   const statusDict = {}
@@ -149,9 +163,40 @@ const currentPage = computed({
 })
 
 
+const saveLastReadWordIdx = debounce(
+  async(newLastReadWordIdx) => {
+    try {
+      await $fetch(`/api/update_last_read_word_idx/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCsrfToken(),
+        },
+        body: JSON.stringify({ 
+          lessonName: props.lessonAndCourseName.lessonName,
+          courseName: props.lessonAndCourseName.courseName,
+          lastReadWordIdx: newLastReadWordIdx 
+        }),
+      })
+    } catch (error) {
+      console.error('Failed to update last read word index:', error)
+    }
+  }, 1000
+)
+
 watch(currentPage, (newVal) => {
     scrollNewPage(newVal);
+    if (!prose.value) return
+    // find all word-item elements
+    const wordItems = prose.value.querySelectorAll('.word-item')
 
+    const currentPageOffsetTop = (newVal - 1) * view.value
+    // find the fist word of this page
+    const targetWord = Array.from(wordItems).find(item => item.offsetTop >= currentPageOffsetTop )
+    // interpolate the word index
+    const targetWordIdx = targetWord ? parseInt(targetWord.dataset.wIdx) : 1
+    saveLastReadWordIdx(targetWordIdx)
+    
 })
 
 
@@ -371,15 +416,24 @@ const itemFirstAndLastOfPage = computed(() => {
 /* =========================================================
    Lifecycle: mount/unmount side-effects
 ========================================================= */
+
+const handleVisibilityChange = () => {
+  if (document.hidden) {
+    saveLastReadWordIdx.flush()
+  }
+}
 onMounted(async () => {
   // Ensure pagination is correct on first render
   await updateTotalPages()
+  moveToLastReadingPage()
   emit('selected', selected.value)
   // Global listeners (remember to remove them on unmount)
   window.addEventListener('resize', updateTotalPages)
   window.addEventListener('pointerup', pointerUp)
   window.addEventListener('keydown', changePageStatusByKeyborad)
   window.addEventListener('keydown', moveNextPrevious)
+
+  document.addEventListener('visibilitychange', handleVisibilityChange)
 })
 
 onBeforeUnmount(() => {
@@ -387,6 +441,9 @@ onBeforeUnmount(() => {
   window.removeEventListener('pointerup', pointerUp)
   window.removeEventListener('keydown', changePageStatusByKeyborad)
   window.removeEventListener('keydown', moveNextPrevious)
+   document.removeEventListener('visibilitychange', handleVisibilityChange)
+  saveLastReadWordIdx.flush() // immediately invoke the debounced function to save the last read word index before unmounting
+  saveLastReadWordIdx.cancel()
 })
 </script>
 
