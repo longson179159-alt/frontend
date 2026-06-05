@@ -165,20 +165,28 @@ const currentPage = computed({
 
 
 const saveLastReadWordIdx = debounce(
-  async(newLastReadWordIdx) => {
+  async(newLastReadWordIdx, youtubeStartTime) => {
     try {
+
+      let payload = {
+        lessonName: props.lessonAndCourseName.lessonName,
+        courseName: props.lessonAndCourseName.courseName,
+        lastReadWordIdx: newLastReadWordIdx,
+        isYoutubeVideo: props.isYoutubeVideo,
+        youtubeStartTime: youtubeStartTime
+      }
+
+      if (props.isYoutubeVideo) {
+        payload.youtubeStartTime = props.audioCurrentTime.currentTime
+        
+      }
       await $fetch(`/api/update_last_read_word_idx/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'X-CSRFToken': getCsrfToken(),
         },
-        body: JSON.stringify({ 
-          lessonName: props.lessonAndCourseName.lessonName,
-          courseName: props.lessonAndCourseName.courseName,
-          lastReadWordIdx: newLastReadWordIdx,
-          youtubeStartTime: props.audioCurrentTime.currentTime
-        }),
+        body: JSON.stringify(payload),
       })
     } catch (error) {
       console.error('Failed to update last read word index:', error)
@@ -197,7 +205,7 @@ watch(currentPage, (newVal) => {
     const targetWord = Array.from(wordItems).find(item => item.offsetTop >= currentPageOffsetTop )
     // interpolate the word index
     const targetWordIdx = targetWord ? parseInt(targetWord.dataset.wIdx) : 1
-    saveLastReadWordIdx(targetWordIdx)
+    saveLastReadWordIdx(targetWordIdx, props.audioCurrentTime.currentTime)
     
 })
 
