@@ -212,16 +212,20 @@ const finishLesson = async () => {
     const statusDict = {}
     const listKeys = Object.keys(statusTagsMeanings.value)
     for (const item of listKeys) {
+
+        if (item.split(' ').length > 1 || statusTagsMeanings.value[item].status !== 6) continue
         statusDict[item] = statusTagsMeanings.value[item].status
     }
-  
+
+    console.log("statusDict to send to backend", statusDict)
 
    try {
         await $fetch(`/api/finish_lesson/`, {
             method: "PUT", 
-            body: statusDict,
+            body: JSON.stringify(statusDict),
             credentials: "include",
                 headers: {
+                    "Content-Type": "application/json",
                     "X-CSRFToken": getCsrfToken(),
                 }
         })
@@ -237,6 +241,7 @@ const finishLesson = async () => {
 
    catch(error) {
         console.log("there is an error with finish lesson", error)
+        loading.value = false
    }
 }
 
