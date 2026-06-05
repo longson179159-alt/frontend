@@ -29,7 +29,11 @@ export default defineEventHandler(async (event) => {
   if (csrfToken) headers["x-csrftoken"] = csrfToken;
 
   const hasBody = !["GET", "HEAD"].includes(method.toUpperCase());
-  const body = hasBody ? await readBody(event) : undefined;
+  const body = !hasBody
+  ? undefined
+  : contentType?.includes("application/json")
+    ? await readRawBody(event, "utf8")
+    : await readRawBody(event);
 
   try {
     const upstream = await $fetch.raw(upstreamUrl, {
