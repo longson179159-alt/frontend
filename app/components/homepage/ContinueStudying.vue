@@ -22,6 +22,8 @@
                 :lesson-img-url="item.imgUrl"
                
                 :lesson-name="item.lessonName"
+                :lesson-number="item.lessonNumber"
+                :youtube-duration="item.youtubeDuration"
                 :number-new-words="item.numberNewWords"
                 :number-ling-qs="item.numberLingQs"
                 :number-known-words="item.numberKnownWords"

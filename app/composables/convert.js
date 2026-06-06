@@ -10,10 +10,13 @@ const minutesSeconds = (sec) => {
   return `${m}:${s}`
 }
 
-// Convert "M:SS" -> seconds
-const seconds = (rawString) => {
-  const [m, s] = rawString.split(":").map(Number)
-  return m * 60 + s
+const formatDuration = (sec) => {
+  const h = Math.floor(sec / 3600)
+  const m = Math.floor((sec - h * 3600) / 60)
+  const s = (sec % 60)
+  if (h >=1) return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
+  if (m >=1) return `${m}:${s.toString().padStart(2, '0')}`
+  return `${s}`
 }
 
 
@@ -44,7 +47,7 @@ const isValidWord = (word) => {
 
   return {
     minutesSeconds,
-    seconds,
+    formatDuration,
     cleanWord,
     isValidWord
   }

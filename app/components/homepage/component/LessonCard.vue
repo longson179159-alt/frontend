@@ -39,7 +39,7 @@
             </div>
 
             <!-- center -->
-            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div v-if="lessonNumber" class="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div
                     class=" h-16 w-16 rounded-full bg-blue-800/80 flex items-center justify-center text-3xl font-semibold text-yellow-400">
                     {{ lessonNumber }}
@@ -88,8 +88,8 @@
                 words Intermediate 1 </div>
             <div class="flex justify-between ">
                 <span class="truncate max-w-40">LingQ Mini Stories - France histoir Une nouvelle maison</span>
-                <!-- <span class="inline-flex gap-1 whitespace-nowrap "><img src="/icons/header/importAudio.svg" />
-                    3:03</span> -->
+                <span v-if="youtubeDuration" class="inline-flex gap-1 whitespace-nowrap "><img src="/icons/header/importAudio.svg" />
+                    {{ formatDuration(youtubeDuration) }}</span>
             </div>
 
             <span class="inline-block my-2 text-gray-500 truncate">{{ courseName }}</span>
@@ -105,7 +105,7 @@
 <script setup>
 
 import {ref, computed} from 'vue'
-
+const { formatDuration } = useConvert()
 
 const showUnder = ref(false)
 const hoverPlusButton = ref(false)
@@ -117,6 +117,7 @@ const props = defineProps({
     lessonImgUrl : {type: String, default: '/images/demo.png'},
     courseName : {type: String, default: "Quick import"},
     lessonNumber : {type: Number, default : 10},
+    youtubeDuration : {type: Number, default: 100},
     lessonName : {type:String, default: "Lesson name by default"},
     numberNewWords : {type: Number, default: 8},
     numberLingQs: {type: Number, default: 9},
@@ -178,8 +179,10 @@ const addToContinuingLesson = () => {
             courseName : props.courseName,
             lessonNumber : props.lessonNumber,
             lessonName : props.lessonName,
+            youtubeDuration : props.youtubeDuration,
             numberNewWords : props.numberNewWords,
             numberKnownWords : props.numberKnownWords,
+            numberLingQs : props.numberLingQs,
             newWordsPercents : props.newWordsPercents,
             builtinLesson : props.builtinLesson,
         })
@@ -222,7 +225,7 @@ const moveLessonCard =  () => {
         deleteLesson()
     }
 
-    else if (hoverPlusButton && props.continuingLesson && props.builtinLesson) {
+    else if (hoverPlusButton.value && props.continuingLesson && props.builtinLesson) {
         removeFromContinuingLesson()
     }
 
