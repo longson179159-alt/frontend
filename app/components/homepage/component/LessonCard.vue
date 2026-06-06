@@ -116,8 +116,8 @@ const { getCsrfToken } = useCsrf()
 const props = defineProps({
     lessonImgUrl : {type: String, default: '/images/demo.png'},
     courseName : {type: String, default: "Quick import"},
-    lessonNumber : {type: Number, default : 10},
-    youtubeDuration : {type: Number, default: 100},
+    lessonNumber : {type: Number},
+    youtubeDuration : {type: Number},
     lessonName : {type:String, default: "Lesson name by default"},
     numberNewWords : {type: Number, default: 8},
     numberLingQs: {type: Number, default: 9},
