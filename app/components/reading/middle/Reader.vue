@@ -214,7 +214,7 @@ watch(currentPage, (newVal) => {
 const targetParagraphIdx = ref(null)
 // sync audio time from youtube video to parent component
 watch(() => props.audioCurrentTime, (newVal) => {
-    const currentTime = newVal.currentTime+ 0.5
+    const currentTime = newVal.currentTime + 2
     const syncTimeToText = newVal.syncTimeToText 
 
   

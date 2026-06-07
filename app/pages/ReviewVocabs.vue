@@ -10,16 +10,37 @@
             </div>
             <span v-else class="text-2xl font-bold text-blue-600 text-center">List all words</span>
     
-            <div class="flex gap-2">
-                <button @click="changeData('words')" 
-                class="px-6 py-2 transition h-10 border border-b-2 rounded-t-lg text-lg hover:bg-gray-200"
-                
-                :class="toggleType === 'words' ? 'border-blue-600 text-blue-600 font-semibold': 'border-transparent text-gray-500 bg-gray-200 hover:text-black'">
-                    Words
-                </button>
-                <button @click="changeData('phrases')" 
-                class="px-6 py-2 transition h-10 border border-b-2 rounded-t-lg text-lg hover:bg-gray-200"
-                :class="toggleType === 'phrases' ? 'border-blue-600 text-blue-600 font-semibold' : 'border-transparent text-gray-500 bg-gray-200 hover:text-black'">Phrases</button>
+            <!-- Words, Phrases, Courses, Lessons -->
+            <div>
+                <div class="flex gap-2">
+                    <button @click="changeData('words')" 
+                    class="px-6 py-2 transition h-10 border border-b-2 rounded-t-lg text-lg hover:bg-gray-200"
+                    
+                    :class="toggleType === 'words' ? 'border-blue-600 text-blue-600 font-semibold': 'border-transparent text-gray-500 bg-gray-200 hover:text-black'">
+                        Words
+                    </button>
+                    <button @click="changeData('phrases')" 
+                    class="px-6 py-2 transition h-10 border border-b-2 rounded-t-lg text-lg hover:bg-gray-200"
+                    :class="toggleType === 'phrases' ? 'border-blue-600 text-blue-600 font-semibold' : 'border-transparent text-gray-500 bg-gray-200 hover:text-black'">Phrases</button>
+                </div>
+                <!-- Courses, Lessons; -->
+                <div>
+                    <div>
+                        <div>
+                            <span>Courses</span>
+                            <button>
+                                
+                            </button>
+                        </div>
+                        
+                        <div>
+                            <span>Lessons</span>
+                            <button>
+                                
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
     
             <div class="bg-white p-4 rounded-xl border shadow-md">
@@ -124,8 +145,6 @@ const hasNextPage = ref(false)
 const isLoading = ref(false)
 
 
-// const {listPhrasesData, listWordsData} = useListVocabularies()
-
 const listVisibleData = ref([]) // default show words data, when toggle to phrases, will set listVisibleData to listPhrasesData
 
 const showWordMeaning = (index) => {
@@ -136,8 +155,6 @@ const showWordMeaning = (index) => {
 const selectedStatuses = ref([1,2,3]) // default show all words with status 1-3 (exclude 0 - deleted)
 const selectSortOption = ref(1)
 const toggleType = ref('words') // default show words, other option is 'phrases'
-
-
 
 
 import debounce from 'lodash/debounce'
@@ -185,7 +202,6 @@ const getDataBackend = async () => {
         // isLoading.value = false
     }
 
-    // console.log('listVisibleData.value', listVisibleData.value)
 }
 
 const prevPage = () => {
