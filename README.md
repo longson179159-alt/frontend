@@ -4,7 +4,7 @@ A language-learning web app inspired by LingQ, focused on reading practice, less
 
 ## Live Demo
 
-- Demo Reader: https://lingq-home-page-lkgp.vercel.app/DemoReader
+- Demo Reader: https://langoda.com/DemoReader
 
 ## Why I Built This
 

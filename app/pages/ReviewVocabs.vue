@@ -3,16 +3,15 @@
         <div class=" max-w-6xl rounded-2xl border  shadow-lg px-8 py-5 mx-auto  flex flex-col gap-6 ">
             <NuxtLink to="/HomepageLingQ" class="inline-flex self-start justify-start items-center text-gray-600 font-medium hover:text-black hover:bg-gray-200 px-3 py-1 text-center rounded-md"> <font-awesome icon="chevron-left" /> Back
             Homepage</NuxtLink>
-            <div v-if="courseName && lessonName" class="flex text-2xl text-blue-600 font-bold  items-start justify-center">
-                <span>Course: {{ courseName }}</span>
-                <span class="mx-2 text-2xl">•</span>
-                <span>Lesson: {{ lessonName }}</span>
+            
+            <div class="flex flex-col items-center gap-2">
+                <span  class="text-2xl font-bold text-gray-600 text-center">ÔN TẬP TỪ MỚI</span>
+                <span class="text-gray-500 text-center text-sm">(Thời điểm tốt nhất để học từ mới là trước và sau mỗi bài học!)</span>
+        
             </div>
-            <span v-else class="text-2xl font-bold text-blue-600 text-center">List all words</span>
-    
             <!-- Words, Phrases, Courses, Lessons -->
-            <div>
-                <div class="flex gap-2">
+            <div class="flex flex-col items-center gap-5 md:flex-row md:justify-between">
+                <div class="flex gap-2 md:self-end ">
                     <button @click="changeData('words')" 
                     class="px-6 py-2 transition h-10 border border-b-2 rounded-t-lg text-lg hover:bg-gray-200"
                     
@@ -24,23 +23,11 @@
                     :class="toggleType === 'phrases' ? 'border-blue-600 text-blue-600 font-semibold' : 'border-transparent text-gray-500 bg-gray-200 hover:text-black'">Phrases</button>
                 </div>
                 <!-- Courses, Lessons; -->
-                <div>
-                    <div>
-                        <div>
-                            <span>Courses</span>
-                            <button>
-                                
-                            </button>
-                        </div>
-                        
-                        <div>
-                            <span>Lessons</span>
-                            <button>
-                                
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <CourseAndLesson 
+                @selectionChanged="handleSelectionChanged"
+                :lessonNameRoute="lessonNameRoute"
+                :courseNameRoute="courseNameRoute"
+                />
             </div>
     
             <div class="bg-white p-4 rounded-xl border shadow-md">
@@ -84,7 +71,8 @@
     
             <div v-if="isLoading === false && listVisibleData.length > 0" v-for="(item, index) in listVisibleData"  :key="item.word" class="border border-gray-600 rounded-lg  p-5 flex flex-col md:flex-row gap-3   items-center justify-between">
                 <span class="font-medium text-lg w-40 text-center md:text-start">{{ item.word }}</span>
-    
+                
+                <button @click="speakEnglish(item.word)"><img src='/icons/reader/volume.svg' alt='volume'/></button>
                 <button @click="showWordMeaning(index)"  :class="[item.showMeaning? '' : 'italic underline' , 'text-blue-600 mb-3']">{{ item.showMeaning? item.meaning : 'Show meaning'  }}</button>
             
                 <div class="flex  gap-3 w-full md:w-auto justify-between">
@@ -114,10 +102,27 @@
 
 import {ref, onMounted, computed, onBeforeUnmount} from 'vue'
 import {useRoute} from 'vue-router'
+import CourseAndLesson from '~/components/ReviewPage/CourseAndLesson.vue'
+
+const {speakEnglish} = useGooleTranslate();
 const route  = useRoute()
 
-const lessonName = computed(() => route.query.lessonName || '')
-const courseName = computed(() => route.query.courseName || '')
+const lessonName = ref('')
+const courseName = ref('')
+const getALLCourseData = ref(false)
+const getALLLessonData = ref(false)
+
+const lessonNameRoute = computed(() => route.query.lessonName || '')
+const courseNameRoute = computed(() => route.query.courseName || '')
+
+const handleSelectionChanged = (selectedCourse, selectedLesson, courseIdx, lessonIdx) => {
+    courseName.value = selectedCourse
+    lessonName.value = selectedLesson
+    getALLCourseData.value = courseIdx === 0 // if courseIdx is 0, means select "All" course, then set getALLCourseData to true to get all course data
+    getALLLessonData.value = lessonIdx === 0 // if lessonIdx is 0
+  
+}
+
 
 const listStatusOptions = [
   { value: 1, label: '1 - New' },
@@ -174,7 +179,9 @@ const getDataBackend = async () => {
                 pageSize: pageSize.value,
                 currentPage: currentPage.value,
                 lessonName: lessonName.value,
-                courseName: courseName.value
+                courseName: courseName.value,
+                getALLCourseData: getALLCourseData.value,
+                getALLLessonData: getALLLessonData.value
             },
             credentials: 'include'})
             
