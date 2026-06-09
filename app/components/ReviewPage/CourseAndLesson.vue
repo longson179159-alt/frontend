@@ -36,7 +36,7 @@
             <button
               v-for="course, idx in listCourseNames"
               v-show="includesearchCourse(course)"
-              @click="currentCourseName = course; courseIdx = idx; openToggleCourse = false; searchCourse = ''; currentLessonName = 'All'"
+              @click="currentCourseName = course; courseIdx = idx; lessonIdx = 0; openToggleCourse = false; searchCourse = ''; currentLessonName = 'All'"
               :key="course"
               :class="['w-full flex  items-center justify-start px-3 py-1 inline-block hover:bg-gray-200', currentCourseName === course ? 'bg-gray-200 font-medium' : '']"
             >
@@ -129,24 +129,51 @@ const lessonIdx = ref(0)
 const courseIdx = ref(0)
 
 const refreshCourseAndLesson = (dataBackend, lessonNameRoute, courseNameRoute) => {
-    if (Object.keys(dataBackend).includes(courseNameRoute)) {
-        currentCourseName.value = courseNameRoute
-        courseIdx.value = 1
-      if (dataBackend[courseNameRoute].includes(lessonNameRoute)) {
+    if (!courseNameRoute) {
+      visibleData.value = dataBackend.value
+       currentCourseName.value = 'All'
+      currentLessonName.value = 'All'
+      courseIdx.value = 0
+      lessonIdx.value = 0
+      return
+    }
+
+    currentCourseName.value = courseNameRoute
+    courseIdx.value = 1
+    if (Object.keys(dataBackend.value).includes(courseNameRoute)) {
+        
+        
+      if (dataBackend.value[courseNameRoute].includes(lessonNameRoute)) {
         lessonIdx.value = 1
         currentLessonName.value = lessonNameRoute
         visibleData.value = dataBackend.value
       }
 
       else {
-        dataBackend.value[courseNameRoute].unshift(lessonNameRoute)
         visibleData.value = dataBackend.value
+        if(!lessonNameRoute) {  
+          currentLessonName.value = 'All'
+          lessonIdx.value = 0          
+          return
+        }
+        dataBackend.value[courseNameRoute].unshift(lessonNameRoute)
+        currentLessonName.value = lessonNameRoute
+        lessonIdx.value = 1
+
       }
     }
 
     else {
-        dataBackend.value[courseNameRoute] = [lessonNameRoute]
         visibleData.value = dataBackend.value
+        if(!lessonNameRoute) {   
+          currentLessonName.value = 'All'
+            lessonIdx.value = 0         
+          return
+        }
+        dataBackend.value[courseNameRoute] = [lessonNameRoute]
+        currentLessonName.value = lessonNameRoute
+        lessonIdx.value = 1
+        
     }
 }
 
@@ -157,10 +184,10 @@ const getDataBackend = async () => {
     const data = await response.json()
     dataBackend.value = data ?? demoData
     console.log('Fetched backend data:', dataBackend.value)
-    refreshCourseAndLesson(dataBackend.value, props.lessonNameRoute, props.courseNameRoute)
+    refreshCourseAndLesson(dataBackend, props.lessonNameRoute, props.courseNameRoute)
   } catch (error) {
     dataBackend.value = demoData
-    refreshCourseAndLesson(dataBackend.value, props.lessonNameRoute, props.courseNameRoute)
+    refreshCourseAndLesson(dataBackend, props.lessonNameRoute, props.courseNameRoute)
     // console.error('Error fetching backend data:', error)
   }
 
@@ -186,12 +213,16 @@ const includesearchCourse = (course) => {
 }
 
 const handleSearchCourse = () => {
-  currentCourseName.value = listCourseNames.value.find(course => course.toLowerCase().includes(searchCourse.value.trim().toLowerCase()))
-  if (!currentCourseName.value) {
-    currentCourseName.value = 'All'
-  }
+
+  const matchedIdx = listCourseNames.value.findIndex(course => course.toLowerCase().includes(searchCourse.value.trim().toLowerCase()))
+
+  currentCourseName.value = matchedIdx === -1 ? 'All' : listCourseNames.value[matchedIdx]
+  courseIdx.value = matchedIdx === -1 ? 0 : matchedIdx
+
   openToggleCourse.value = false
   searchCourse.value = ''
+  currentLessonName.value = 'All'
+  lessonIdx.value = 0
 }
 
 // LESSON PARTS
@@ -205,7 +236,9 @@ const listLessonNames = computed(() => {
   if (currentCourseName.value === 'All') {
     return ['All']
   }
-  return ['All', ...dataBackend.value[currentCourseName.value]]
+
+  const lessons = dataBackend.value[currentCourseName.value] ?? []
+  return ['All', ...lessons]
 })
 
 const openToggleLesson = ref(false)
@@ -216,10 +249,9 @@ const includeSearchLesson = (lesson) => {
 }
 
 const handleSearchLesson = () => {
-  currentLessonName.value = listLessonNames.value.find(lesson => lesson.toLowerCase().includes(searchLesson.value.trim().toLowerCase()))
-  if (!currentLessonName.value) {
-    currentLessonName.value = 'All'
-  }
+  const matchedIdx = listLessonNames.value.findIndex(lesson => lesson.toLowerCase().includes(searchLesson.value.trim().toLowerCase()))
+  currentLessonName.value = matchedIdx === -1 ? 'All' : listLessonNames.value[matchedIdx]
+  lessonIdx.value = matchedIdx === -1 ? 0 : matchedIdx
   openToggleLesson.value = false
   searchLesson.value = ''
 }
@@ -234,16 +266,19 @@ const handleClickOutside = (event) => {
     openToggleLesson.value = false
   }
 }
-const emit = defineEmits(['selectionChanged'])
-watch([currentCourseName, currentLessonName], ([newCourse, newLesson]) => {
+const emit = defineEmits(['selectionChanged','ready'])
+watch([currentCourseName, currentLessonName, courseIdx, lessonIdx], ([newCourse, newLesson]) => {
   console.log('Selected Course:', newCourse)
   console.log('Selected Lesson:', newLesson)
-  emit('selectionChanged', { courseName: newCourse, lessonName: newLesson, courseIdx: courseIdx.value, lessonidx: lessonIdx.value })
+  emit('selectionChanged', { courseName: currentCourseName.value, lessonName: currentLessonName.value, courseIdx: courseIdx.value, lessonIdx: lessonIdx.value })
 })
 
-onMounted(() => {
-   getDataBackend()
-   emit('selectionChanged', { courseName: newCourse, lessonName: newLesson, courseIdx: courseIdx.value, lessonidx: lessonIdx.value })
+
+
+onMounted(async() => {
+   await getDataBackend()
+   emit('selectionChanged', { courseName: currentCourseName.value, lessonName: currentLessonName.value, courseIdx: courseIdx.value, lessonIdx: lessonIdx.value })
+   emit('ready')
   document.addEventListener('click', handleClickOutside)
 })
 

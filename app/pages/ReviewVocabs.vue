@@ -25,6 +25,7 @@
                 <!-- Courses, Lessons; -->
                 <CourseAndLesson 
                 @selectionChanged="handleSelectionChanged"
+                @ready="currentPage = 1; getDataBackend()"
                 :lessonNameRoute="lessonNameRoute"
                 :courseNameRoute="courseNameRoute"
                 />
@@ -49,9 +50,9 @@
             </div>
     
     
-            <div class="flex  justify-between">
-                <div class="flex ">
-                    <button @click="getDataBackend" 
+            <div class="flex justify-between items-center">
+                <div  class="flex ">
+                    <button v-if="showUpdateButton" @click=" currentPage = 1; getDataBackend()" 
                     class=" px-6 py-2 bg-[#0B1B32] border text-white hover:bg-black transition rounded-lg">{{ isLoading ? 'Loading...' : 'Apply Filters' }}</button>
                 </div>
     
@@ -59,7 +60,7 @@
                     <div class="relative" ref="dropdownRef">
                         <button @click="openPageSizeDropdown = !openPageSizeDropdown" class="border boder-gray-300 w-32 py-2 rounded-lg shadow-md bg-gray-200 hover:bg-gray-300 font-medium">Show {{pageSize}} <font-awesome icon='chevron-down' class="text-sm"/></button>
                         <div v-if="openPageSizeDropdown" class="absolute overflow-hidden top-full right-0 translate-y-2 w-40 flex flex-col boder  rounded-md bg-white shadow-md z-10">
-                            <button v-for="size in listPageSizes" :key="size" @click="pageSize = size; openPageSizeDropdown = false; getDataBackend()" class="text-start italic font-medium text-gray-600 px-3 py-2 hover:bg-gray-200">{{ size }} items</button>
+                            <button v-for="size in listPageSizes" :key="size" @click="currentPage = 1; pageSize = size; openPageSizeDropdown = false; getDataBackend()" class="text-start italic font-medium text-gray-600 px-3 py-2 hover:bg-gray-200">{{ size }} items</button>
                         </div>
                     </div>
                     
@@ -100,7 +101,7 @@
 
 <script setup>
 
-import {ref, onMounted, computed, onBeforeUnmount} from 'vue'
+import {ref,watch, onMounted, computed, onBeforeUnmount} from 'vue'
 import {useRoute} from 'vue-router'
 import CourseAndLesson from '~/components/ReviewPage/CourseAndLesson.vue'
 
@@ -115,11 +116,11 @@ const getALLLessonData = ref(false)
 const lessonNameRoute = computed(() => route.query.lessonName || '')
 const courseNameRoute = computed(() => route.query.courseName || '')
 
-const handleSelectionChanged = (selectedCourse, selectedLesson, courseIdx, lessonIdx) => {
-    courseName.value = selectedCourse
-    lessonName.value = selectedLesson
-    getALLCourseData.value = courseIdx === 0 // if courseIdx is 0, means select "All" course, then set getALLCourseData to true to get all course data
-    getALLLessonData.value = lessonIdx === 0 // if lessonIdx is 0
+const handleSelectionChanged = (data) => {
+    courseName.value = data.courseName
+    lessonName.value = data.lessonName
+    getALLCourseData.value = data.courseIdx === 0 // if courseIdx is 0, means select "All" course, then set getALLCourseData to true to get all course data
+    getALLLessonData.value = data.lessonIdx === 0 // if lessonIdx is 0
   
 }
 
@@ -157,6 +158,7 @@ const showWordMeaning = (index) => {
 }
 
 
+const showUpdateButton = ref(false)
 const selectedStatuses = ref([1,2,3]) // default show all words with status 1-3 (exclude 0 - deleted)
 const selectSortOption = ref(1)
 const toggleType = ref('words') // default show words, other option is 'phrases'
@@ -165,7 +167,7 @@ const toggleType = ref('words') // default show words, other option is 'phrases'
 import debounce from 'lodash/debounce'
 
 
-// const config = useRuntimeConfig()
+
 
 const getDataBackend = async () => {
     isLoading.value = true
@@ -203,10 +205,11 @@ const getDataBackend = async () => {
 
     finally {
         // setitmeout to delay 1s before set isLoading to false to avoid loading too fast and make user can't see the loading state
-        setTimeout(() => {
-            isLoading.value = false
-        }, 1000)
-        // isLoading.value = false
+        // setTimeout(() => {
+        //     isLoading.value = false
+        // }, 1000)
+        isLoading.value = false
+        showUpdateButton.value = false
     }
 
 }
@@ -263,6 +266,10 @@ const changeData = (type) => {
 
 }
 
+watch([selectSortOption, selectedStatuses, lessonName, courseName, toggleType], () => {
+    showUpdateButton.value = true
+})
+
 const handleClickOutside = (event) => {
     if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
         openPageSizeDropdown.value = false
@@ -271,7 +278,7 @@ const handleClickOutside = (event) => {
 
 
 onMounted( async() => {
-    await getDataBackend()
+  
     document.addEventListener('click', handleClickOutside)
 })
 
