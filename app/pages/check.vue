@@ -26,16 +26,36 @@
                 <span
                   v-for="tag in tags"
                   :key="tag"
-                  class="rounded border border-gray-400 bg-gray-100 px-1 text-center"
+                  class="group relative rounded border border-gray-400 bg-gray-100 px-1 text-center"
                 >
                   {{ tag }}
+                  <button
+                    type="button"
+                    class="absolute -right-1 -top-1 hidden h-3 w-3 items-center justify-center rounded-full bg-gray-400 text-white group-hover:flex"
+                    @click="removeTag(tag)"
+                  >
+                    <font-awesome icon="times" class="h-2 w-2" />
+                  </button>
                 </span>
+
                 <button
+                  v-if="!openAddTag"
                   type="button"
                   class="rounded border border-gray-400 px-1 hover:bg-gray-300"
+                  @click="openAddTag = true"
                 >
                   Tag +
                 </button>
+
+                <input
+                  v-else
+                  v-model="newTag"
+                  type="text"
+                  class="w-24 rounded border border-gray-300 px-2 py-0.5 focus:outline-none"
+                  placeholder="New tag"
+                  @keydown.enter.prevent="addTag"
+                  @blur="addTag"
+                >
               </div>
             </div>
           </div>
@@ -44,21 +64,46 @@
           <div class="flex max-h-[380px] flex-1 flex-col gap-1 overflow-auto border-y border-y-gray-300 p-5">
             <span class="font-medium">Saved Meaning</span>
 
-            <textarea
+            <div
               v-for="(meaning, index) in yourMeanings"
               :key="`saved-${index}`"
-              v-model="yourMeanings[index]"
-              rows="2"
-              class="mt-2 w-full rounded-lg bg-gray-100 px-2 pt-2 text-start leading-none focus:outline-none focus:ring-0"
-              placeholder="Enter meaning"
-            />
+              class="group relative mt-2"
+            >
+              <textarea
+                v-model="yourMeanings[index]"
+                rows="2"
+                class="w-full rounded-lg bg-gray-100 px-2 pt-2 text-start leading-none focus:outline-none focus:ring-0"
+                placeholder="Enter meaning"
+                @input="autoResize"
+                @keydown.enter.prevent="($event.target.blur())"
+              ></textarea>
+              <div class="absolute right-3 top-1/2 hidden -translate-y-1/2 gap-1 group-hover:flex">
+                <button
+                  type="button"
+                  class="flex h-5 w-5 items-center justify-center rounded-full bg-white"
+                  @click="removeMeaning(index)"
+                >
+                  <font-awesome icon="times" class="h-3 w-3" />
+                </button>
+                <button
+                  type="button"
+                  class="flex h-5 w-5 items-center justify-center rounded-full bg-white"
+                  @click="openAddMeaning = true"
+                >
+                  <font-awesome icon="plus" class="h-3 w-3" />
+                </button>
+              </div>
+            </div>
 
             <textarea
-              v-model="draftMeaning"
+              v-show="openAddMeaning || yourMeanings.length === 0"
+              v-model="newMeaning"
               rows="2"
-              class="min-h-10 w-full rounded-lg border px-2 pt-2 text-start leading-none focus:outline-none focus:ring-0"
-              placeholder="Demo input for adding or editing a meaning"
-            />
+              class="mt-3 min-h-10 w-full rounded-lg border px-2 pt-2 text-start leading-none focus:outline-none focus:ring-0"
+              placeholder="Enter new meaning, then press Enter"
+              @input="autoResize"
+              @keydown.enter.prevent="addMeaning"
+            ></textarea>
           </div>
 
           <!-- Footer: status buttons -->
@@ -120,7 +165,10 @@ const phrase = ref(props.phrase)
 const tags = ref([...props.tags])
 const yourMeanings = ref(['strong enough to recover quickly'])
 const currentStatus = ref(props.status)
-const draftMeaning = ref('')
+const newTag = ref('')
+const openAddTag = ref(false)
+const openAddMeaning = ref(false)
+const newMeaning = ref('')
 
 const statusButtons = [
   { value: 0, icon: 'trash', hoverClass: 'hover:bg-red-100', activeClass: 'bg-red-100' },
@@ -130,4 +178,46 @@ const statusButtons = [
   { value: 4, label: '4', hoverClass: 'hover:bg-gray-200', activeClass: 'bg-gray-200' },
   { value: 5, icon: 'check', hoverClass: 'hover:bg-green-100', activeClass: 'bg-green-100' },
 ]
+
+const addTag = () => {
+  const value = newTag.value.trim()
+
+  if (!value) {
+    openAddTag.value = false
+    newTag.value = ''
+    return
+  }
+
+  if (!tags.value.includes(value)) {
+    tags.value.push(value)
+  }
+
+  newTag.value = ''
+  openAddTag.value = false
+}
+
+const removeTag = (tag) => {
+  tags.value = tags.value.filter((item) => item !== tag)
+}
+
+const removeMeaning = (index) => {
+  yourMeanings.value.splice(index, 1)
+}
+
+const addMeaning = () => {
+  const value = newMeaning.value.trim()
+  if (!value) return
+
+  if (!yourMeanings.value.includes(value)) {
+    yourMeanings.value.push(value)
+  }
+
+  newMeaning.value = ''
+  openAddMeaning.value = false
+}
+
+const autoResize = (event) => {
+  event.target.style.height = 'auto'
+  event.target.style.height = `${event.target.scrollHeight}px`
+}
 </script>
