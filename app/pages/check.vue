@@ -165,13 +165,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
   phrase: { type: String, default: 'resilient' },
   tags: { type: Array, default: () => (['adjective', 'academic']) },
   status: { type: Number, default: 3 },
 })
+
+const { onTranslate } = useGooleTranslate()
 
 const frequency = ref(1)
 const phrase = ref(props.phrase)
@@ -182,7 +184,7 @@ const newTag = ref('')
 const openAddTag = ref(false)
 const openAddMeaning = ref(false)
 const newMeaning = ref('')
-const googleTranslateMeaning = ref('strong enough to recover quickly')
+const googleTranslateMeaning = ref('')
 
 const statusButtons = [
   { value: 0, icon: 'trash', hoverClass: 'hover:bg-red-100', activeClass: 'bg-red-100' },
@@ -242,4 +244,12 @@ const autoResize = (event) => {
   event.target.style.height = 'auto'
   event.target.style.height = `${event.target.scrollHeight}px`
 }
+
+watch(
+  phrase,
+  async (newPhrase) => {
+    googleTranslateMeaning.value = await onTranslate(newPhrase)
+  },
+  { immediate: true }
+)
 </script>
