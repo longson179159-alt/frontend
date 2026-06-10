@@ -10,6 +10,7 @@
               <button
                 type="button"
                 class="flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-300"
+                @click="speakEnglish(phrase)"
               >
                 <img src="/icons/reader/volume.svg" alt="volume" class="h-6 w-6" />
               </button>
@@ -105,11 +106,12 @@
               @keydown.enter.prevent="addMeaning"
             ></textarea>
 
-            <div class="mb-1 mt-5 flex items-center justify-between">
+            <div v-if="googleTranslateMeaning" class="mb-1 mt-5 flex items-center justify-between">
               <span class="block text-center font-medium">Popular Meanings</span>
             </div>
 
             <button
+              v-if="googleTranslateMeaning"
               type="button"
               class="mt-1 flex items-center justify-between rounded-md bg-gray-100 px-3 py-2 text-start text-blue-600 hover:bg-gray-200"
               @click="useGoogleTranslateMeaning"
@@ -147,15 +149,16 @@
           <div class="flex justify-end gap-3 px-5 pb-5 pt-2">
             <button
               type="button"
-              class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
+              class="rounded-lg w-20 border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
             >
               Cancel
             </button>
             <button
+              @click="saveWord"
               type="button"
-              class="rounded-lg bg-[#0B1B32] px-4 py-2 text-sm font-medium text-white hover:bg-black"
+              class="rounded-lg w-20 bg-[#0B1B32] px-4 py-2 text-sm font-medium text-white hover:bg-black"
             >
-              Save Demo
+              Save 
             </button>
           </div>
         </div>
@@ -165,21 +168,27 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import debounce from 'lodash/debounce'
 
+const { getCsrfToken } = useCsrf()
 const props = defineProps({
-  phrase: { type: String, default: 'resilient' },
-  tags: { type: Array, default: () => (['adjective', 'academic']) },
-  status: { type: Number, default: 3 },
+  wordDATA: {type: Object, default: () => ({
+  
+    phrase: 'resilient',
+    tags: ['adjective', 'academic'],
+    yourMeanings: ['strong enough to recover quickly'],
+    status: 3,
+  })},
 })
 
-const { onTranslate } = useGooleTranslate()
+const { onTranslate, speakEnglish } = useGooleTranslate()
 
 const frequency = ref(1)
-const phrase = ref(props.phrase)
-const tags = ref([...props.tags])
-const yourMeanings = ref(['strong enough to recover quickly'])
-const currentStatus = ref(props.status)
+const phrase = ref(props.wordDATA.phrase)
+const tags = ref([...props.wordDATA.tags])
+const yourMeanings = ref(props.wordDATA.yourMeanings)
+const currentStatus = ref(props.wordDATA.status)
 const newTag = ref('')
 const openAddTag = ref(false)
 const openAddMeaning = ref(false)
@@ -245,11 +254,26 @@ const autoResize = (event) => {
   event.target.style.height = `${event.target.scrollHeight}px`
 }
 
-watch(
-  phrase,
-  async (newPhrase) => {
-    googleTranslateMeaning.value = await onTranslate(newPhrase)
-  },
-  { immediate: true }
-)
+
+
+const saveWord = async () => {
+  await $fetch('/api/update_word/', {
+    method: 'PUT',
+    body: {
+      phrase: phrase.value,
+      tags: tags.value,
+      your_meanings: yourMeanings.value,
+      status: currentStatus.value,
+      changes: ['tags', 'your_meanings', 'status'],
+    },
+    credentials: 'include',
+    headers: {
+      'X-CSRFToken': getCsrfToken(),
+    },
+  })
+}
+
+onMounted( async() => {
+  googleTranslateMeaning.value = await onTranslate(newPhrase)
+})
 </script>
