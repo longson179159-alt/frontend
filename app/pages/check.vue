@@ -104,6 +104,19 @@
               @input="autoResize"
               @keydown.enter.prevent="addMeaning"
             ></textarea>
+
+            <div class="mb-1 mt-5 flex items-center justify-between">
+              <span class="block text-center font-medium">Popular Meanings</span>
+            </div>
+
+            <button
+              type="button"
+              class="mt-1 flex items-center justify-between rounded-md bg-gray-100 px-3 py-2 text-start text-blue-600 hover:bg-gray-200"
+              @click="useGoogleTranslateMeaning"
+            >
+              <span>{{ googleTranslateMeaning }}</span>
+              <img src="/icons/reader/chatgpt.svg" class="inline-block h-5" alt="chatgpt">
+            </button>
           </div>
 
           <!-- Footer: status buttons -->
@@ -169,6 +182,7 @@ const newTag = ref('')
 const openAddTag = ref(false)
 const openAddMeaning = ref(false)
 const newMeaning = ref('')
+const googleTranslateMeaning = ref('strong enough to recover quickly')
 
 const statusButtons = [
   { value: 0, icon: 'trash', hoverClass: 'hover:bg-red-100', activeClass: 'bg-red-100' },
@@ -214,6 +228,14 @@ const addMeaning = () => {
 
   newMeaning.value = ''
   openAddMeaning.value = false
+}
+
+const useGoogleTranslateMeaning = () => {
+  const value = googleTranslateMeaning.value.trim()
+  if (!value) return
+  if (yourMeanings.value.includes(value)) return
+
+  yourMeanings.value.unshift(value)
 }
 
 const autoResize = (event) => {
