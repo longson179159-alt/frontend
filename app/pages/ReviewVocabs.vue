@@ -70,11 +70,13 @@
                 </div>
             </div>
     
-            <div v-if="isLoading === false && listVisibleData.length > 0" v-for="(item, index) in listVisibleData"  :key="item.word" class="border border-gray-600 rounded-lg  p-5 flex flex-col md:flex-row gap-3   items-center justify-between">
-                <span class="font-medium text-lg w-40 text-center md:text-start">{{ item.word }}</span>
+            <div v-if="isLoading === false && listVisibleData.length > 0" v-for="(item, index) in listVisibleData"  
+            :key="item.word" 
+            class="border border-gray-600 rounded-lg  p-5 grid grid-cols-1 md:grid-cols-[160px_56px_1fr_300px]  gap-3 items-center ">
+                <span class="font-medium text-lg w-40 text-center mx-auto md:mx-0 md:text-left">{{ item.word }}</span>
                 
-                <button @click="speakEnglish(item.word)"><img src='/icons/reader/volume.svg' alt='volume'/></button>
-                <button @click="showWordMeaning(index)"  :class="[item.showMeaning? '' : 'italic underline' , 'text-blue-600 mb-3']">{{ item.showMeaning? item.meaning : 'Show meaning'  }}</button>
+                <button @click="speakEnglish(item.word)" class="justify-self-center"><img src='/icons/reader/volume.svg' alt='volume'/></button>
+                <button @click="showWordMeaning(index)"  :class="[item.showMeaning? '' : 'italic underline' , 'text-blue-600 mb-3 ']">{{ item.showMeaning? item.meaning : 'Show meaning'  }}</button>
             
                 <div class="flex  gap-3 w-full md:w-auto justify-between">
                     <button @click="changeStatus(index, 0)" class="h-10 w-10 rounded-full border border-gray-300 hover:bg-red-100 flex items-center justify-center" :class="[item.status === 0 && 'bg-red-100']"><img src="/icons/reader/trash.svg" alt="trash"/></button>
