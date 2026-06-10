@@ -2,6 +2,14 @@
 import process from "node:process";
 
 export default defineNuxtConfig({
+
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/icons/LangIcon-128.png' }
+      ]
+    }
+  },
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
 

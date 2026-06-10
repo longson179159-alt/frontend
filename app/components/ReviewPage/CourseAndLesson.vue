@@ -79,34 +79,34 @@
 import {ref, computed, onMounted, onBeforeUnmount, watch} from 'vue'
 
 
-const demoData = {
-  "English Beginner Course": [
-    "Introduction to English",
-    "Daily Conversations",
-    "Travel Vocabulary",
-    "Ordering Food",
-    "At the Airport",
-    "Shopping Basics",
-    "Making Friends",
-    "Work and Career",
-    "Health and Fitness",
-    "Technology Today"
-  ],
-  "English Intermediate Conversation and Reading Mastery Course": [
-    "Introduction to English",
-    "Daily Conversations",
-    "Travel Vocabulary",
-    "Ordering Food",
-    "At the Airport",],
-  "French for Travelers, Everyday Real-Life Communication, and Practical Speaking Mastery Course": [
-    "Introduction to English",
-    "Daily Conversations",
-    "Travel Vocabulary",
-    "Ordering Food",
-    "At the Airport",
-    "Shopping Basics",
-    "Making Friends",]
-}
+// const demoData = {
+//   "English Beginner Course": [
+//     "Introduction to English",
+//     "Daily Conversations",
+//     "Travel Vocabulary",
+//     "Ordering Food",
+//     "At the Airport",
+//     "Shopping Basics",
+//     "Making Friends",
+//     "Work and Career",
+//     "Health and Fitness",
+//     "Technology Today"
+//   ],
+//   "English Intermediate Conversation and Reading Mastery Course": [
+//     "Introduction to English",
+//     "Daily Conversations",
+//     "Travel Vocabulary",
+//     "Ordering Food",
+//     "At the Airport",],
+//   "French for Travelers, Everyday Real-Life Communication, and Practical Speaking Mastery Course": [
+//     "Introduction to English",
+//     "Daily Conversations",
+//     "Travel Vocabulary",
+//     "Ordering Food",
+//     "At the Airport",
+//     "Shopping Basics",
+//     "Making Friends",]
+// }
 
 const props = defineProps({
   lessonNameRoute: {
@@ -182,11 +182,11 @@ const getDataBackend = async () => {
   try {
     const response = await fetch(`/api/Review/getCoursesAndLessons`)
     const data = await response.json()
-    dataBackend.value = data ?? demoData
+    dataBackend.value = data ?? {}
     console.log('Fetched backend data:', dataBackend.value)
     refreshCourseAndLesson(dataBackend, props.lessonNameRoute, props.courseNameRoute)
   } catch (error) {
-    dataBackend.value = demoData
+    dataBackend.value = {}
     refreshCourseAndLesson(dataBackend, props.lessonNameRoute, props.courseNameRoute)
     // console.error('Error fetching backend data:', error)
   }
