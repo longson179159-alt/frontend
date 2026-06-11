@@ -3,7 +3,8 @@
     <div 
   
     ref = 'boxRef'
-    class="fixed flex flex-col min-w-64 z-10 bg-white resize w-72 aspect-video border rounded-xl shadow-lg overflow-hidden"
+    tabindex="0"
+    class="fixed flex flex-col min-w-64 z-10 bg-white resize w-72 h-52  border rounded-xl shadow-lg overflow-hidden"
     :style="{left : videoPosition.x + 'px', top : videoPosition.y + 'px'}"
     >
       <div class="h-10 shrink-0 px-3 py-1 cursor-move select-none touch-none w-full flex items-center justify-between"
@@ -19,8 +20,14 @@
 
       </div>
 
-      <div class="bg-black   flex-1 ">
+      <div class="bg-black relative flex-1 ">
         <div ref="videoRef" class=" w-full h-full rounded "></div>
+        <button
+          type="button"
+          class="absolute inset-0 z-10"
+          aria-label="Toggle video playback"
+          @click="playAudio"
+        ></button>
       </div>
 
     </div>
@@ -193,6 +200,7 @@ const handleStateChange = (e)=> {
 // PAUSD AND PLAY
 
 const playAudio = () => {
+  boxRef.value?.focus?.()
   
   if (isPlaying.value) {
     player?.pauseVideo?.()
@@ -220,6 +228,7 @@ const keepIsPlayingState = () => {
 }
 
 const back = () => {
+  boxRef.value?.focus?.()
   if (!player) return
 
   const t = player.getCurrentTime()
@@ -230,6 +239,7 @@ const back = () => {
 }
 // this funcion increment currentime by 5 seconds
 const next = () => {
+  boxRef.value?.focus?.()
   if (!player) return
 
   const t = player.getCurrentTime()
@@ -252,6 +262,7 @@ watch(currentTime , (newVal) =>  {
 })
 
 const onSeekStart = () => {
+  boxRef.value?.focus?.()
   isUserSeeking.value = true
 }
 
@@ -263,6 +274,7 @@ const onSeekEnd = () => {
 
 
 const changeAudioSpeed = (newSpeed) => {
+  boxRef.value?.focus?.()
   if (!player) return
 
   audioSpeed.value = newSpeed
@@ -322,8 +334,8 @@ const handleDragging = (e) => {
     const newLeft = startLeft + e.clientX - startX
     const newTop = startTop + e.clientY - startY
 
-    videoPosition.value.x = Math.min(Math.max(0, newLeft) , window.innerWidth - w)
-    videoPosition.value.y = Math.min(Math.max(0, newTop) , window.innerHeight - h)
+    videoPosition.value.x = Math.min(Math.max(-w / 2, newLeft), window.innerWidth - w / 2)
+    videoPosition.value.y = Math.min(Math.max(-h / 2, newTop), window.innerHeight - h / 2)
 }
 
 
@@ -381,42 +393,42 @@ const handlePointerUp = () => {
     window.removeEventListener('pointerup', handlePointerUp)
 }
 
-//  videoId: 'o4w8yAHWDEU',
-onMounted( async () => {
-
-  videoPosition.value.x = Math.max(12, window.innerWidth - 288 - 12)
-  videoPosition.value.y = Math.max(12, window.innerHeight - 162 -12)
-
+onMounted(async () => {
   await loadYoutubeAPI()
- 
+
+  const boxRect = boxRef.value?.getBoundingClientRect()
+
+  const boxWidth = boxRect?.width ?? 288
+  const boxHeight = boxRect?.height ?? 220
+
+  videoPosition.value.x = Math.max(12, window.innerWidth - boxWidth - 12 - 400)
+  videoPosition.value.y = Math.max(12, window.innerHeight - boxHeight - 12)
+
   player = new YT.Player(videoRef.value, {
-    videoId: props.youtubeData.youtube_id?? '', 
-
-    playerVars : {
-      controls: 1,// Hiện thanh điều khiển
-      modestbranding: 1, // Giảm logo YouTube
-      rel:0 // Không gợi ý video liên quan
+    videoId: props.youtubeData.youtube_id ?? '',
+    playerVars: {
+      controls: 0,
+      modestbranding: 1,
+      rel: 0
     },
-
     events: {
-      onReady:  () => {
+      onReady: () => {
+        boxRef.value?.focus?.()
+        player.getIframe()?.setAttribute('tabindex', '-1')
 
         const id = props.youtubeData.youtube_id ?? ''
         const start = props.youtubeData.youtube_start_time ?? 0
 
-        // Force metadata load without autoplay
         player.cueVideoById({ videoId: id, startSeconds: start })
 
-         waitForDuration()
+        waitForDuration()
 
-        
         isPlayRready.value = duration.value > 0
 
-        const startTime = props.youtubeData.youtube_start_time?? 0
+        const startTime = props.youtubeData.youtube_start_time ?? 0
         player.seekTo(startTime, true)
         player.pauseVideo()
       },
-
       onStateChange: handleStateChange
     }
   })
