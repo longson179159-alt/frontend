@@ -183,7 +183,7 @@ const getDataBackend = async () => {
     const response = await fetch(`/api/Review/getCoursesAndLessons`)
     const data = await response.json()
     dataBackend.value = data ?? {}
-    console.log('Fetched backend data:', dataBackend.value)
+    // console.log('Fetched backend data:', dataBackend.value)
     refreshCourseAndLesson(dataBackend, props.lessonNameRoute, props.courseNameRoute)
   } catch (error) {
     dataBackend.value = {}
@@ -191,7 +191,7 @@ const getDataBackend = async () => {
     // console.error('Error fetching backend data:', error)
   }
 
-  console.log('Current backend data:', dataBackend.value)
+  // console.log('Current backend data:', dataBackend.value)
 }
 
 const listCourseNames = computed(() => [
@@ -268,8 +268,7 @@ const handleClickOutside = (event) => {
 }
 const emit = defineEmits(['selectionChanged','ready'])
 watch([currentCourseName, currentLessonName, courseIdx, lessonIdx], ([newCourse, newLesson]) => {
-  console.log('Selected Course:', newCourse)
-  console.log('Selected Lesson:', newLesson)
+  
   emit('selectionChanged', { courseName: currentCourseName.value, lessonName: currentLessonName.value, courseIdx: courseIdx.value, lessonIdx: lessonIdx.value })
 })
 

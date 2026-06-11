@@ -196,28 +196,6 @@ watch(
 
 
 
-// watch(() => props.sidebarData, async (newVal, oldVal) => {
-//     if (
-//         oldVal.phrase !== newVal.phrase &&
-//         oldVal.status === 6 &&
-//         oldVal.phrase.split(' ').length === 1
-//     ) {
-//         const translated = await onTranslate(oldVal.phrase)
-
-//         emit('updatePrevious', {
-//             phrase: oldVal.phrase,
-//             your_meanings: [translated] || [],
-//             status: 1
-//         })
-//     }
-  
-  
-// }, {deep : true})
-
-
-
-
-
 watch(() => currentPhraseData.value.status, async (newVal, oldVal) => {
     if (oldVal !== 6 && oldVal !==0) return
     if ( newVal === 5) return

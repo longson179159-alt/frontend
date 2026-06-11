@@ -71,12 +71,32 @@
             </div>
     
             <div v-if="isLoading === false && listVisibleData.length > 0" v-for="(item, index) in listVisibleData"  
-            :key="item.word" 
+            :key="`${index}-${item.word}`"
             class="border border-gray-600 rounded-lg  p-5 grid grid-cols-1 md:grid-cols-[160px_56px_1fr_300px]  gap-3 items-center ">
-                <span class="font-medium text-lg w-40 text-center mx-auto md:mx-0 md:text-left">{{ item.word }}</span>
+                <div class="relative w-40 mx-auto md:mx-0">
+                    <button
+                        @click="showPopup( item)"
+                        :id="`${index}-${item.word}`"
+                        class="word-display font-medium text-lg w-full text-center md:text-left hover:underline cursor-pointer"
+                    >
+                        {{ item.word }}
+                    </button>
+
+                    <div
+                        v-if="openPopup && dataPopup.phrase === item.word"
+                        class="absolute left-full top-0 -translate-y-1/2 ml-2 z-20"
+                    >
+                        <PopUp
+                            ref="popupRef"
+                            :word-data="dataPopup"
+                            @updateParentData="handleUpdateParent"
+                            @closePopup="openPopup = $event"
+                        />
+                    </div>
+                </div>
                 
                 <button @click="speakEnglish(item.word)" class="justify-self-center"><img src='/icons/reader/volume.svg' alt='volume'/></button>
-                <button @click="showWordMeaning(index)"  :class="[item.showMeaning? '' : 'italic underline' , 'text-blue-600 mb-3 ']">{{ item.showMeaning? item.meaning : 'Show meaning'  }}</button>
+                <button @click="showWordMeaning(index)"  :class="[item.showMeaning? '' : 'italic underline' , 'text-blue-600 mb-3 ']">{{ !item.showMeaning?   'Show meaning' : item.meaning ? item.meaning : 'no saved meaning'  }}</button>
             
                 <div class="flex  gap-3 w-full md:w-auto justify-between">
                     <button @click="changeStatus(index, 0)" class="h-10 w-10 rounded-full border border-gray-300 hover:bg-red-100 flex items-center justify-center" :class="[item.status === 0 && 'bg-red-100']"><img src="/icons/reader/trash.svg" alt="trash"/></button>
@@ -97,7 +117,8 @@
                         <span class="bg-[#0B1B32] h-8 hover:bg-black text-white px-3 py-1 rounded-lg">{{ currentPage }}/{{ totalPages }}</span>
                     <button type="button" @click="nextPage" @keydown.enter.prevent @keyup.enter.prevent :disabled="hasNextPage === false" class='p-1 rounded-md hover:bg-gray-200'><font-awesome icon='chevron-right' class="text-blue-500"/></button>
                 </div>
-            </div>
+        </div>
+
     </div>
 </template>
 
@@ -106,9 +127,12 @@
 import {ref,watch, onMounted, computed, onBeforeUnmount} from 'vue'
 import {useRoute} from 'vue-router'
 import CourseAndLesson from '~/components/ReviewPage/CourseAndLesson.vue'
-
+import PopUp from '~/components/ReviewPage/Popup.vue'
 const {speakEnglish} = useGooleTranslate();
 const route  = useRoute()
+const openPopup = ref(false)
+const dataPopup = ref({})
+const popupRef = ref(null)
 
 const lessonName = ref('')
 const courseName = ref('')
@@ -159,6 +183,31 @@ const showWordMeaning = (index) => {
     listVisibleData.value[index].showMeaning = !listVisibleData.value[index].showMeaning
 }
 
+const handleUpdateParent = (updatedData) => {
+    // find the index of the updated word in listVisibleData and update it
+    const index = listVisibleData.value.findIndex(item => item.word === updatedData.phrase)
+    if (index !== -1) {
+        if (updatedData.status === 0) {
+        listVisibleData.value.splice(index, 1)
+        } else {
+        listVisibleData.value[index].tags = updatedData.tags
+        listVisibleData.value[index].yourMeanings = updatedData.your_meanings
+        listVisibleData.value[index].meaning = updatedData.your_meanings.join('; ')
+        listVisibleData.value[index].status = updatedData.status
+        }
+    }
+}
+// place this popup next to word-display button
+const showPopup = ( item) => {
+ 
+
+    dataPopup.value.phrase = item.word
+    dataPopup.value.tags = [...(item.tags ?? [])]
+    dataPopup.value.yourMeanings = [...(item.yourMeanings ?? [])]
+    dataPopup.value.status = item.status
+ 
+    openPopup.value = !openPopup.value
+}
 
 const showUpdateButton = ref(false)
 const selectedStatuses = ref([1,2,3]) // default show all words with status 1-3 (exclude 0 - deleted)
@@ -251,8 +300,7 @@ const changeStatus = async (index, status) => {
         changes :['status']
     }
 
-    syncPhrase(playLoad)
-    
+   
 
     listVisibleData.value[index].status = status
     if (status === 0) {
@@ -275,6 +323,11 @@ watch([selectSortOption, selectedStatuses, lessonName, courseName, toggleType], 
 const handleClickOutside = (event) => {
     if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
         openPageSizeDropdown.value = false
+    }
+
+    
+    if (popupRef.value && !popupRef.value.$el.contains(event.target) && !event.target.closest('.word-display')) {
+        openPopup.value = false
     }
 }
 

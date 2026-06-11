@@ -62,37 +62,39 @@
           </div>
 
           <!-- Body: saved meanings and draft input -->
-          <div class="flex max-h-[380px] flex-1 flex-col gap-1 overflow-auto border-y border-y-gray-300 p-5">
+          <div class="flex  flex-1 flex-col gap-1 overflow-auto border-y border-y-gray-300 p-5">
             <span class="font-medium">Saved Meaning</span>
 
-            <div
-              v-for="(meaning, index) in yourMeanings"
-              :key="`saved-${index}`"
-              class="group relative mt-2"
-            >
-              <textarea
-                v-model="yourMeanings[index]"
-                rows="2"
-                class="w-full rounded-lg bg-gray-100 px-2 pt-2 text-start leading-none focus:outline-none focus:ring-0"
-                placeholder="Enter meaning"
-                @input="autoResize"
-                @keydown.enter.prevent="($event.target.blur())"
-              ></textarea>
-              <div class="absolute right-3 top-1/2 hidden -translate-y-1/2 gap-1 group-hover:flex">
-                <button
-                  type="button"
-                  class="flex h-5 w-5 items-center justify-center rounded-full bg-white"
-                  @click="removeMeaning(index)"
-                >
-                  <font-awesome icon="times" class="h-3 w-3" />
-                </button>
-                <button
-                  type="button"
-                  class="flex h-5 w-5 items-center justify-center rounded-full bg-white"
-                  @click="openAddMeaning = true"
-                >
-                  <font-awesome icon="plus" class="h-3 w-3" />
-                </button>
+            <div class="max-h-44 overflow-auto">
+              <div
+                v-for="(meaning, index) in yourMeanings"
+                :key="`saved-${index}`"
+                class="group relative mt-2"
+              >
+                <textarea
+                  v-model="yourMeanings[index]"
+                  rows="2"
+                  class="w-full rounded-lg bg-gray-100 px-2 pt-2 text-start leading-none focus:outline-none focus:ring-0"
+                  placeholder="Enter meaning"
+                  @input="autoResize"
+                  @keydown.enter.prevent="($event.target.blur())"
+                ></textarea>
+                <div class="absolute right-3 top-1/2 hidden -translate-y-1/2 gap-1 group-hover:flex">
+                  <button
+                    type="button"
+                    class="flex h-5 w-5 items-center justify-center rounded-full bg-white"
+                    @click="removeMeaning(index)"
+                  >
+                    <font-awesome icon="times" class="h-3 w-3" />
+                  </button>
+                  <button
+                    type="button"
+                    class="flex h-5 w-5 items-center justify-center rounded-full bg-white"
+                    @click="openAddMeaning = true"
+                  >
+                    <font-awesome icon="plus" class="h-3 w-3" />
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -106,12 +108,12 @@
               @keydown.enter.prevent="addMeaning"
             ></textarea>
 
-            <div v-if="googleTranslateMeaning" class="mb-1 mt-5 flex items-center justify-between">
+            <div  class="mb-1  mt-5 flex items-center justify-between">
               <span class="block text-center font-medium">Popular Meanings</span>
             </div>
 
             <button
-              v-if="googleTranslateMeaning"
+              
               type="button"
               class="mt-1 flex items-center justify-between rounded-md bg-gray-100 px-3 py-2 text-start text-blue-600 hover:bg-gray-200"
               @click="useGoogleTranslateMeaning"
@@ -148,6 +150,7 @@
           <!-- Action buttons -->
           <div class="flex justify-end gap-3 px-5 pb-5 pt-2">
             <button
+              @click="emit('closePopup', false)"
               type="button"
               class="rounded-lg w-20 border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100"
             >
@@ -168,8 +171,8 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
-import debounce from 'lodash/debounce'
+import { ref, watch, onMounted,computed } from 'vue'
+
 
 const { getCsrfToken } = useCsrf()
 const props = defineProps({
@@ -177,23 +180,32 @@ const props = defineProps({
   
     phrase: 'resilient',
     tags: ['adjective', 'academic'],
-    yourMeanings: ['strong enough to recover quickly'],
+    yourMeanings: [
+      'strong enough to recover quickly',
+      'able to bounce back from difficulties',
+      'quick to regain strength after stress or illness',
+   
+    ],
     status: 3,
   })},
 })
 
-const { onTranslate, speakEnglish } = useGooleTranslate()
+const emit = defineEmits(['closePopup'])
 
-const frequency = ref(1)
+const { onTranslate, speakEnglish } = useGooleTranslate()
+// frequency is hardcoded for now
+
+const frequency = ref(1) 
 const phrase = ref(props.wordDATA.phrase)
 const tags = ref([...props.wordDATA.tags])
-const yourMeanings = ref(props.wordDATA.yourMeanings)
+const yourMeanings = ref([...(props.wordDATA.yourMeanings ?? [])])
 const currentStatus = ref(props.wordDATA.status)
 const newTag = ref('')
 const openAddTag = ref(false)
 const openAddMeaning = ref(false)
 const newMeaning = ref('')
 const googleTranslateMeaning = ref('')
+// const isWordDataChanged = ref(false)
 
 const statusButtons = [
   { value: 0, icon: 'trash', hoverClass: 'hover:bg-red-100', activeClass: 'bg-red-100' },
@@ -255,25 +267,54 @@ const autoResize = (event) => {
 }
 
 
-
-const saveWord = async () => {
+const updateWordData = async (playLoad) => {
   await $fetch('/api/update_word/', {
     method: 'PUT',
-    body: {
-      phrase: phrase.value,
-      tags: tags.value,
-      your_meanings: yourMeanings.value,
-      status: currentStatus.value,
-      changes: ['tags', 'your_meanings', 'status'],
-    },
+    body: playLoad,
     credentials: 'include',
     headers: {
       'X-CSRFToken': getCsrfToken(),
     },
   })
 }
+     
+
+const listChanges = computed(() => {
+    let changes = []
+    if (JSON.stringify(tags.value) !== JSON.stringify(props.wordDATA.tags)) changes.push('tags')
+    if (JSON.stringify(yourMeanings.value) !== JSON.stringify(props.wordDATA.yourMeanings)) changes.push('your_meanings')
+    if (currentStatus.value !== props.wordDATA.status) changes.push('status')
+    return changes
+})
+
+const saveWord = async () => {
+  if (listChanges.value.length === 0) {
+    emit('closePopup', false)
+    console.log('No changes detected, skipping save.')
+    return
+  }
+
+  let playLoad = {
+    phrase: phrase.value,
+    tags: tags.value,
+    your_meanings: yourMeanings.value
+      .map(item => item.trim())
+      .filter(Boolean),
+    status: currentStatus.value,
+    changes: listChanges.value,
+  }
+
+  try {
+    await updateWordData(playLoad)
+    console.log('Word data updated successfully.')
+    emit('closePopup', false)
+  } catch (error) {
+    console.error('Failed to update word data:', error)
+    alert('Failed to save changes. Please try again.')
+  }
+}
 
 onMounted( async() => {
-  googleTranslateMeaning.value = await onTranslate(newPhrase)
+  googleTranslateMeaning.value = await onTranslate(props.wordDATA.phrase)
 })
 </script>
