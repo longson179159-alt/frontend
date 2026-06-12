@@ -35,7 +35,7 @@ const buildSentence = (listPhrase, flatSentenceData) => {
 }
 
 
-const getSentenceData = (sentenceData, phraseArr, phraseStatusDict) => {
+const getSentenceData = (sentenceData, phrasesByFirstWord) => {
     const wordInSentenceArr = sentenceData.map(item => item["cleaned"])
     
     const paraIndex = sentenceData?.[0]?.p_idx ?? -1;
@@ -43,28 +43,36 @@ const getSentenceData = (sentenceData, phraseArr, phraseStatusDict) => {
 
     const listAllPhrases = []
 
-    for (const phrase of phraseArr) {
-        if (sentenceData.length < phrase.length) continue;
+    for (let i = 0; i < sentenceData.length; i++) {
+        const startWord = wordInSentenceArr[i]
+        const candidatePhrases = phrasesByFirstWord[startWord] ?? []
 
-        for (let i =0; i < sentenceData.length ; i ++) {
-            if (wordInSentenceArr.slice(i, i + phrase.length).join(" ") === phrase.join(" ")) {
-                const chunkData = JSON.parse(JSON.stringify(sentenceData.slice(i, i + phrase.length)))
+        for (const candidate of candidatePhrases) {
+            const phraseWords = candidate.words
+            const phraseLen = phraseWords.length
+
+            if (i + phraseLen > wordInSentenceArr.length) continue
+
+            let isMatch = true
+            for (let j = 0; j < phraseLen; j++) {
+                if (wordInSentenceArr[i + j] !== phraseWords[j]) {
+                    isMatch = false
+                    break
+                }
+            }
+
+            if (isMatch) {
+                const chunkData = sentenceData.slice(i, i + phraseLen).map(word => ({ ...word }))
                 listAllPhrases.push({
                     "phrase" : chunkData,
-                    "status" : phraseStatusDict[phrase.join(" ")],
+                    "status" : candidate.status,
                     "p_idx": paraIndex,
                     "s_idx": sentenceIndex,
                     "visible": true,
                     "type": "phrase"
                 })
-                //  console.log("phrase", phrase.join(" "), "status", phraseStatusDict[phrase.join(" ")])
             }
-
-           
         }
-
-
-
     }
 
     // console.log("list all phrase in this sentence", listAllPhrases)
@@ -86,17 +94,22 @@ const getSentenceData = (sentenceData, phraseArr, phraseStatusDict) => {
 
 export function useCreateLesson(core_data, statusDict, indexParaStart, indexParaEnd) {
 
-// list all current phrase
-const phraseArr = Object.keys(statusDict.value).map(item => item.split(" ")).filter(item => item.length > 1)
+const phrasesByFirstWord = {}
 
+for (const phraseText of Object.keys(statusDict.value)) {
+    const words = phraseText.split(" ")
+    if (words.length <= 1) continue
 
+    const firstWord = words[0]
+    if (!phrasesByFirstWord[firstWord]) {
+        phrasesByFirstWord[firstWord] = []
+    }
 
-const phraseStatusDict = {}
-
-for (const item of phraseArr) {
-    const phraseText = item.join(" ")
-    phraseStatusDict[phraseText] =
-        statusDict.value[phraseText] ?? -1
+    phrasesByFirstWord[firstWord].push({
+        words,
+        text: phraseText,
+        status: statusDict.value[phraseText] ?? -1,
+    })
 }
 
 
@@ -105,17 +118,17 @@ const lessondataChunk = core_data.slice(indexParaStart, indexParaEnd).map(
     paraArr => {
         const paraArrBeforeflatten = paraArr.map(
             sentenceArr => {
-                const updatedSentenceArr = sentenceArr.map(
-                    wordObject => ({
-                        ...wordObject,
-                        status: statusDict.value[wordObject.cleaned] ?? -1 
-                    })
-                )
-                return getSentenceData(updatedSentenceArr, phraseArr, phraseStatusDict)
-            }
-        )
+                    const updatedSentenceArr = sentenceArr.map(
+                        wordObject => ({
+                            ...wordObject,
+                            status: statusDict.value[wordObject.cleaned] ?? -1 
+                        })
+                    )
+                    return getSentenceData(updatedSentenceArr, phrasesByFirstWord)
+                }
+            )
 
-        return paraArrBeforeflatten.flat()
+            return paraArrBeforeflatten.flat()
     }
 )
 
