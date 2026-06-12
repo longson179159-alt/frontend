@@ -42,10 +42,7 @@
         <div v-show="validPhrase" class="p-5 border-y border-y-gray-300 flex flex-col gap-1 flex-1 min-h-0 overflow-auto custom-scrollbar">
             <span class="font-medium">Saved Meaning</span>
             <div v-for="(meaning, i) in listMeanings" :key="i" class="relative group mt-2">
-                <textarea placeholder="Enter meaning" v-model="listMeanings[i]" @input="(e) => {
-                    e.target.style.height = 'auto'
-                    e.target.style.height = e.target.scrollHeight + 'px'
-                }" @keydown.enter.prevent="($event.target.blur())"
+                <textarea placeholder="Enter meaning" :value="meaning" @input="handleMeaningInput($event, i)" @keydown.enter.prevent="($event.target.blur())"
                     class=" inline-block w-full leading-none text-start pt-2 px-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-0 " />
                 <div class="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1 hidden group-hover:flex">
                     <button @click="removeMeaning(meaning)"
@@ -88,18 +85,18 @@
         </div>
 
         <div v-show="validPhrase" class="px-4 py-2 flex justify-between">
-            <button @click="currentPhraseData.status = 0 ; currentPhraseData.tags = []; currentPhraseData.your_meanings = []"
+            <button @click="clearWord()"
                 :class="['h-10 w-10 rounded-full border border-gray-300 hover:bg-red-100 flex items-center justify-center', wordStatus === 0 && 'bg-red-100']"><img
                     src="/icons/reader/trash.svg" alt="" /></button>
-            <button @click="  currentPhraseData.status = 1"
+            <button @click="setStatus(1)"
                 :class="['h-10 w-10 rounded-full border border-gray-300 hover:bg-yellow-300 flex items-center justify-center', wordStatus === 1 && 'bg-yellow-300', wordStatus === 6 && 'bg-blue-200']">1</button>
-            <button @click="currentPhraseData.status = 2"
+            <button @click="setStatus(2)"
                 :class="['h-10 w-10 rounded-full border border-gray-300 hover:bg-yellow-200 flex items-center justify-center', wordStatus === 2 && 'bg-yellow-200']">2</button>
-            <button @click="currentPhraseData.status = 3"
+            <button @click="setStatus(3)"
                 :class="['h-10 w-10 rounded-full border border-gray-300 hover:bg-yellow-100 flex items-center justify-center', wordStatus === 3 && 'bg-yellow-100']">3</button>
-            <button @click="currentPhraseData.status = 4"
+            <button @click="setStatus(4)"
                 :class="['h-10 w-10 rounded-full border border-gray-300 hover:bg-gray-200 flex items-center justify-center', wordStatus === 4 && 'bg-gray-200']">4</button>
-            <button @click="currentPhraseData.status = 5"
+            <button @click="setStatus(5)"
                 :class="['h-10 w-10 rounded-full border border-green-200 hover:bg-green-100 flex items-center justify-center', wordStatus === 5 && 'bg-green-200']"><font-awesome
                     icon="check" class="text-green-500" /></button>
         </div>
@@ -118,337 +115,150 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed, onBeforeUnmount } from 'vue'
-// const config = useRuntimeConfig()
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
+import { useSidebarKeyboard } from '~/composables/reading/useSidebarKeyboard'
+import { useSidebarPersistence } from '~/composables/reading/useSidebarPersistence'
+import { useSidebarSuggestions } from '~/composables/reading/useSidebarSuggestions'
+import { useSidebarWordState } from '~/composables/reading/useSidebarWordState'
 
 const props = defineProps({
-    sidebarData: {type:Object},
-
-    validPhrase: {type: Boolean, default: false}
+    sidebarData: { type: Object },
+    validPhrase: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['update:sidebarData'])
 
 const currentPhraseData = computed({
-  get: () => props.sidebarData,
-  set: (newVal) => {
-    // if (newVal.phrase.split(" ").length > 1 && newVal.status ===0) return
-    emit('update:sidebarData', newVal)
-  }
+    get: () => props.sidebarData,
+    set: (newVal) => {
+        emit('update:sidebarData', newVal)
+    }
 })
 
-
-import debounce from "lodash/debounce";
-const { getCsrfToken } = useCsrf()
-
-const syncPhrase = debounce(async(playLoad) => {
-    try {
-        await $fetch(`/api/update_word/`, {
-            method: "PUT",
-            body: playLoad,
-            credentials: "include",
-            headers: {
-                'X-CSRFToken': getCsrfToken()
-            }
-        })
-    }
-
-    catch(error) {
-        console.log('error with update currentphrase data ', error)
-    }
-}, 500)
-
-
-watch(
-  () => {
-    const v = currentPhraseData.value
-    return {
-      phrase: v.phrase,
-      status: v.status,
-      tags: [...(v.tags || [])],
-      your_meanings: [...(v.your_meanings || [])],
-      global_tags: [...(v.global_tags || [])],
-      global_meanings: [...(v.global_meanings || [])],
-    }
-  },
-  (newVal, oldVal) => {
-
-    if (newVal.phrase !== oldVal.phrase) {
-        syncPhrase.flush()
-        return
-    }
-    if (newVal.phrase.split(' ').length > 1 && newVal.status === 6) return
-
-    const isEqualArray = (a = [], b = []) =>
-      a.length === b.length && a.every((v, i) => v === b[i])
-
-    const changes = []
-
-    if (!isEqualArray(newVal.tags, oldVal.tags)) changes.push('tags')
-    if (!isEqualArray(newVal.your_meanings, oldVal.your_meanings)) changes.push('your_meanings')
-    if (newVal.status !== oldVal.status) changes.push('status')
-
-    if (changes.length === 0) return
- 
-    syncPhrase({
-      ...newVal,
-      changes
-    })
-  },
-  { deep: false }
-)
-
-
-
-watch(() => currentPhraseData.value.status, async (newVal, oldVal) => {
-    if (oldVal !== 6 && oldVal !==0) return
-    if ( newVal === 5) return
-    if (currentPhraseData.value.your_meanings.length !== 0) return
-   
-    const phrase = currentPhraseData.value.phrase
-        const translated = await onTranslate(phrase)
-        if (!translated) return
-        if (currentPhraseData.value.phrase !== phrase) return
-        if (!currentPhraseData.value.your_meanings.includes(translated)) {
-            currentPhraseData.value.your_meanings.push(translated)
-    }
-
-})
-
-
-const wordStatus = computed(() => currentPhraseData.value.status)
-const frequent = 1
 const POS_MAP = {
-  n: 'noun',
-  v: 'verb',
-  a: 'adjective',
-  s: 'adjective', // adjective satellite
-  r: 'adverb'
+    n: 'noun',
+    v: 'verb',
+    a: 'adjective',
+    s: 'adjective',
+    r: 'adverb'
 }
 
+const frequent = 1
 const inputTag = ref(null)
-const listGlobalTags = computed(() => currentPhraseData.value.global_tags.map(p => POS_MAP[p]))
-const listTags = computed(() => Array.from(
-    new Set([
-        ...listGlobalTags.value,
-        ...currentPhraseData.value.tags
-    ])
-))
 const newTag = ref('')
 const openAddtag = ref(false)
-
-const translateAi = ref('')
 const openAddMeaning = ref(false)
-const listMeanings = computed(() => currentPhraseData.value.your_meanings)
 const newMeaning = ref('')
 
-const playAudio = ref(true)
-const focusTranslationIndex = ref(0)
-const { onTranslate, speakEnglish, openTranslatePopup} = useGooleTranslate()
-watch(
-    () => currentPhraseData.value?.phrase,
-    async (phrase) => {
-        focusTranslationIndex.value = 0
-        translateAi.value = ''
-        const currentPhrase = phrase
-        if (!currentPhrase) return
-        const translated = await onTranslate(currentPhrase)
-        if (currentPhraseData.value?.phrase !== currentPhrase) return
+const { getCsrfToken } = useCsrf()
+const { onTranslate, speakEnglish, openTranslatePopup } = useGooleTranslate()
 
-        translateAi.value = translated
-    },
-    { immediate: true }
-)
+const {
+    addTag: appendTag,
+    clearTag,
+    clearWord,
+    listGlobalTags,
+    listMeanings,
+    listTags,
+    removeMeaning,
+    resetUserData,
+    saveMeaning,
+    setStatus,
+    updateMeaningAt,
+    wordStatus,
+} = useSidebarWordState(currentPhraseData, POS_MAP)
 
+const {
+    focusTranslationIndex,
+    moveFocus,
+    refreshCurrentPhraseTranslation,
+    selectTranslationAt,
+    translateAi,
+    usersTranslation,
+} = useSidebarSuggestions(currentPhraseData, onTranslate, saveMeaning)
 
+const { flushPendingSync } = useSidebarPersistence(currentPhraseData, getCsrfToken)
 
-const usersTranslation = computed(() => {
-    if (!translateAi.value )
-        return currentPhraseData.value.global_meanings
-    else {
-        const globalFilterTranslatleAi = currentPhraseData.value.global_meanings.filter(item => item != translateAi.value)
-        return [
-            translateAi.value,
-            ...globalFilterTranslatleAi
-        ]
-    }
+const { onKeydown } = useSidebarKeyboard({
+    currentPhraseData,
+    focusTranslationIndex,
+    moveFocus,
+    refreshCurrentPhraseTranslation,
+    resetUserData,
+    selectTranslationAt,
+    speakEnglish,
 })
 
+const autoResizeTextarea = (event) => {
+    const target = event.target
+    if (!(target instanceof HTMLTextAreaElement)) return
 
-const clearTag = (tag) => {
-  
-    currentPhraseData.value.tags = currentPhraseData.value.tags.filter(item => item !== tag)
+    target.style.height = 'auto'
+    target.style.height = `${target.scrollHeight}px`
+}
+
+const handleMeaningInput = (event, index) => {
+    autoResizeTextarea(event)
+    updateMeaningAt(index, event.target.value)
 }
 
 const addTag = () => {
-    
     const textNewTag = newTag.value.trim()
+
     if (!textNewTag) {
+        newTag.value = ''
         openAddtag.value = false
         return
     }
 
-    if (currentPhraseData.value.tags.includes(textNewTag)) {
+    if (!appendTag(textNewTag)) return
 
-        return
-    }
-
-    currentPhraseData.value.tags.push(textNewTag)
     newTag.value = ''
     openAddtag.value = false
-
-}
-
-const removeMeaning = (meaning) => {
-    const arr = currentPhraseData.value.your_meanings
-    currentPhraseData.value.your_meanings = arr.filter(w => w !== meaning)
-   
 }
 
 const addMeaning = () => {
     const textNewMeaning = newMeaning.value.trim()
     if (!textNewMeaning) return
 
-    if (!currentPhraseData.value.your_meanings.includes(textNewMeaning)) {
-        currentPhraseData.value.your_meanings.push(textNewMeaning)
-        
-        if (currentPhraseData.value.status === 6) {currentPhraseData.value.status =1}
-    }
+    saveMeaning(textNewMeaning, { prepend: false, promote: true })
     newMeaning.value = ''
     openAddMeaning.value = false
 }
 
-const selectTranslations = (idx) => {
-
-    const selected = usersTranslation.value[idx]
-    if (!selected) return
-  
-    if (!currentPhraseData.value.your_meanings.includes(selected)) {
-        currentPhraseData.value.your_meanings.unshift(selected)
-        if (currentPhraseData.value.status === 6) {currentPhraseData.value.status =1}
-        }
-
-    if (!translateAi.value) {
-        
-        currentPhraseData.value.global_meanings.splice(idx, 1)
-    }
-    else {  
-        const arrGolabMeaning = currentPhraseData.value.global_meanings
-        if (arrGolabMeaning.includes(selected)) {
-            currentPhraseData.value.global_meanings = arrGolabMeaning.filter(item => item !== selected)
-        }
-        
-        if (translateAi.value === selected) {
-            translateAi.value = ''
-        }
-    }
-
+const selectTranslations = (index) => {
+    selectTranslationAt(index)
 }
 
-
-const onKeydown = async (e) => {
-    const listkeys = ['ArrowDown', 'ArrowUp','ArrowRight', 'ArrowLeft', 'Enter', 's', "x"]
-    if (!listkeys.includes(e.key)) return
-
-    const tag = e.target?.tagName
-    if (tag === 'INPUT' || tag === 'TEXTAREA') return
-  
-    if (e.key === 'Enter') {
-        
-        selectTranslations(focusTranslationIndex.value)
-        return
-    }
-
-    const findNewIndex = (idx) => {
-        const total = usersTranslation.value.length
-        if (total === 0) return 0
-        if (idx < 0) return total - 1
-        if (idx >= total) return 0
-        return idx
-    }
-    
-    if (e.key === 'ArrowDown') {
-        focusTranslationIndex.value = findNewIndex(focusTranslationIndex.value + 1)
-    }
-
-
-    if (e.key === 'ArrowUp') {
-        focusTranslationIndex.value = findNewIndex(focusTranslationIndex.value - 1)
-    }
-
-    if (e.key === 'ArrowLeft' && !(e.key === 'ArrowLeft' && e.shiftKey)) {
-        setTimeout(() => {
-            speakEnglish(currentPhraseData.value.phrase)
-        }, 20) 
-        
-    }
-
-    if (e.key === 'ArrowRight' && !(e.key === 'ArrowRight' && e.shiftKey)) {
-        
-        setTimeout(() => {
-            speakEnglish(currentPhraseData.value.phrase)
-        }, 20)
- 
-    }
-
-    if (e.key === 's') {
-        speakEnglish(currentPhraseData.value.phrase)
-    }
-
-    if (e.key === 'x') {
-        currentPhraseData.value.tags = []
-        currentPhraseData.value.your_meanings = []
-      
-        const phrase = currentPhraseData.value.phrase
-        const translated = await onTranslate(phrase)
-        if (currentPhraseData.value.phrase !== phrase) return
-
-        translateAi.value = translated
-        }
-
-}
-
-
-
-const handleClickOutside = (e) => {
-    if (inputTag.value && !inputTag.value.contains(e.target)) {
+const handleClickOutside = (event) => {
+    if (inputTag.value && !inputTag.value.contains(event.target)) {
         addTag()
-       
     }
-}   
-
-const onPointerDown = () => {
-    // playAudio.value = false; console.log('playAudio.value', playAudio.value)
 }
 
-const onPointerUp = (e) => {
-    playAudio.value = true
-    const target = e.target
+const onPointerUp = (event) => {
+    const target = event.target
     if (!(target instanceof HTMLElement)) return
-    const WordEl = target.closest('.word-item')
-    const PhraseEl = target.closest('.phrase-item')
-    if (!WordEl && !PhraseEl) return
-    
-    // console.log('playAudio after', playAudio.value)
+
+    const wordElement = target.closest('.word-item')
+    const phraseElement = target.closest('.phrase-item')
+    if (!wordElement && !phraseElement) return
+
     speakEnglish(currentPhraseData.value.phrase)
 }
 
-
 onMounted(() => {
-    window.addEventListener('keydown', onKeydown),
+    window.addEventListener('keydown', onKeydown)
     window.addEventListener('click', handleClickOutside)
-    window.addEventListener('pointerdown', onPointerDown)
     window.addEventListener('pointerup', onPointerUp)
 })
 
-
 onBeforeUnmount(() => {
-    syncPhrase.flush()
+    flushPendingSync()
 
-    window.removeEventListener('keydown', onKeydown);
-    window.removeEventListener("click", handleClickOutside)
-    window.removeEventListener('pointerdown',  onPointerDown )
+    window.removeEventListener('keydown', onKeydown)
+    window.removeEventListener('click', handleClickOutside)
     window.removeEventListener('pointerup', onPointerUp)
 })
 </script>
