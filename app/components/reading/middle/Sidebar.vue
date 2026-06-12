@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <span v-show="!props.validPhrase">
+            <span v-show="!props.validPhrase" class="italic text-red-600">
                 Để tạo một phrase LangG, vui lòng chọn tối đa 8 từ trong cùng một câu.
             </span>
         </div>
@@ -106,9 +106,12 @@
 
         <div  v-show='!validPhrase' class="px-5 py-10 flex flex-col  border-t border-t-gray-300 ">
             <span class="inline-block  mb-3 font-medium text-lg">Dictionaries</span>
-            <button @click="openTranslatePopup(currentPhraseData.phrase)" class="px-3 py-2  bg-gray-100 hover:bg-gray-300 inline-block font-medium rounded-md shadow-md">
+            <button @click="openTranslatePopup(currentPhraseData.phrase)" class="px-3 py-2 bg-gray-100 hover:bg-gray-300 inline-block font-medium rounded-md shadow-md">
                 Google Translate
             </button>
+
+            <span class="inline-block mt-10 italic font-medium text-lg text-gray-700">{{ translateAi }}</span>
+   
         </div>
     </div>
 
@@ -247,9 +250,12 @@ watch(
     () => currentPhraseData.value?.phrase,
     async (phrase) => {
         focusTranslationIndex.value = 0
+        translateAi.value = ''
         const currentPhrase = phrase
+        if (!currentPhrase) return
         const translated = await onTranslate(currentPhrase)
         if (currentPhraseData.value?.phrase !== currentPhrase) return
+
         translateAi.value = translated
     },
     { immediate: true }
