@@ -171,7 +171,10 @@ watch(
   },
   (newVal, oldVal) => {
 
-    if (newVal.phrase !== oldVal.phrase) return
+    if (newVal.phrase !== oldVal.phrase) {
+        syncPhrase.flush()
+        return
+    }
     if (newVal.phrase.split(' ').length > 1 && newVal.status === 6) return
 
     const isEqualArray = (a = [], b = []) =>
@@ -184,8 +187,7 @@ watch(
     if (newVal.status !== oldVal.status) changes.push('status')
 
     if (changes.length === 0) return
-    // console.log("changes", changes) 
-    // console.log("newVal", newVal)
+ 
     syncPhrase({
       ...newVal,
       changes
@@ -200,8 +202,14 @@ watch(() => currentPhraseData.value.status, async (newVal, oldVal) => {
     if (oldVal !== 6 && oldVal !==0) return
     if ( newVal === 5) return
     if (currentPhraseData.value.your_meanings.length !== 0) return
-    const translated = await onTranslate(currentPhraseData.value.phrase)
-    currentPhraseData.value.your_meanings.push(translated)  
+   
+    const phrase = currentPhraseData.value.phrase
+        const translated = await onTranslate(phrase)
+        if (!translated) return
+        if (currentPhraseData.value.phrase !== phrase) return
+        if (!currentPhraseData.value.your_meanings.includes(translated)) {
+            currentPhraseData.value.your_meanings.push(translated)
+    }
 
 })
 
@@ -233,16 +241,18 @@ const listMeanings = computed(() => currentPhraseData.value.your_meanings)
 const newMeaning = ref('')
 
 const playAudio = ref(true)
-
+const focusTranslationIndex = ref(0)
 const { onTranslate, speakEnglish, openTranslatePopup} = useGooleTranslate()
-watch(() => currentPhraseData.value?.phrase,
+watch(
+    () => currentPhraseData.value?.phrase,
     async (phrase) => {
-
-        const translated = await onTranslate(phrase)
+        focusTranslationIndex.value = 0
+        const currentPhrase = phrase
+        const translated = await onTranslate(currentPhrase)
+        if (currentPhraseData.value?.phrase !== currentPhrase) return
         translateAi.value = translated
-
-    }, 
-    {immediate: true}
+    },
+    { immediate: true }
 )
 
 
@@ -258,7 +268,7 @@ const usersTranslation = computed(() => {
         ]
     }
 })
-const focusTranslationIndex = ref(0)
+
 
 const clearTag = (tag) => {
   
@@ -306,6 +316,7 @@ const addMeaning = () => {
 const selectTranslations = (idx) => {
 
     const selected = usersTranslation.value[idx]
+    if (!selected) return
   
     if (!currentPhraseData.value.your_meanings.includes(selected)) {
         currentPhraseData.value.your_meanings.unshift(selected)
@@ -344,14 +355,11 @@ const onKeydown = async (e) => {
     }
 
     const findNewIndex = (idx) => {
-        if (idx < 0) {
-            return currentPhraseData.value.global_meanings.length - 1
-        }
-        else if (idx === currentPhraseData.value.global_meanings.length) {
-            return  0
-        }
-        else {return idx}
-
+        const total = usersTranslation.value.length
+        if (total === 0) return 0
+        if (idx < 0) return total - 1
+        if (idx >= total) return 0
+        return idx
     }
     
     if (e.key === 'ArrowDown') {
@@ -385,8 +393,13 @@ const onKeydown = async (e) => {
     if (e.key === 'x') {
         currentPhraseData.value.tags = []
         currentPhraseData.value.your_meanings = []
-        translateAi.value = await onTranslate(currentPhraseData.value.phrase)
-    }
+      
+        const phrase = currentPhraseData.value.phrase
+        const translated = await onTranslate(phrase)
+        if (currentPhraseData.value.phrase !== phrase) return
+
+        translateAi.value = translated
+        }
 
 }
 
@@ -425,6 +438,8 @@ onMounted(() => {
 
 
 onBeforeUnmount(() => {
+    syncPhrase.flush()
+
     window.removeEventListener('keydown', onKeydown);
     window.removeEventListener("click", handleClickOutside)
     window.removeEventListener('pointerdown',  onPointerDown )

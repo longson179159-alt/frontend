@@ -1,0 +1,56 @@
+Word Status
+
+status = 6 means the word is new and has not been acted on yet.
+status = 1..5 means the user has already interacted with the word.
+Any meaningful action on a status = 6 word should change it to 1.
+Clicking trash sets status = 0 and clears tags and your_meanings.
+Clicking status buttons 1..5 must update both UI state and saved state.
+Saved Meanings
+
+your_meanings is the user’s saved meanings list.
+Adding a manual meaning should save it into your_meanings.
+Editing an existing saved meaning is also a meaningful action.
+Removing a meaning should only remove it from your_meanings.
+your_meanings should never contain duplicates.
+your_meanings should never contain undefined or empty strings.
+If a word is status = 6, adding or editing meanings should promote it to status = 1.
+Popular Meanings
+
+Popular meanings are suggestion data, not saved data.
+global_meanings is backend suggestion data.
+translateAi is also a suggestion, not a saved meaning until selected.
+Clicking a popular meaning should add it to your_meanings if it is not already there.
+Clicking a popular meaning still counts as user action even if that meaning is already in your_meanings.
+Therefore, clicking a popular meaning on a status = 6 word should still change status to 1, even when the meaning already exists.
+After selecting a suggestion, it can be removed from suggestion sources if that is intended by the product logic.
+Keyboard Navigation
+
+Keyboard selection must follow the list actually rendered in the UI.
+The rendered list is usersTranslation, not global_meanings.
+focusTranslationIndex must always stay within the bounds of usersTranslation.
+When the selected phrase changes, focusTranslationIndex should reset to 0.
+Pressing Enter should never add an invalid or missing translation.
+Phrase Changes
+
+When the user selects a new word or phrase, sidebar data must switch to that phrase’s current state.
+Re-selecting the same word should preserve the latest status, tags, and your_meanings.
+Parent state must not overwrite a newer sidebar change with an older cached value.
+Phrase changes must not lose pending local edits.
+Async Translation
+
+Translation requests are async and may finish out of order.
+A translation result should only be applied if it still belongs to the currently selected phrase.
+Old translation results must not overwrite the current phrase’s translateAi.
+Failed translation should not create blank saved meanings.
+Tags
+
+tags is user-owned tag data.
+global_tags is suggestion/reference tag data.
+Adding a tag should only add non-empty values.
+Duplicate user tags should not be added.
+Global tags should not be removable if the UI treats them as read-only reference tags.
+Data Contract
+
+tags, your_meanings, global_tags, and global_meanings should always be arrays.
+Sidebar UI state, parent state, and backend payload should always agree on the final status.
+Debounced saves must be flushed when leaving the component or switching phrase, so updates are not lost.
