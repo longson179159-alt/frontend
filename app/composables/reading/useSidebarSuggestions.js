@@ -1,14 +1,17 @@
 import { computed, ref, watch } from 'vue'
 
+// Handles suggestion data for Sidebar.vue: AI translation, rendered options, and selection focus.
 export function useSidebarSuggestions(currentPhraseData, onTranslate, saveMeaning) {
   const translateAi = ref('')
   const focusTranslationIndex = ref(0)
 
+  // Safely reads backend-provided suggestion meanings.
   const getGlobalMeanings = () => {
     const value = currentPhraseData.value?.global_meanings
     return Array.isArray(value) ? value : []
   }
 
+  // Builds the exact suggestion list shown in the UI.
   const usersTranslation = computed(() => {
     if (!translateAi.value) {
       return getGlobalMeanings()
@@ -20,10 +23,12 @@ export function useSidebarSuggestions(currentPhraseData, onTranslate, saveMeanin
     ]
   })
 
+  // Resets keyboard focus to the first suggestion.
   const resetFocus = () => {
     focusTranslationIndex.value = 0
   }
 
+  // Moves keyboard focus up or down within the visible suggestion list.
   const moveFocus = (delta) => {
     const total = usersTranslation.value.length
     if (total === 0) {
@@ -46,6 +51,7 @@ export function useSidebarSuggestions(currentPhraseData, onTranslate, saveMeanin
     focusTranslationIndex.value = nextIndex
   }
 
+  // Refreshes the AI translation for the currently selected phrase.
   const refreshCurrentPhraseTranslation = async () => {
     const phrase = currentPhraseData.value?.phrase?.trim()
 
@@ -60,6 +66,7 @@ export function useSidebarSuggestions(currentPhraseData, onTranslate, saveMeanin
     return translated
   }
 
+  // Saves a clicked suggestion and removes it from suggestion sources when needed.
   const selectTranslationAt = (index) => {
     const selected = usersTranslation.value[index]
     if (!selected) return false

@@ -1,7 +1,9 @@
 import { watch } from 'vue'
 import debounce from 'lodash/debounce'
 
+// Owns debounced backend persistence for Sidebar.vue phrase changes.
 export function useSidebarPersistence(currentPhraseData, getCsrfToken) {
+  // Sends the latest changed phrase payload to the backend after a short delay.
   const syncPhrase = debounce(async (payload) => {
     try {
       await $fetch('/api/update_word/', {
@@ -17,7 +19,9 @@ export function useSidebarPersistence(currentPhraseData, getCsrfToken) {
     }
   }, 500)
 
+  // Normalizes possibly invalid array fields before comparison.
   const getArray = (value) => Array.isArray(value) ? value : []
+  // Compares arrays by value and order to detect persisted field changes.
   const isEqualArray = (a = [], b = []) =>
     a.length === b.length && a.every((value, index) => value === b[index])
 

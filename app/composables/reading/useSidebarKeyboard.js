@@ -1,3 +1,4 @@
+// Collects keyboard shortcuts for Sidebar.vue and routes them to shared actions.
 export function useSidebarKeyboard({
   currentPhraseData,
   focusTranslationIndex,
@@ -7,6 +8,7 @@ export function useSidebarKeyboard({
   selectTranslationAt,
   speakEnglish,
 }) {
+  // Handles keyboard navigation, audio shortcuts, and quick actions.
   const onKeydown = async (event) => {
     const listKeys = ['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Enter', 's', 'x']
     if (!listKeys.includes(event.key)) return
