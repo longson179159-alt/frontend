@@ -1,0 +1,6 @@
+Shift + Left/Right: move page only
+Left/Right: move to previous/next valid item within statuses [1,2,3,4,6]
+if the next item is outside the visible page, change page instead
+if current selection is no longer on currentPage, snap to the first/last valid item on that page
+b: jump to the next item with status 6
+phrases should move as a span: startPointer at first word, currentPointer at last word
