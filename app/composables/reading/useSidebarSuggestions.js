@@ -100,10 +100,12 @@ export function useSidebarSuggestions(currentPhraseData, onTranslate, saveMeanin
   )
 
   watch(
-    () => currentPhraseData.value?.status,
+    () => ({status: currentPhraseData.value?.status, phrase: currentPhraseData.value?.phrase}),
     async (newVal, oldVal) => {
-      if (oldVal !== 6 && oldVal !== 0) return
-      if (newVal === 5) return
+      if (!oldVal) return
+      if (oldVal.phrase !== newVal.phrase) return
+      if (oldVal.status !== 6 && oldVal.status !== 0) return
+      if (newVal.status === 5) return
 
       const meanings = currentPhraseData.value?.your_meanings
       if (Array.isArray(meanings) && meanings.length !== 0) return

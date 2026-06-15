@@ -1,0 +1,44 @@
+File:
+C:\Users\PC\Desktop\fontend\lingQ\app\components\homepage\ContinueStudying.vue
+
+Purpose:
+- Homepage “Continue Studying” card list
+- 2 modes: `lesson` and `course`
+- Desktop shows paged grids
+- Mobile shows all cards horizontally
+
+Core state:
+- `dataLessonCards` and `dataCourseCards` store all loaded cards
+- `data` is the active array for current mode
+- `indexStart` is the local visible-window start index
+- `numberGrid` is cards per desktop page:
+  - md: 3
+  - lg: 4
+  - xl: 5
+- `visibleData` is the slice currently rendered
+
+Important concept:
+- This component has 2 layers of pagination:
+  1. backend pagination: fetch more cards from API
+  2. local pagination: move through already loaded cards with `indexStart`
+
+Backend state:
+- lessons: `lessonCurrentPage`, `lessonTotalPage`, `lessonHasNextPage`
+- courses: `courseCurrentPage`, `courseTotalPage`, `courseHasNextPage`
+
+Intended Next-button behavior:
+1. Prefer full next grid pages when possible.
+2. If hidden loaded cards are enough to fill the next grid page, move locally.
+3. If hidden loaded cards are fewer than one full grid page and backend has more data, fetch more first.
+4. If hidden loaded cards are fewer than one full grid page and backend has no more data, allow one final move to show the remaining cards as a partial last page.
+5. Do not block the final partial page just because backend has no next page.
+
+Important derived values:
+- `hiddenLoadedCount`: how many loaded cards are still hidden after the current window
+- `hasLocalPartialNextPage`: whether at least one hidden card remains
+
+Review instructions:
+- Focus on real logic bugs only
+- Pay attention to interaction between backend pagination and local `indexStart`
+- Do not suggest generic carousel refactors
+- Preserve the “prefer full grid pages first” behavior

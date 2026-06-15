@@ -1,0 +1,36 @@
+
+* All file
+Help me write a short reusable context description for future Codex chats about this file.
+
+Requirements:
+- explain the core purpose of the file
+- explain the important state and data flow
+- explain the intended behavior/rules Codex must preserve
+- keep it short and practical
+- optimize for future bug-checking, not documentation
+- avoid style commentary
+- avoid repeating code literally unless necessary
+
+Then give me:
+1. a short version for normal reuse
+2. an even shorter version for quick reuse
+
+* Tailored for logic
+Help me write a reusable context prompt for future Codex reviews of this file.
+
+I want the prompt to tell Codex:
+- what this file is responsible for
+- the important state variables
+- the key business/UI rules
+- what behavior must be preserved
+- what kinds of bugs to focus on
+
+Keep it concise.
+Do not turn it into documentation.
+Optimize it for helping Codex review logic correctly in later chats.
+
+Give me:
+1. a normal reusable version
+2. a compact version
+
+
