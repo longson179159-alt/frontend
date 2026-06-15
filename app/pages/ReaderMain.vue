@@ -137,6 +137,9 @@ const getLesson = async () => {
         credentials : 'include'
     })
 
+    // console.log('data', data)
+    // window.readerMock = data
+    // JSON.stringify(window.readerMock, null, 2)
     
 
     lessondata.value = data.lesson_data ?? []
