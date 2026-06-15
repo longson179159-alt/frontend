@@ -69,7 +69,7 @@ import { useBreakpoints } from '@vueuse/core';
 // import LessonCard from './homepage/component/LessonCard.vue';
 import CourseCard from './component/CourseCard.vue';
 import LessonCard from './component/LessonCard.vue';
-const config = useRuntimeConfig()
+
 
 
 const data = ref([])
@@ -78,6 +78,9 @@ const dataCourseCards = ref([])
 
 const lessonCurrentPage = ref(1)
 const lessonTotalPage = ref(2)
+
+const lessonHasNextPage = ref(false)
+const courseHasNextPage = ref(false)
 
 const courseCurrentPage = ref(1)
 const courseTotalPage = ref(2)
@@ -114,6 +117,8 @@ const getLessonCardsData = async () => {
         const paginationInfo = dataBackend?.["pagination"] ?? {}
         lessonTotalPage.value = paginationInfo.totalPages ?? 1
 
+        lessonHasNextPage.value = paginationInfo.hasNext ?? false
+
 }
     catch (error) {
         console.log('error fetching lesson cards data:', error)
@@ -137,10 +142,10 @@ const getCourseCardsData = async () => {
             ...(dataBackend?.["dataCourseCards"] ?? [])
         ]
         data.value = dataCourseCards.value
-        console.log('dataCourseCards.value', dataCourseCards.value)
 
         const paginationInfo = dataBackend?.["pagination"] ?? {}
         courseTotalPage.value = paginationInfo.totalPages ?? 1
+        courseHasNextPage.value = paginationInfo.hasNext ?? false
 
 }
     catch (error) {
@@ -179,6 +184,11 @@ const numberGrid = computed(() => {
     else return 5
 })
 
+const hiddenLoadedCount = computed(() => {
+    if (isMobile.value) return 0
+    return Math.max(0, data.value.length - (indexStart.value + numberGrid.value))
+})
+
 const visibleData = computed(() => {
     if (isMobile.value) return data.value
     return data.value.length - numberGrid.value > 0 ? data.value.slice(indexStart.value, indexStart.value + numberGrid.value) : data.value
@@ -189,33 +199,51 @@ const Previous = () => {
     indexStart.value = Math.max(0, indexStart.value - numberGrid.value)
 }
 
+
+const hasLocalPartialNextPage = computed(() => hiddenLoadedCount.value > 0)
+
 const Next = async () => {
     if (isMobile.value) return
 
+   
+
     if (data.value.length < numberGrid.value) return
+
 
     const needMoreData  = data.value.length < indexStart.value + 2 * numberGrid.value
 
+   
     if (needMoreData) {
         if (mode.value === 'lesson') {
-            if (lessonCurrentPage.value === lessonTotalPage.value) return
+            if (lessonCurrentPage.value === lessonTotalPage.value) {
+                 if (hasLocalPartialNextPage.value) {
+                        indexStart.value = Math.min(data.value.length - numberGrid.value, indexStart.value + numberGrid.value)
+                    }
+                    return
+            }
             lessonCurrentPage.value += 1
              await getLessonCardsData()
         } else if (mode.value === 'course') {
-            if (courseCurrentPage.value === courseTotalPage.value) return
+            if (courseCurrentPage.value === courseTotalPage.value) {
+               if (hasLocalPartialNextPage.value) {
+                    indexStart.value = Math.min(data.value.length - numberGrid.value, indexStart.value + numberGrid.value)
+                }
+                return 
+            }
             courseCurrentPage.value += 1
             await getCourseCardsData()
         }
     } 
-
+    
     indexStart.value = Math.min(data.value.length - numberGrid.value, indexStart.value + numberGrid.value)   
+
 }
 
 const canGoNext = computed(() => {
     if (isMobile.value) return false
 
     const hasMoreLoadedData = data.value.length > indexStart.value + numberGrid.value
-    const hasMoreBackendData = mode.value === 'lesson' ? lessonCurrentPage.value < lessonTotalPage.value : courseCurrentPage.value < courseTotalPage.value
+    const hasMoreBackendData = mode.value === 'lesson' ? lessonHasNextPage.value : courseHasNextPage.value
 
     return hasMoreLoadedData || hasMoreBackendData
 }) 
