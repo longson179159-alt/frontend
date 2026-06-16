@@ -78,9 +78,9 @@
 ========================================================= */
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 
-import Popup from './Popup.vue'
+
 import debounce from "lodash/debounce";
-const { getCsrfToken } = useCsrf()
+
 
 
 /* =========================================================
@@ -129,7 +129,7 @@ const props = defineProps({
 const lessondata = ref(props.lessonData)
 const core_data = props.coreData
 const lastReadWordIdx = ref(props.lastReadWordIdx)
-console.log("lastReadWordIdx in reader.vue", lastReadWordIdx.value)
+// console.log("lastReadWordIdx in reader.vue", lastReadWordIdx.value)
 
 const moveToLastReadingPage = () => {
   if (!prose.value) return
@@ -164,35 +164,7 @@ const currentPage = computed({
 })
 
 
-const saveLastReadWordIdx = debounce(
-//   async(newLastReadWordIdx, youtubeStartTime) => {
-//     try {
-
-//       let payload = {
-//         lessonName: props.lessonAndCourseName.lessonName,
-//         courseName: props.lessonAndCourseName.courseName,
-//         lastReadWordIdx: newLastReadWordIdx,
-//         isYoutubeVideo: props.isYoutubeVideo,
-//         youtubeStartTime: youtubeStartTime
-//       }
-
-//       if (props.isYoutubeVideo) {
-//         payload.youtubeStartTime = props.audioCurrentTime.currentTime
-        
-//       }
-//       await $fetch(`/api/update_last_read_word_idx/`, {
-//         method: 'PUT',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'X-CSRFToken': getCsrfToken(),
-//         },
-//         body: JSON.stringify(payload),
-//       })
-//     } catch (error) {
-//       console.error('Failed to update last read word index:', error)
-//     }
-//   }, 1000
-)
+const saveLastReadWordIdx = debounce(() => {}, 1000)
 
 watch(currentPage, (newVal) => {
     scrollNewPage(newVal);
@@ -436,9 +408,7 @@ const itemFirstAndLastOfPage = computed(() => {
 ========================================================= */
 
 const handleVisibilityChange = () => {
-  if (document.hidden) {
-    saveLastReadWordIdx.flush()
-  }
+
 }
 onMounted(async () => {
   // Ensure pagination is correct on first render

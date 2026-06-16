@@ -95,20 +95,20 @@ import demoSidebar from './demoSidebar.vue';
 // import Reader from '~/components/reading/middle/Reader.vue';
 import demoSmallReader from './demoSmallReader.vue';
 import LoadingProgressBar from '~/components/LoadingProgressBar.vue';
-import lesson from '~/server/mock/ReaderMain.json'
+import data from '~~/server/mock/ReaderMain.json'
 
 
 const mainRef = ref(null)
 const boxHeight = ref(0)
-const loading = ref(true)
+// const loading = ref(true)
 
 
 const current = ref(1)
 const total = ref(1)
 
 const messure = () => {
-    boxHeight.value = Math.round(mainRef?.value.getBoundingClientRect().height)
-
+  const rect = mainRef.value?.getBoundingClientRect?.()
+  boxHeight.value = Math.round(rect?.height ?? 0)
 }
 
 const lessondata = ref( [])
@@ -127,22 +127,6 @@ const route = useRoute()
 const lesson_name = computed(() => route.query.lessonName || 'Default lesson')
 const course_name = computed(() => route.query.courseName || 'Quick import')
 const getLesson = async () => {
-    loading.value = true
-    
-    try {
-        const data = await $fetch('/mock/ReaderMain.json', {
-        method : "GET",
-        query: {
-            lesson_name : lesson_name.value,
-            course_name : course_name.value
-        },
-        credentials : 'include'
-    })
-
-    // console.log('data', data)
-    // window.readerMock = data
-    // JSON.stringify(window.readerMock, null, 2)
-    
 
     lessondata.value = data.lesson_data ?? []
     listSentence.value = data.list_sentences ?? []
@@ -151,14 +135,6 @@ const getLesson = async () => {
     youtubeData.value = data.youtube_data?? []
     timestamp.value = data.timestamp ?? null
     lastReadWordIdx.value = data.lastReadWordIdx ?? 0
-
-
-
-}
-    catch (error) {
-        console.error(error)
-    }
-    loading.value = false
 
 }
 
