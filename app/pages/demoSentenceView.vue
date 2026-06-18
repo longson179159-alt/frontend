@@ -1,7 +1,28 @@
 <template>
     <div class="h-screen flex flex-col  item-center max-w-xl border mx-auto mt-20">
 
-        <div class="w-full flex items-center justify-center">
+         <!-- create button change currentTimestamp idx to check -->
+         <div class="flex items-center justify-center gap-5 my-10">
+           <button @click="currentTimestampIndex--">decrease</button>
+           <span>{{ currentTimestampIndex }}</span>
+           <button @click="currentTimestampIndex++">increase</button>
+         </div >
+
+        
+        
+
+        <div class="w-full flex flex-col items-center justify-center">
+          <div class="w-full flex items-center justify-center">
+            <iframe
+              class="w-full h-[400px]"
+              src="https://www.youtube.com/embed/M0lSKceg_fs"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+
           <div class="relative h-14 w-14 shrink-0 whitespace-none my-10">
               <button class="border border-gray-600  self-center w-full h-full rounded-full flex items-center justify-center">
                   <img src="/icons/reader/volume.svg" class="w-8 h-8">
@@ -85,13 +106,24 @@
 
         <div v-for="(item, idx) in visibleDataWordLevel" :key="`${idx}-${item.word}`" class="border-b  py-5">
           <div class="flex items-center w-full ">
-              <div class="flex gap-3 items-center ">
-                <button class="h-6 w-6 rounded-full border border-gray-600 border-1 flex items-center justify-center">
-                  {{ item.status }}
+              <div class="grid grid-cols-[28px_auto] gid-row-2 gap-x-3 items-center">
+                <button @click="quickChangestatus(item.word, item.status)">
+                  <div v-if="item.status !== 6" :class="['h-7 w-7 rounded-full  flex items-center justify-center', colorStatus[item.status]]">
+                    {{ item.status }}
+                  </div>
+                  <div v-else class="h-7 w-7 rounded-full border border-gray-600 border-1 flex items-center justify-center">
+                    <font-awesome icon="plus" class="text-blue-500 "/>
+                  </div>
                 </button>
       
-                <span class="text-xl font-semibold">{{ item.word }}</span>
-                <button> <img src='/icons/reader/volume.svg' class="w-[18px]"/> </button>
+                <div class="flex gap-5">
+                  <span class="text-xl font-semibold">{{ item.word }}</span>
+                  <button> <img src='/icons/reader/volume.svg' class="w-[18px]"/> </button>
+                </div>          
+
+                <span class="col-start-2 row-start-2 mt-2 text-lg font-semibold italic">
+                      {{ item.status === 6? listTranslation[item.word] : item.yourMeanings }}
+                </span>
               </div>
     
     
@@ -106,12 +138,14 @@
               </div>
           </div>
 
-          <span>
-              {{ item.yourMeanings }}
-          </span>
+          
 
         </div>
-        <!-- current -->
+        
+
+       
+
+
 
     </div>
 </template>
@@ -138,7 +172,7 @@ const {
 
 const {cleanWord, isValidWord} = useConvert()
 
-
+const {onTranslate} = useGooleTranslate()
 
 /* =========================================================
     resize, props, emit: mount/unmount side-effects
@@ -164,13 +198,18 @@ const props = defineProps({
 )
 
 
+
+
 const lessondata = ref(props.lessonData.length? props.lessonData: mockData.lesson_data)
 const core_data = props.coreData.length? props.coreData : mockData.core_data
 const timestamp = props.timestamp.length? props.timestamp : mockData.timestamp
 const statusTagsMeanings = Object.keys(props.statusTagsMeanings).length !==0 ? props.statusTagsMeanings : mockData.Tags_Meanings
 
-const paraIdx = ref(0)
-const visibleDataTimestampText = computed(() => lessondata.value[paraIdx.value])
+const youtubeData = mockData.youtube_data
+
+
+const currentTimestampIndex = ref(0)
+const visibleDataTimestampText = computed(() => lessondata.value[currentTimestampIndex.value])
 
 const visibleDataWordLevel = computed(() => {
     let listWords = []
@@ -239,47 +278,49 @@ const visibleDataWordLevel = computed(() => {
 
 const listTranslation = ref({})
 
-watch(visibleDataTimestampText, async (newVal) => {
-    const listWords = newVal.filter((item) => item.type === 'word' && item.status === 6).map((item) => item.word)
+watch(visibleDataWordLevel, async (newVal) => {
+    const listWords = newVal.filter((item) => item.status === 6).map((item) => item.word)
+    // create a set with listTranslation of reduring the number of translation needed
+    // const translationSet = new Set(Object.keys(listTranslation.value))
+    
     for (const word of listWords) {
-      if (!listTranslation.value[word]) {
+      if (!(word in listTranslation.value)) {
         const translation = await onTranslate(word)
         listTranslation.value[word] = translation
       }
     }
-}, {deep: true})
+
+}, {deep: true, immediate: true})
 
 // create a color status for word item and phrase item based on statusTagsMeanings
 const colorStatus = {
-    '1': 'bg-yellow-300',
-    '2': 'bg-yellow-200',
-    '3': 'bg-yellow-100',
-    '6': 'bg-blue-300'
+    1: 'bg-yellow-300',
+    2: 'bg-yellow-200',
+    3: 'bg-yellow-100',
+    // 6: 'bg-blue-300'
 }
 
 
 
-const currentTimestamp = computed(() => timestamp[paraIdx.value])
-const {onTranslate} = useGooleTranslate()
+const currentTimestamp = computed(() => timestamp[currentTimestampIndex.value])
+
 
 const handleTranslation = async () => {
-    console.log('currentTimestamp', currentTimestamp.value)
+    // console.log('currentTimestamp', currentTimestamp.value)
     if (showTranslation.value) {
       currentTimestampTranslation.value = ''
     }
 
     else {
-      console.log('currentTimestamp.text', currentTimestamp.value.text)
+      // console.log('currentTimestamp.text', currentTimestamp.value.text)
 
       currentTimestampTranslation.value = await onTranslate(currentTimestamp.value.text)
-      console.log('currentTimestampTranslation.value', currentTimestampTranslation.value)
+      // console.log('currentTimestampTranslation.value', currentTimestampTranslation.value)
     }
 
     showTranslation.value = !showTranslation.value
 
 }
-
-
 
 
 const isActice = (wordIndex) => {
@@ -293,9 +334,42 @@ const isActice = (wordIndex) => {
   return wordIndex >= a && wordIndex <= b
 }
 
+// malipulate data
+const quickChangestatus = (cleaned, currentStatus) => {
+  if (currentStatus === 6) {
+    statusTagsMeanings[cleaned].status = 1
+    statusTagsMeanings[cleaned].your_meanings = listTranslation.value[cleaned]
+  }
+
+}
+
+const newStatusDict = computed(() => {
+  const statusDict = {}
+  const listKeys = Object.keys(statusTagsMeanings)
+  for (const item of listKeys) {
+    if (item.split(" ").length === 1|| statusTagsMeanings[item].status >0) {
+       statusDict[item] = statusTagsMeanings[item].status
+    }
+   
+  }
+  return statusDict
+})
+
+
+watch([currentTimestampIndex, newStatusDict], () => {
+  const {lessondataChunk} = useCreateLesson(core_data, newStatusDict, currentTimestampIndex.value, currentTimestampIndex.value + 1)
+  lessondata.value.splice(currentTimestampIndex.value,  1, ...lessondataChunk)
+})  
+
+
+
+
+
+
+
+
 onMounted(async() => {
-    // console.log('props.timestamp', timestamp)
-    console.log("visibleDataWordLevel", visibleDataWordLevel.value)
+    console.log('yotubeData', youtubeData)
 
     window.addEventListener('pointerup', pointerUp)
 })
