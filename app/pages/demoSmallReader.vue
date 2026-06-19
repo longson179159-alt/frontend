@@ -313,14 +313,7 @@ const selected = computed(() => {
 })
 
 watch(selected, (newVal) => {
-    // console.log('currentPage', currentPage.value)
-    // console.log('startPointer', startPointer.value[0])
-    // // current page of this startPointer
-    // const items = prose.value.querySelectorAll(".word-item")
-    // const firstWordElement = Array.from(items).find(item => parseInt(item.dataset.wIdx) === startPointer.value[0] )
-    // const offsetTop = firstWordElement ? firstWordElement.offsetTop : 0
-    // const page = Math.floor(offsetTop / view.value) + 1
-    // console.log('page of startPointer', page)
+
     emit('selected', newVal)
 })
 

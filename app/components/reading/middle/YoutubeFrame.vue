@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full max-w-xl mx-auto h-screen flex flex-col items-center border justify-start mt-10">
-          <div class="w-full flex items-center justify-center">
+    <div class="w-full flex flex-col items-center border justify-start mt-10">
+          <div v-if="props.videoId" class="w-full flex items-center justify-center">
             <div ref="videoRef" class="w-full h-[400px] border"></div>
           </div>
 
@@ -43,13 +43,31 @@ import mockData from '~~/server/mock/ReaderMain.json'
 let player = null
 const videoRef = ref(null)
 const isPlaying = ref(false)
-const timestamp = mockData.timestamp
-const currentTimestampIndex = ref(3)
 
-const currentTimestamp = computed(() => timestamp[currentTimestampIndex.value])
+
+const props = defineProps({
+  currentTimestampIndex: {type: Object, default: () => ({
+    text: '',
+    start: 0,
+    end: 0,
+    idx: 0
+  })},
+
+
+  videoId: {type: String, default: ''}  
+})
+
+const currentTimestamp = computed(() => props.currentTimestampIndex)
 let chunkTimer = null
 
+
+const {speakEnglish} = useGooleTranslate()
 const playAudio = () => {
+    if (props.videoId === '') {
+      speakEnglish(currentTimestamp.value.text, currentSpeed.value)
+      return
+    }
+
     if (!player) return
     const chunk = currentTimestamp.value
 
@@ -109,10 +127,15 @@ const handleClickOutside = (event) => {
 }
 
 onMounted(async () => {
+
+  document.addEventListener('click', handleClickOutside)
+  if (!props.videoId) return
+
+
   await loadYoutubeAPI()
 
   player = new YT.Player(videoRef.value, {
-    videoId: 'M0lSKceg_fs',
+    videoId: props.videoId,
 
     playerVars: {
       controls: 0,
@@ -131,7 +154,7 @@ onMounted(async () => {
     }
   })
 
-  document.addEventListener('click', handleClickOutside)
+  
 })
 
 onBeforeUnmount(() => {

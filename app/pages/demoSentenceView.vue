@@ -11,30 +11,10 @@
         
         
 
-        <div class="w-full flex flex-col items-center justify-center">
-          <div class="w-full flex items-center justify-center">
-            <iframe
-              class="w-full h-[400px]"
-              src="https://www.youtube.com/embed/M0lSKceg_fs"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </div>
-
-          <div class="relative h-14 w-14 shrink-0 whitespace-none my-10">
-              <button class="border border-gray-600  self-center w-full h-full rounded-full flex items-center justify-center">
-                  <img src="/icons/reader/volume.svg" class="w-8 h-8">
-              </button>
-  
-              <button class="absolute border border-gray-600 -right-5 -bottom-5 bg-white h-10 w-10 rounded-full z-10 flex items-center justify-center">
-                  <img src="/icons/reader/rabbit.svg" class="">
-              </button>
-  
-              <button class="absolute flex items-center justify-center -right-11 top-12 h-5 w-7 rounded-xl bg-white z-20 border border-gray-600"><font-awesome icon='chevron-down'/></button>
-          </div>
-        </div>
+        <youtube-frame
+        :currentTimestampIndex="currentTimestampIndex"
+        :videoId="youtubeData.youtube_id"
+        />
 
         <div class=' flex items-center flex-wrap text-3xl'  ref="prose"
         @pointerdown.prevent="handlePointerDown"
@@ -143,18 +123,14 @@
         </div>
         
 
-       
-
-
-
     </div>
 </template>
 
 <script setup>
 
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import YoutubeFrame from '~~/app/components/reading/middle/YoutubeFrame.vue'
 
-import mockData from '~~/server/mock/ReaderMain.json'
 
 
 const showTranslation = ref(false)
@@ -181,34 +157,29 @@ const props = defineProps({
   readerHeight: {type: Number, default: 500},
   currentValue : {type :Number, default: 1},
   lessonData: {type: Array, default : () => []},
-  listSentence : {type: Array, default : () => []},
   statusTagsMeanings: {type: Object, default: () => []},
   coreData: {type: Array, default: () => []},
+  listSentence: {type: Array, default: () => []},
   currentPhraseStatus :{type: Number },
-  isYoutubeVideo: {type: Boolean, default: false},
+  youtubeData: {type: Object, default: () => ({})},
   timestamp: {type: Array, default: () => []},
-  lastReadWordIdx: {type: Number, default: 1},
-  audioCurrentTime: {
-    type: Object,
-    default: () => ({
-      currentTime: 0,
-      syncTimeToText: false
-    })
-  }}
+  lastReadWordIdx: {type: Number, default: 1}}
 )
 
+const emit = defineEmits(['update:currentValue', 'selected', 'sendStatusFromReader'])
+
+const currentTimestampIndex = computed({
+  get: () => props.currentValue,
+  set: (v) => emit('update:currentValue', v)
+})
 
 
+const lessondata = ref(props.lessonData.length? props.lessonData: [])
+const core_data = props.coreData.length? props.coreData : []
+const timestamp = props.timestamp.length? props.timestamp : []
+const statusTagsMeanings = Object.keys(props.statusTagsMeanings).length !==0 ? props.statusTagsMeanings : {}
+const youtubeData = Object.keys(props.youtubeData).length !== 0 ? props.youtubeData : {}
 
-const lessondata = ref(props.lessonData.length? props.lessonData: mockData.lesson_data)
-const core_data = props.coreData.length? props.coreData : mockData.core_data
-const timestamp = props.timestamp.length? props.timestamp : mockData.timestamp
-const statusTagsMeanings = Object.keys(props.statusTagsMeanings).length !==0 ? props.statusTagsMeanings : mockData.Tags_Meanings
-
-const youtubeData = mockData.youtube_data
-
-
-const currentTimestampIndex = ref(0)
 const visibleDataTimestampText = computed(() => lessondata.value[currentTimestampIndex.value])
 
 const visibleDataWordLevel = computed(() => {
@@ -297,7 +268,7 @@ const colorStatus = {
     1: 'bg-yellow-300',
     2: 'bg-yellow-200',
     3: 'bg-yellow-100',
-    // 6: 'bg-blue-300'
+
 }
 
 
@@ -357,9 +328,59 @@ const newStatusDict = computed(() => {
 
 
 watch([currentTimestampIndex, newStatusDict], () => {
-  const {lessondataChunk} = useCreateLesson(core_data, newStatusDict, currentTimestampIndex.value, currentTimestampIndex.value + 1)
-  lessondata.value.splice(currentTimestampIndex.value,  1, ...lessondataChunk)
+  changePageStatus()
 })  
+
+
+// select and emit
+const selected = computed(() => {
+  // Guard: selection not started or not updated   
+  if (!startPointer.value || !currentPointer.value) return {text: '', valid: false, error: 'empty'}
+
+  // Guard: do not allow cross-sentence selection
+  if (startPointer.value[1] !== currentPointer.value[1]) {
+    const realStart = startPointer.value[0] <currentPointer.value[0]? startPointer.value : currentPointer.value
+    const realEnd = startPointer.value[0] <currentPointer.value[0]? currentPointer.value : startPointer.value
+
+    const firstSentenceChuck = props.listSentence[realStart[1]].split(' ').splice(realStart[2]).join(' ')
+
+    const middleSentence = props.listSentence.slice(realStart[1] + 1, realEnd[1]).join(' ')
+    const lastSentenceChuck = props.listSentence[realEnd[1]].split(' ').splice(0, realEnd[2] + 1).join(' ')
+    const text = firstSentenceChuck + ' ' + middleSentence +  " "  + lastSentenceChuck
+    return {text: text, valid: false, error: 'cross-sentence'}
+  }
+
+  const a = Math.min(startPointer.value[2], currentPointer.value[2])
+  const b = Math.max(startPointer.value[2], currentPointer.value[2])
+
+
+  const sentence = props.listSentence[currentPointer.value?.[1]]
+  const listWordInSentence = sentence.split(' ')
+  const selected_phrase = listWordInSentence.slice(a, b + 1)
+  const cleaned_selected_phrase = selected_phrase.map( item => cleanWord(item))
+
+  // check if all words of selected phrase are valid
+  if (!cleaned_selected_phrase.every(word => isValidWord(word))) {
+    return {text: cleaned_selected_phrase.join(' '), valid: false, error: 'invalid-word'}
+  }
+
+
+  if (selected_phrase.length > 8) return {text: cleaned_selected_phrase.join(' '), valid: false, error: 'too-long'}
+  return {text: cleaned_selected_phrase.join(' '), valid: true}
+})
+
+watch(selected, (newVal) => {
+
+    emit('selected', newVal)
+})
+
+
+// @sendStatus="currentPhraseData.status = $event"
+const emitStatus = (keyboard) => {
+  emit('sendStatusFromReader', keyboard)
+}
+
+
 
 
 
@@ -369,7 +390,7 @@ watch([currentTimestampIndex, newStatusDict], () => {
 
 
 onMounted(async() => {
-    console.log('yotubeData', youtubeData)
+  
 
     window.addEventListener('pointerup', pointerUp)
 })

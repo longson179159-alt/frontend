@@ -15,7 +15,8 @@
                     </button>
                     <div class="flex-1 min-h-0 ">
                         <demoSmallReader  
-                        v-if="boxHeight > 0"
+                        
+                        v-if="boxHeight > 0 && proseMode"
                         :lesson-data="lessondata"
                         :list-sentence="listSentence"
                         :readerHeight="boxHeight" 
@@ -36,7 +37,22 @@
                         @send-status-from-reader="currentPhraseData.status = $event"
                         />
 
-                        
+                        <demoSentenceView
+                        v-else-if="boxHeight > 0 && !proseMode"
+                        :lesson-data="lessondata"
+                        :last-read-word-idx="lastReadWordIdx"
+                        :core-data="core_data"
+                        :list-sentence="listSentence"
+                        :timestamp="timestamp"
+                        :status-tags-meanings="statusTagsMeanings"
+                        :youtube-data="youtubeData"
+                        @selected="onSelected"
+                        @send-status-from-reader="currentPhraseData.status = $event"
+
+                        :current-phrase-status="currentPhraseData.status"
+                        v-model:current-value="currentTimestampIndex"
+
+                        />
                     </div>
                     <button
                         v-if="current !== total"
@@ -96,11 +112,13 @@ import demoSidebar from './demoSidebar.vue';
 import demoSmallReader from './demoSmallReader.vue';
 import LoadingProgressBar from '~/components/LoadingProgressBar.vue';
 import data from '~~/server/mock/ReaderMain.json'
+import demoSentenceView from './demoSentenceView.vue';
 
 
 const mainRef = ref(null)
 const boxHeight = ref(0)
 // const loading = ref(true)
+const proseMode = ref(false)
 
 
 const current = ref(1)
@@ -230,6 +248,8 @@ const finishLesson = async () => {
 
 onMounted(async () => {
     await getLesson()
+
+    total.value = proseMode.value ? 1 : timestamp.value.length
     messure();
     
     await nextTick();

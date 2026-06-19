@@ -30,7 +30,8 @@ const onTranslate = async (text) => {
 }
 
 // 🟢 Speak English input text
-const speakEnglish = debounce((text) =>{
+const speakEnglish = debounce((text, speed = 1) => {
+    if (!text) return
     try {  // Create a speech utterance using the input text
     const utterance = new SpeechSynthesisUtterance(text)
 
@@ -38,7 +39,7 @@ const speakEnglish = debounce((text) =>{
     utterance.lang = 'en-US'
 
     // Control speaking speed (1 = normal)
-    utterance.rate = 1
+    utterance.rate = speed
 
     utterance.voice = speechSynthesis
         .getVoices()

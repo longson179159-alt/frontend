@@ -96,6 +96,7 @@ import Reader from '~/components/reading/middle/Reader.vue';
 import LoadingProgressBar from '~/components/LoadingProgressBar.vue';
 
 
+
 const mainRef = ref(null)
 const boxHeight = ref(0)
 const loading = ref(true)

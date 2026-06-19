@@ -117,10 +117,10 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
-import { useSidebarKeyboard } from '~/composables/reading/useSidebarKeyboard'
-import { useSidebarPersistence } from '~/composables/reading/demoSidevarPersistence'
-import { useSidebarSuggestions } from '~/composables/reading/useSidebarSuggestions'
-import { useSidebarWordState } from '~/composables/reading/useSidebarWordState'
+import { useSidebarKeyboard } from '~/composables/sidebar/useSidebarKeyboard'
+import { useSidebarPersistence } from '~/composables/sidebar/demoSidevarPersistence'
+import { useSidebarSuggestions } from '~/composables/sidebar/useSidebarSuggestions'
+import { useSidebarWordState } from '~/composables/sidebar/useSidebarWordState'
 
 const props = defineProps({
     sidebarData: { type: Object },
