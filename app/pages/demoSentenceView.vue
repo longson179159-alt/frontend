@@ -176,7 +176,7 @@ const currentTimestampIndex = computed({
 
 const lessondata = ref(props.lessonData.length? props.lessonData: [])
 const core_data = props.coreData.length? props.coreData : []
-const timestamp = props.timestamp.length? props.timestamp : []
+
 const statusTagsMeanings = Object.keys(props.statusTagsMeanings).length !==0 ? props.statusTagsMeanings : {}
 const youtubeData = Object.keys(props.youtubeData).length !== 0 ? props.youtubeData : {}
 
@@ -273,7 +273,7 @@ const colorStatus = {
 
 
 
-const currentTimestamp = computed(() => timestamp[currentTimestampIndex.value])
+const currentTimestamp = computed(() => props.timestamp[currentTimestampIndex.value])
 
 
 const handleTranslation = async () => {
@@ -380,6 +380,11 @@ const emitStatus = (keyboard) => {
   emit('sendStatusFromReader', keyboard)
 }
 
+const {
+  changePageStatus,
+  changePageStatusByKeyborad,
+  moveNextPrevious
+} = useKeyboard( startPointer,currentPointer,  core_data, newStatusDict , lessondata, currentTimestampIndex, props.timestamp.length,  emitStatus, selected)
 
 
 
@@ -390,13 +395,16 @@ const emitStatus = (keyboard) => {
 
 
 onMounted(async() => {
-  
 
     window.addEventListener('pointerup', pointerUp)
+    window.addEventListener('keydown', changePageStatusByKeyborad,)
+    window.addEventListener('keydown', moveNextPrevious,)
 })
 
 onBeforeUnmount( () => {
     window.removeEventListener('pointerup', pointerUp)
+    window.removeEventListener('keydown', changePageStatusByKeyborad,)
+    window.removeEventListener('keydown', moveNextPrevious,)
 })
 
 

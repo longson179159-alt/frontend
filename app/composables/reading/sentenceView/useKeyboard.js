@@ -11,29 +11,24 @@ const changePageStatus =  () => {
 }
 
 const getDataCurrentPage = () => {
-    let scrollTop = (currentPage.value - 1) * view.value
-    let scrollBottom = scrollTop + view.value
-    const flatLessonData = lessondata.value.flat()
-    const items = prose.value.querySelectorAll(".word-item")
-    const firstItemEl = Array.from(items).find(item => item.offsetTop >= scrollTop)
-    const lastItemEl = Array.from(items).findLast(item => item.offsetTop <= scrollBottom)
-    const first = firstItemEl ? Number(firstItemEl.dataset.wIdx) : null
-    const last = lastItemEl ? Number(lastItemEl.dataset.wIdx) : null
+    
+    const paraData = lessondata.value[currentTimestampIndex.value] ?? []
+    const core_para_data = (core_data.value.filter(item => item['p_idx'] === currentTimestampIndex.value)[0] ?? []).sort_by('w_idx')
+    const first = core_para_data?.[0]?.['w_idx'] ?? null
+    const last = core_para_data?.[core_para_data.length - 1]?.['w_idx'] ?? null
 
     // cacluate page of startPointer
-    const activeElement = Array.from(items).find(item => parseInt(item.dataset.wIdx) === startPointer.value[0] )
-    
-    const activePage = activeElement
-      ? Math.floor(activeElement.offsetTop / view.value) + 1
-      : 0
+   
+    const activePage = startPointer?.value[3]
 
 
 
     // find the first 6 status in this page 
-    const firstSixStatus = flatLessonData.find(
+    const firstSixStatus = paraData.find(
         item =>
-          (item['w_idx'] >= first || item['phrase']?.[0]?.['w_idx'] >= first) &&
-          (item['w_idx'] <= last || item['phrase']?.[0]?.['w_idx'] <= last) &&
+            (item['type'] >= 'word' ) &&    
+          (item['w_idx'] >= first ) &&
+          (item['w_idx'] <= last ) &&
           item['status'] === 6
       )
 
@@ -46,7 +41,7 @@ const getDataCurrentPage = () => {
     
     let firstValidStartPointer = null
     let firstValidCurrentPointer = null
-    const firstValidItem = flatLessonData.find(
+    const firstValidItem = paraData.find(
         item =>
           (item['w_idx'] >= first || item['phrase']?.[0]?.['w_idx'] >= first) &&
           (item['w_idx'] <= last || item['phrase']?.[0]?.['w_idx'] <= last) &&
@@ -75,7 +70,7 @@ const getDataCurrentPage = () => {
     let lastValidCurrentPointer = null
 
     
-    const lastValidItem = flatLessonData.findLast(
+    const lastValidItem = paraData.findLast(
         item =>
           (item['w_idx'] >= first || item['phrase']?.[0]?.['w_idx'] >= first) &&
           (item['w_idx'] <= last || item['phrase']?.[0]?.['w_idx'] <= last) &&
@@ -128,192 +123,199 @@ const changePageStatusByKeyborad = (e) => {
  
   }
 
+const getPointersFromItem = (item) => {
+  if (!item) {
+    return {
+      startPointer: null,
+      currentPointer: null
+    }
+  }
 
+  if (item['type'] === 'phrase') {
+    const startItem = item['phrase'][0]
+    const endItem = item['phrase'][item['phrase'].length - 1]
+
+    return {
+      startPointer: [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'], startItem['p_idx']],
+      currentPointer: [endItem['w_idx'], endItem['s_idx'], endItem['idx_w_in_s'], endItem['p_idx']]
+    }
+  }
+
+  return {
+    startPointer: [item['w_idx'], item['s_idx'], item['idx_w_in_s'], item['p_idx']],
+    currentPointer: [item['w_idx'], item['s_idx'], item['idx_w_in_s'], item['p_idx']]
+  }
+}
+
+const setPointers = (newStartPointer, newCurrentPointer) => {
+  startPointer.value = newStartPointer
+  currentPointer.value = newCurrentPointer
+}
+
+const changePageByOffset = (offset) => {
+  if (offset > 0) {
+    currentPage.value = Math.min(currentPage.value + offset, totalPage.value)
+    return
+  }
+
+  currentPage.value = Math.max(1, currentPage.value + offset)
+}
+
+const findForwardPointer = (paraIndex, predicate) => {
+  for (let i = paraIndex; i < lessondata.value.length; i++) {
+    const paraData = lessondata.value[i]
+    const nextIndex = paraData.findIndex(predicate)
+    if (nextIndex === -1) continue
+
+    return getPointersFromItem(paraData[nextIndex])
+  }
+
+  return {
+    startPointer: null,
+    currentPointer: null
+  }
+}
+
+const findBackwardPointer = (paraIndex, predicate) => {
+  for (let i = paraIndex; i >= 0; i--) {
+    const paraData = lessondata.value[i]
+    const lastIndex = paraData.findLastIndex(predicate)
+    if (lastIndex === -1) continue
+
+    return getPointersFromItem(paraData[lastIndex])
+  }
+
+  return {
+    startPointer: null,
+    currentPointer: null
+  }
+}
+
+const handleShiftPageNavigation = (e) => {
+  if (e.key === 'ArrowLeft' && e.shiftKey) {
+    e.preventDefault();
+    changePageByOffset(-1)
+    return true
+  }
+
+  if (e.key === 'ArrowRight' && e.shiftKey) {
+    e.preventDefault();
+    changePageByOffset(1)
+    return true
+  }
+
+  return false
+}
+
+const handleArrowRight = (e) => {
+  if (!currentPointer.value || !startPointer.value) return
+  const wordIndex = currentPointer.value[0]
+  const paraIndex = currentPointer.value[3]
+
+  const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer] = getDataCurrentPage()
+  const { startPointer: newStartPointer, currentPointer: newCurrentPointer } = findForwardPointer(
+    paraIndex,
+    item => (item['w_idx'] > wordIndex || item['phrase']?.[0]?.['w_idx'] > wordIndex) && [1,2,3,4, 6].includes(item['status'])
+  )
+
+  if (currentPage.value !== activePage) {
+      if (!firstValidCurrentPointer || !firstValidStartPointer) {
+        e.preventDefault();
+        changePageByOffset(1)
+      }
+
+      else {
+        setPointers(firstValidStartPointer, firstValidCurrentPointer)
+      }
+  }
+
+  else {
+       if (!newStartPointer || last == null) return
+    if (newStartPointer[0] <= last) {
+        setPointers(newStartPointer, newCurrentPointer)
+    }
+
+    else {
+      e.preventDefault();
+      changePageByOffset(1)
+    }
+  }
+}
+
+const handleArrowLeft = (e) => {
+  if (!currentPointer.value || !startPointer.value) return
+
+  const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer ] = getDataCurrentPage()
+  const wordIndex = startPointer.value[0]
+  const paraIndex = startPointer.value[3]
+  const { startPointer: newStartPointer, currentPointer: newCurrentPointer } = findBackwardPointer(
+    paraIndex,
+    item => (item['w_idx'] < wordIndex || item['phrase']?.[0]?.['w_idx'] < wordIndex) && [1,2,3,4,6].includes(item['status'])
+  )
+
+  if (currentPage.value !== activePage) {
+    if (!lastValidStartPointer || !lastValidCurrentPointer) {
+      e.preventDefault();
+      changePageByOffset(-1)
+    }
+
+    else {
+      setPointers(lastValidStartPointer, lastValidCurrentPointer)
+    }
+    
+  }
+
+  else {
+       if (!newStartPointer || first == null) return
+      if (newStartPointer[0] >= first) {
+          setPointers(newStartPointer, newCurrentPointer)
+        }
+
+      else {
+        e.preventDefault();
+        changePageByOffset(-1)
+      }
+
+      }
+}
+
+const handleKeyB = () => {
+  if (!currentPointer.value || !startPointer.value) return
+  const wordIndex = currentPointer.value[0]
+  const paraIndex = currentPointer.value[3]
+
+  const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer, firstSixStatus ] = getDataCurrentPage()
+  const { startPointer: newStartPointer, currentPointer: newCurrentPointer } = findForwardPointer(
+    paraIndex,
+    item => (item['w_idx'] > wordIndex || item['phrase']?.[0]?.['w_idx'] > wordIndex) && item['status'] === 6
+  )
+
+  if (currentPage.value !== activePage) {
+      if (!firstSixStatus || firstSixStatus['type'] !== 'word') return
+      const nextPointer = [firstSixStatus['w_idx'], firstSixStatus['s_idx'], firstSixStatus['idx_w_in_s'], firstSixStatus['p_idx']]
+      setPointers(nextPointer, nextPointer)
+  }
+
+  else {
+      if (!newStartPointer || last == null) return
+    if (newStartPointer[0] > last) return
+    setPointers(newStartPointer, newCurrentPointer)
+  }
+}
 
 const moveNextPrevious = (e) => {
-    if (e.key === 'ArrowLeft' && e.shiftKey) {
-      e.preventDefault();
-      currentPage.value = Math.max(1, currentPage.value -1)
+    if (handleShiftPageNavigation(e)) return
+
+    if (e.key === 'ArrowRight') {
+      handleArrowRight(e)
     }
 
-    if (e.key === 'ArrowRight' && e.shiftKey) {
-      e.preventDefault();
-      currentPage.value = Math.min(currentPage.value + 1, totalPage.value)
+    if (e.key === 'ArrowLeft') {
+      handleArrowLeft(e)
     }
-
-    // 
-    if (e.key === 'ArrowRight' && !(e.key === 'ArrowRight' && e.shiftKey)) {
-
-      if (!currentPointer.value || !startPointer.value) return
-      const wordIndex = currentPointer.value[0]
-      const paraIndex = currentPointer.value[3]
-
-      const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer , firstSixStatus] = getDataCurrentPage()
-      let newCurrentPointer = null
-      let newStartPointer = null
-  
-
-      for (let i = paraIndex; i < lessondata.value.length; i++) {
-        const paraData = lessondata.value[i]
-        const nextIndex = paraData.findIndex(item => (item['w_idx'] > wordIndex || item['phrase']?.[0]?.['w_idx'] > wordIndex) && [1,2,3,4, 6].includes(item['status']) )
-        if (nextIndex === -1) continue
-        
-        if (paraData[nextIndex]['type'] === 'phrase') {
-          
-          const startItem = paraData[nextIndex]['phrase'][0]
-          const endItem = paraData[nextIndex]['phrase'][paraData[nextIndex]['phrase'].length-1]
-          newStartPointer = [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'] , startItem['p_idx']]
-          newCurrentPointer = [endItem['w_idx'], endItem['s_idx'], endItem['idx_w_in_s'] , endItem['p_idx']]
-        }
-        else {
-            const startItem = paraData[nextIndex]
-            newStartPointer = [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'] , startItem['p_idx']]
-            newCurrentPointer = [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'] , startItem['p_idx']]
-        }
-        break
-      }
-
-      if (currentPage.value !== activePage) {
-          if (!firstValidCurrentPointer || !firstValidStartPointer) {
-            e.preventDefault();
-            currentPage.value = Math.min(currentPage.value + 1, totalPage.value)
-          }
-
-          else {
-            startPointer.value = firstValidStartPointer
-            currentPointer.value = firstValidCurrentPointer
-          }
-      }
-
-      else {
-           if (!newStartPointer || last == null) return
-      // check if new element inside current page
-        if (newStartPointer[0] <= last) {
-            startPointer.value = newStartPointer
-            currentPointer.value = newCurrentPointer
-        
-      
-        }
-
-        else {
-          e.preventDefault();
-          currentPage.value = Math.min(currentPage.value + 1, totalPage.value)
-        }
-      }
-
-      
-    }
-    if (e.key === 'ArrowLeft' && !(e.key === 'ArrowLeft' && e.shiftKey)) {
-
-      if (!currentPointer.value || !startPointer.value) return
-
-      const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer, firstSixStatus ] = getDataCurrentPage()
-      const wordIndex = startPointer.value[0]
-      const paraIndex = startPointer.value[3]
-      let newCurrentPointer = null
-      let newStartPointer = null
-
-  
-
-      for (let i = paraIndex; i >= 0; i--) {
-        const paraData = lessondata.value[i]
-        const lastIndex = paraData.findLastIndex(item => (item['w_idx'] < wordIndex || item['phrase']?.[0]?.['w_idx'] < wordIndex) && [1,2,3,4,6].includes(item['status']) )
-        if (lastIndex === -1) continue
-
-        if (paraData[lastIndex]['type'] === 'phrase') {
-          
-          const startItem = paraData[lastIndex]['phrase'][0]
-          const endItem = paraData[lastIndex]['phrase'][paraData[lastIndex]['phrase'].length-1]
-          newStartPointer = [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'] , startItem['p_idx']]
-          newCurrentPointer = [endItem['w_idx'], endItem['s_idx'], endItem['idx_w_in_s'] , endItem['p_idx']]
-        }
-        else {
-            const startItem = paraData[lastIndex]
-            newStartPointer = [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'] , startItem['p_idx']]
-            newCurrentPointer = [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'] , startItem['p_idx']]
-        }
-        break
-      }
-
-      if (currentPage.value !== activePage) {
-        if (!lastValidStartPointer || !lastValidCurrentPointer) {
-          e.preventDefault();
-          currentPage.value = Math.max(1, currentPage.value -1)
-        }
-
-        else {
-          startPointer.value = lastValidStartPointer
-          currentPointer.value = lastValidCurrentPointer
-        }
-        
-      }
-
-      else {
-           if (!newStartPointer || first == null) return
-          if (newStartPointer[0] >= first) {
-              startPointer.value = newStartPointer
-              currentPointer.value = newCurrentPointer
-          
-            }
-
-          else {
-            e.preventDefault();
-            currentPage.value = Math.max(1, currentPage.value - 1)
-          }
-
-          }
-
-      }
-
-    
-     
 
     if (e.key === 'b' ) {
-
-      if (!currentPointer.value || !startPointer.value) return
-      const wordIndex = currentPointer.value[0]
-      const paraIndex = currentPointer.value[3]
-
-      const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer, firstSixStatus ] = getDataCurrentPage()
-      let newCurrentPointer = null
-      let newStartPointer = null
-  
-
-      for (let i = paraIndex; i < lessondata.value.length; i++) {
-        const paraData = lessondata.value[i]
-        const nextIndex = paraData.findIndex(item => (item['w_idx'] > wordIndex || item['phrase']?.[0]?.['w_idx'] > wordIndex) && item['status'] === 6 )
-        if (nextIndex === -1) continue
-
-        if (paraData[nextIndex]['type'] === 'phrase') {
-          
-          const startItem = paraData[nextIndex]['phrase'][0]
-          const endItem = paraData[nextIndex]['phrase'][paraData[nextIndex]['phrase'].length-1]
-          newStartPointer = [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'] , startItem['p_idx']]
-          newCurrentPointer = [endItem['w_idx'], endItem['s_idx'], endItem['idx_w_in_s'] , endItem['p_idx']]
-        }
-        else {
-            const startItem = paraData[nextIndex]
-            newStartPointer = [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'] , startItem['p_idx']]
-            newCurrentPointer = [startItem['w_idx'], startItem['s_idx'], startItem['idx_w_in_s'] , startItem['p_idx']]
-        }
-        break
-      }
-      
-
-      if (currentPage.value !== activePage) {
-          if (!firstSixStatus || firstSixStatus['type'] !== 'word') return
-          startPointer.value = [firstSixStatus['w_idx'], firstSixStatus['s_idx'], firstSixStatus['idx_w_in_s'], firstSixStatus['p_idx']]
-          currentPointer.value = startPointer.value
-      }
-
-      else {
-          if (!newStartPointer || last == null) return
-      if (newStartPointer[0] > last) return
-      startPointer.value = newStartPointer
-      currentPointer.value = newCurrentPointer
-      }
-   
-    
+      handleKeyB()
     }
 }
 
