@@ -1,10 +1,10 @@
 <template>
-    <div class="w-full flex flex-col items-center border justify-start mt-10">
-          <div v-if="props.videoId" class="w-full flex items-center justify-center">
-            <div ref="videoRef" class="w-full h-[400px] border"></div>
+    <div class="w-full flex flex-col items-center border justify-start mt-3">
+          <div v-if="props.videoId" class="w-full h-[200px] flex items-center justify-center">
+            <div ref="videoRef" class="w-full h-full border"></div>
           </div>
 
-          <div class="relative h-14 w-14 shrink-0 whitespace-none my-10">
+          <div class="relative h-14 w-14 shrink-0 whitespace-none mb-10">
               <button @click="playAudio" class="border border-gray-600  self-center w-full h-full rounded-full flex items-center justify-center">
                   <img src="/icons/reader/volume.svg" class="w-8 h-8">
               </button>
@@ -14,7 +14,7 @@
                       <img :src= "currentSpeed < 1? '/icons/reader/turtle.svg' : '/icons/reader/rabbit.svg'" class="rabbit">
                   </button>
 
-                  <div ref="speedRef" v-if="openSelectSpeed" class="absolute w-40 flex flex-col top-full right-3 rounded-xl border border-gray-300 shadow-md z-20">
+                  <div ref="speedRef" v-if="openSelectSpeed" class="absolute w-40 flex flex-col top-full right-3 rounded-xl border border-gray-300 shadow-md z-20 bg-white ">
                     <button 
                     v-for="speed in speedLists" :key="speed"
                     :class="['px-3 py-2 hover:bg-gray-200 text-start font-medium text-gray-600 italic', speed === currentSpeed && 'bg-gray-200']"

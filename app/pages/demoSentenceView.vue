@@ -1,22 +1,14 @@
 <template>
-    <div class="h-screen flex flex-col  item-center max-w-xl border mx-auto mt-20">
+    <div class="flex flex-col overflow-hidden " :style="{height : readerHeight + 'px'}">
 
-         <!-- create button change currentTimestamp idx to check -->
-         <div class="flex items-center justify-center gap-5 my-10">
-           <button @click="currentTimestampIndex--">decrease</button>
-           <span>{{ currentTimestampIndex }}</span>
-           <button @click="currentTimestampIndex++">increase</button>
-         </div >
 
-        
-        
 
         <youtube-frame
         :currentTimestampIndex="currentTimestampIndex"
         :videoId="youtubeData.youtube_id"
         />
 
-        <div class=' flex items-center flex-wrap text-3xl'  ref="prose"
+        <div class=' flex items-center flex-wrap text-3xl' 
         @pointerdown.prevent="handlePointerDown"
         @pointermove="handlePointerEnter"
         >
@@ -84,44 +76,51 @@
           </div>
         </button>
 
-        <div v-for="(item, idx) in visibleDataWordLevel" :key="`${idx}-${item.word}`" class="border-b  py-5">
-          <div class="flex items-center w-full ">
-              <div class="grid grid-cols-[28px_auto] gid-row-2 gap-x-3 items-center">
-                <button @click="quickChangestatus(item.word, item.status)">
-                  <div v-if="item.status !== 6" :class="['h-7 w-7 rounded-full  flex items-center justify-center', colorStatus[item.status]]">
-                    {{ item.status }}
+        <div class="scroll-wrap flex-1 min-h-0">
+          <div class="custom-scroll min-h-0 overflow-auto">
+            <div v-for="(item, idx) in visibleDataWordLevel" :key="`${idx}-${item.word}`" class="border-b  py-5">
+              <div class="flex items-center w-full ">
+                  <div class="grid grid-cols-[28px_auto] gid-row-2 gap-x-3 items-center">
+                    <button @click="quickChangestatus(item.word, item.status)">
+                      <div v-if="item.status !== 6" :class="['h-7 w-7 rounded-full  flex items-center justify-center', colorStatus[item.status]]">
+                        {{ item.status }}
+                      </div>
+                      <div v-else class="h-7 w-7 rounded-full border border-gray-600 border-1 flex items-center justify-center">
+                        <font-awesome icon="plus" class="text-blue-500 "/>
+                      </div>
+                    </button>
+          
+                    <div class="flex gap-5">
+                      <span class="text-xl font-semibold">{{ item.word }}</span>
+                      <button> <img src='/icons/reader/volume.svg' class="w-[18px]"/> </button>
+                    </div>          
+    
+                    <span class="col-start-2 row-start-2 mt-2 text-lg font-semibold italic">
+                          {{ item.status === 6? listTranslation[item.word] : item.yourMeanings }}
+                    </span>
                   </div>
-                  <div v-else class="h-7 w-7 rounded-full border border-gray-600 border-1 flex items-center justify-center">
-                    <font-awesome icon="plus" class="text-blue-500 "/>
+        
+        
+                  <div class="ml-auto flex items-center justify-center gap-2">
+                    <button class="h-7 w-7 rounded-full border border-gray-600 flex items-center justify-center">
+                      <font-awesome icon="check" class="opacity-50"/>
+                    </button>
+        
+                    <button class="h-7 w-7 rounded-full border border-gray-600 flex items-center justify-center ">
+                      <img src="/icons/others/trash.svg" class="opacity-50"/>
+                    </button>
                   </div>
-                </button>
-      
-                <div class="flex gap-5">
-                  <span class="text-xl font-semibold">{{ item.word }}</span>
-                  <button> <img src='/icons/reader/volume.svg' class="w-[18px]"/> </button>
-                </div>          
-
-                <span class="col-start-2 row-start-2 mt-2 text-lg font-semibold italic">
-                      {{ item.status === 6? listTranslation[item.word] : item.yourMeanings }}
-                </span>
               </div>
     
+              
     
-              <div class="ml-auto flex items-center justify-center gap-2">
-                <button class="h-7 w-7 rounded-full border border-gray-600 flex items-center justify-center">
-                  <font-awesome icon="check" class="opacity-50"/>
-                </button>
-    
-                <button class="h-7 w-7 rounded-full border border-gray-600 flex items-center justify-center ">
-                  <img src="/icons/others/trash.svg" class="opacity-50"/>
-                </button>
-              </div>
+            </div>
+            
           </div>
 
-          
-
+            <div class="scroll-arrow scroll-arrow-top"></div>
+            <div class="scroll-arrow scroll-arrow-bottom"></div>
         </div>
-        
 
     </div>
 </template>
@@ -169,8 +168,12 @@ const props = defineProps({
 const emit = defineEmits(['update:currentValue', 'selected', 'sendStatusFromReader'])
 
 const currentTimestampIndex = computed({
-  get: () => props.currentValue,
-  set: (v) => emit('update:currentValue', v)
+  get: () => props.currentValue - 1,
+  set: (v) => emit('update:currentValue', v + 1)
+})
+
+watch(() => props.currentValue, () => {
+  console.log('currentTimestampIndex', currentTimestampIndex.value)
 })
 
 
@@ -180,13 +183,13 @@ const core_data = props.coreData.length? props.coreData : []
 const statusTagsMeanings = Object.keys(props.statusTagsMeanings).length !==0 ? props.statusTagsMeanings : {}
 const youtubeData = Object.keys(props.youtubeData).length !== 0 ? props.youtubeData : {}
 
-const visibleDataTimestampText = computed(() => lessondata.value[currentTimestampIndex.value])
+const visibleDataTimestampText = computed(() => lessondata.value[currentTimestampIndex.value -1] ?? [])
 
 const visibleDataWordLevel = computed(() => {
     let listWords = []
     // create a set to fillter duplicate word
     let wordSet = new Set()
-    for (const item of visibleDataTimestampText.value) {
+    for (const item of visibleDataTimestampText.value ?? []) {
       if (item.type === 'word') {
         const yourMeanings = statusTagsMeanings[item.cleaned]?.your_meanings ?? []
         
@@ -273,20 +276,20 @@ const colorStatus = {
 
 
 
-const currentTimestamp = computed(() => props.timestamp[currentTimestampIndex.value])
+const currentTimestamp = computed(() => props.timestamp[currentTimestampIndex.value -1] ?? null)
 
 
 const handleTranslation = async () => {
-    // console.log('currentTimestamp', currentTimestamp.value)
+   
     if (showTranslation.value) {
       currentTimestampTranslation.value = ''
     }
 
     else {
-      // console.log('currentTimestamp.text', currentTimestamp.value.text)
 
+      if (!currentTimestamp.value?.text) return
       currentTimestampTranslation.value = await onTranslate(currentTimestamp.value.text)
-      // console.log('currentTimestampTranslation.value', currentTimestampTranslation.value)
+
     }
 
     showTranslation.value = !showTranslation.value
@@ -309,7 +312,7 @@ const isActice = (wordIndex) => {
 const quickChangestatus = (cleaned, currentStatus) => {
   if (currentStatus === 6) {
     statusTagsMeanings[cleaned].status = 1
-    statusTagsMeanings[cleaned].your_meanings = listTranslation.value[cleaned]
+    statusTagsMeanings[cleaned].your_meanings = [listTranslation.value[cleaned]]
   }
 
 }
@@ -326,11 +329,18 @@ const newStatusDict = computed(() => {
   return statusDict
 })
 
-
 watch([currentTimestampIndex, newStatusDict], () => {
-  changePageStatus()
-})  
+  console.log('watch changePageStatus', currentTimestampIndex.value)
+  console.log('typeof changePageStatus', typeof changePageStatus)
+  console.log('before call changePageStatus')
 
+  // try {
+  //   changePageStatus()
+  //   console.log('after call changePageStatus')
+  // } catch (error) {
+  //   console.error('changePageStatus crashed', error)
+  // }
+})
 
 // select and emit
 const selected = computed(() => {
@@ -390,10 +400,6 @@ const {
 
 
 
-
-
-
-
 onMounted(async() => {
 
     window.addEventListener('pointerup', pointerUp)
@@ -412,34 +418,64 @@ onBeforeUnmount( () => {
 
 
 
-<style>
-.status-1 {
-  @apply bg-yellow-300;
+<style scoped>
+.scroll-wrap {
+  position: relative;
 }
 
-.status-2 {
-  @apply bg-yellow-200
+.custom-scroll {
+  height: 100%;
+  padding-right: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #0f172a transparent;
 }
 
-.status-3 {
-  @apply bg-yellow-100
+/* Chrome, Edge, Safari */
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* .status-4 { @apply underline decoration-dashed decoration-2 underline-offset-4 decoration-gray-500} */
-/* instead of underline */
-.status-4 {
-  @apply border-b border-dashed border-b-gray-500;
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.status-6 {
-  @apply bg-blue-300
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #0f172a;
+  border-radius: 9999px;
 }
 
-.word-item {
-  @apply flex rounded h-[30px] cursor-pointer px-2 items-center 
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #1e293b;
+}
+
+/* Fake arrows */
+.scroll-arrow-top {
+  top: 4px;
+  border-bottom: 6px solid #0f172a;
+}
+
+.scroll-arrow-bottom {
+  bottom: 4px;
+  border-top: 6px solid #0f172a;
+}
+
+.scroll-arrow-bottom {
+  bottom: 4px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid #0f172a;
+}
+
+.scroll-arrow-top {
+  top: 4px;
+  border-bottom: 6px solid #0f172a;
+}
+
+.scroll-arrow-bottom {
+  bottom: 4px;
+  border-top: 6px solid #0f172a;
 }
 </style>
-<!-- C:\Users\PC\Desktop\fontend\lingQ\app\pages\demoSentenceView.vue -->
 
 
 

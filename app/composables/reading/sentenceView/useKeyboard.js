@@ -3,11 +3,16 @@
 export function useKeyboard( startPointer,currentPointer,  core_data, newStatusDict , lessondata, currentTimestampIndex, totalPage,  emitStatus, selected)  {
 
 
-const changePageStatus =  () => {
-
-  const {lessondataChunk} = useCreateLesson(core_data, newStatusDict, currentTimestampIndex.value, currentTimestampIndex.value + 1)
-  lessondata.value.splice(currentTimestampIndex.value,  1, ...lessondataChunk)
-
+const changePageStatus = () => {
+  console.log('inside changePageStatus')
+  const { lessondataChunk } = useCreateLesson(
+    core_data,
+    newStatusDict,
+    currentTimestampIndex.value,
+    currentTimestampIndex.value + 1
+  )
+  console.log('lessondataChunk', lessondataChunk)
+  lessondata.value.splice(currentTimestampIndex.value, 1, ...lessondataChunk)
 }
 
 const getDataCurrentPage = () => {
@@ -154,7 +159,7 @@ const setPointers = (newStartPointer, newCurrentPointer) => {
 
 const changePageByOffset = (offset) => {
   if (offset > 0) {
-    currentPage.value = Math.min(currentPage.value + offset, totalPage.value)
+    currentPage.value = Math.min(currentPage.value + offset, totalPage)
     return
   }
 

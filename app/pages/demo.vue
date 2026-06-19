@@ -39,6 +39,7 @@
 
                         <demoSentenceView
                         v-else-if="boxHeight > 0 && !proseMode"
+                        :readerHeight="boxHeight" 
                         :lesson-data="lessondata"
                         :last-read-word-idx="lastReadWordIdx"
                         :core-data="core_data"
@@ -50,7 +51,7 @@
                         @send-status-from-reader="currentPhraseData.status = $event"
 
                         :current-phrase-status="currentPhraseData.status"
-                        v-model:current-value="currentTimestampIndex"
+                        v-model:current-value="current"
 
                         />
                     </div>
