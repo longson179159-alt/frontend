@@ -4,7 +4,7 @@
 
 
         <youtube-frame
-        :currentTimestampIndex="currentTimestampIndex"
+        :currentTimestamp="currentTimestamp"
         :videoId="youtubeData.youtube_id"
         />
 
@@ -72,7 +72,7 @@
               <font-awesome icon="chevron-up" class="text-xs text-gray-500"/>
             </div>
 
-            <span class="italic inline-block ml-3 font-medium text-lg ">{{currentTimestampTranslation}}</span>
+            <span class="italic inline-block ml-3 font-medium text-lg ">{{listTranslation.timestampText[currentTimestampIndex] ?? ''}}</span>
           </div>
         </button>
 
@@ -96,7 +96,7 @@
                     </div>          
     
                     <span class="col-start-2 row-start-2 mt-2 text-lg font-semibold italic">
-                          {{ item.status === 6? listTranslation[item.word] : item.yourMeanings }}
+                          {{ item.status === 6? listTranslation.word[item.word] : item.yourMeanings }}
                     </span>
                   </div>
         
@@ -130,7 +130,7 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import YoutubeFrame from '~~/app/components/reading/middle/YoutubeFrame.vue'
 
-
+import { useKeyboard } from '~/composables/reading/sentenceView/useKeyboard'
 
 const showTranslation = ref(false)
 const currentTimestampTranslation = ref('')
@@ -172,9 +172,7 @@ const currentTimestampIndex = computed({
   set: (v) => emit('update:currentValue', v + 1)
 })
 
-watch(() => props.currentValue, () => {
-  console.log('currentTimestampIndex', currentTimestampIndex.value)
-})
+
 
 
 const lessondata = ref(props.lessonData.length? props.lessonData: [])
@@ -183,7 +181,7 @@ const core_data = props.coreData.length? props.coreData : []
 const statusTagsMeanings = Object.keys(props.statusTagsMeanings).length !==0 ? props.statusTagsMeanings : {}
 const youtubeData = Object.keys(props.youtubeData).length !== 0 ? props.youtubeData : {}
 
-const visibleDataTimestampText = computed(() => lessondata.value[currentTimestampIndex.value -1] ?? [])
+const visibleDataTimestampText = computed(() => lessondata.value[currentTimestampIndex.value] ?? [])
 
 const visibleDataWordLevel = computed(() => {
     let listWords = []
@@ -250,7 +248,10 @@ const visibleDataWordLevel = computed(() => {
     return listWords
 })
 
-const listTranslation = ref({})
+const listTranslation = ref({
+  word: {},
+  timestampText: {}
+})
 
 watch(visibleDataWordLevel, async (newVal) => {
     const listWords = newVal.filter((item) => item.status === 6).map((item) => item.word)
@@ -258,13 +259,16 @@ watch(visibleDataWordLevel, async (newVal) => {
     // const translationSet = new Set(Object.keys(listTranslation.value))
     
     for (const word of listWords) {
-      if (!(word in listTranslation.value)) {
+      if (!(word in listTranslation.value.word)) {
         const translation = await onTranslate(word)
-        listTranslation.value[word] = translation
+        listTranslation.value.word[word] = translation
       }
     }
 
 }, {deep: true, immediate: true})
+
+
+
 
 // create a color status for word item and phrase item based on statusTagsMeanings
 const colorStatus = {
@@ -276,21 +280,20 @@ const colorStatus = {
 
 
 
-const currentTimestamp = computed(() => props.timestamp[currentTimestampIndex.value -1] ?? null)
+const currentTimestamp = computed(() => props.timestamp[currentTimestampIndex.value] ?? null)
+watch(currentTimestampIndex, async (newVal) => {
+    if ((newVal in listTranslation.value.timestampText) && listTranslation.value.timestampText[newVal]) return
 
+    const text = props.timestamp[newVal]?.text
+    if (text) {
+        const tranlation = await onTranslate(text)
+        listTranslation.value.timestampText[newVal] = tranlation
+      }
+
+  
+}, { immediate: true })
 
 const handleTranslation = async () => {
-   
-    if (showTranslation.value) {
-      currentTimestampTranslation.value = ''
-    }
-
-    else {
-
-      if (!currentTimestamp.value?.text) return
-      currentTimestampTranslation.value = await onTranslate(currentTimestamp.value.text)
-
-    }
 
     showTranslation.value = !showTranslation.value
 
@@ -311,8 +314,10 @@ const isActice = (wordIndex) => {
 // malipulate data
 const quickChangestatus = (cleaned, currentStatus) => {
   if (currentStatus === 6) {
+    const translated = listTranslation.value.word[cleaned]
+    if (!translated) return
     statusTagsMeanings[cleaned].status = 1
-    statusTagsMeanings[cleaned].your_meanings = [listTranslation.value[cleaned]]
+    statusTagsMeanings[cleaned].your_meanings = [listTranslation.value.word[cleaned]]
   }
 
 }
@@ -329,18 +334,6 @@ const newStatusDict = computed(() => {
   return statusDict
 })
 
-watch([currentTimestampIndex, newStatusDict], () => {
-  console.log('watch changePageStatus', currentTimestampIndex.value)
-  console.log('typeof changePageStatus', typeof changePageStatus)
-  console.log('before call changePageStatus')
-
-  // try {
-  //   changePageStatus()
-  //   console.log('after call changePageStatus')
-  // } catch (error) {
-  //   console.error('changePageStatus crashed', error)
-  // }
-})
 
 // select and emit
 const selected = computed(() => {
@@ -380,7 +373,7 @@ const selected = computed(() => {
 })
 
 watch(selected, (newVal) => {
-
+    // console.log('selected', newVal)
     emit('selected', newVal)
 })
 
@@ -396,6 +389,9 @@ const {
   moveNextPrevious
 } = useKeyboard( startPointer,currentPointer,  core_data, newStatusDict , lessondata, currentTimestampIndex, props.timestamp.length,  emitStatus, selected)
 
+watch([currentTimestampIndex, newStatusDict], () => {
+  changePageStatus()
+})
 
 
 

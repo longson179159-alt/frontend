@@ -4,21 +4,21 @@ export function useKeyboard( startPointer,currentPointer,  core_data, newStatusD
 
 
 const changePageStatus = () => {
-  console.log('inside changePageStatus')
+
   const { lessondataChunk } = useCreateLesson(
     core_data,
     newStatusDict,
     currentTimestampIndex.value,
     currentTimestampIndex.value + 1
   )
-  console.log('lessondataChunk', lessondataChunk)
+ 
   lessondata.value.splice(currentTimestampIndex.value, 1, ...lessondataChunk)
 }
 
 const getDataCurrentPage = () => {
     
     const paraData = lessondata.value[currentTimestampIndex.value] ?? []
-    const core_para_data = (core_data.value.filter(item => item['p_idx'] === currentTimestampIndex.value)[0] ?? []).sort_by('w_idx')
+    const core_para_data = (core_data[currentTimestampIndex.value] ?? []).flat().sort((a, b) => a.w_idx - b.w_idx)
     const first = core_para_data?.[0]?.['w_idx'] ?? null
     const last = core_para_data?.[core_para_data.length - 1]?.['w_idx'] ?? null
 
@@ -159,11 +159,11 @@ const setPointers = (newStartPointer, newCurrentPointer) => {
 
 const changePageByOffset = (offset) => {
   if (offset > 0) {
-    currentPage.value = Math.min(currentPage.value + offset, totalPage)
+    currentTimestampIndex.value = Math.min(currentTimestampIndex.value + offset, totalPage -1)
     return
   }
 
-  currentPage.value = Math.max(1, currentPage.value + offset)
+  currentTimestampIndex.value = Math.max(0, currentTimestampIndex.value + offset)
 }
 
 const findForwardPointer = (paraIndex, predicate) => {
@@ -218,12 +218,14 @@ const handleArrowRight = (e) => {
   const paraIndex = currentPointer.value[3]
 
   const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer] = getDataCurrentPage()
+
+  // console.log('first', first, 'last', last, 'activePage', activePage, 'firstValidStartPointer', firstValidStartPointer, 'firstValidCurrentPointer', firstValidCurrentPointer)
   const { startPointer: newStartPointer, currentPointer: newCurrentPointer } = findForwardPointer(
     paraIndex,
     item => (item['w_idx'] > wordIndex || item['phrase']?.[0]?.['w_idx'] > wordIndex) && [1,2,3,4, 6].includes(item['status'])
   )
 
-  if (currentPage.value !== activePage) {
+  if (currentTimestampIndex.value !== activePage) {
       if (!firstValidCurrentPointer || !firstValidStartPointer) {
         e.preventDefault();
         changePageByOffset(1)
@@ -258,7 +260,7 @@ const handleArrowLeft = (e) => {
     item => (item['w_idx'] < wordIndex || item['phrase']?.[0]?.['w_idx'] < wordIndex) && [1,2,3,4,6].includes(item['status'])
   )
 
-  if (currentPage.value !== activePage) {
+  if (currentTimestampIndex.value !== activePage) {
     if (!lastValidStartPointer || !lastValidCurrentPointer) {
       e.preventDefault();
       changePageByOffset(-1)
@@ -295,7 +297,7 @@ const handleKeyB = () => {
     item => (item['w_idx'] > wordIndex || item['phrase']?.[0]?.['w_idx'] > wordIndex) && item['status'] === 6
   )
 
-  if (currentPage.value !== activePage) {
+  if (currentTimestampIndex.value !== activePage) {
       if (!firstSixStatus || firstSixStatus['type'] !== 'word') return
       const nextPointer = [firstSixStatus['w_idx'], firstSixStatus['s_idx'], firstSixStatus['idx_w_in_s'], firstSixStatus['p_idx']]
       setPointers(nextPointer, nextPointer)

@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full flex flex-col items-center border justify-start mt-3">
-          <div v-if="props.videoId" class="w-full h-[200px] flex items-center justify-center">
+    <div class="w-full flex flex-col items-center justify-start mt-3">
+          <div v-if="props.videoId" class="w-full h-[200px] flex items-center justify-center my-2">
             <div ref="videoRef" class="w-full h-full border"></div>
           </div>
 
@@ -35,9 +35,7 @@
 
 
 <script setup>
-import {ref, computed, onMounted, onBeforeUnmount} from 'vue'
-// import mockData from C:\Users\PC\Desktop\fontend\lingQ\server\mock\ReaderMain.json
-import mockData from '~~/server/mock/ReaderMain.json'
+import {ref,watch, computed, onMounted, onBeforeUnmount} from 'vue'
 
 
 let player = null
@@ -46,7 +44,7 @@ const isPlaying = ref(false)
 
 
 const props = defineProps({
-  currentTimestampIndex: {type: Object, default: () => ({
+  currentTimestamp: {type: Object, default: () => ({
     text: '',
     start: 0,
     end: 0,
@@ -57,7 +55,10 @@ const props = defineProps({
   videoId: {type: String, default: ''}  
 })
 
-const currentTimestamp = computed(() => props.currentTimestampIndex)
+const currentTimestamp = computed(() => props.currentTimestamp)
+watch(currentTimestamp, () => {
+  // console.log('currentTimestamp changed', currentTimestamp.value)
+})
 let chunkTimer = null
 
 
@@ -126,9 +127,19 @@ const handleClickOutside = (event) => {
   }
 }
 
+// add keyboard a as play playAudioTextTime, guard input and textarea
+const handleKeydown = (event) => {
+  if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') return
+
+  if (event.key.toLowerCase() === 'a') {
+    playAudio()
+  }
+}
+
 onMounted(async () => {
 
   document.addEventListener('click', handleClickOutside)
+  document.addEventListener('keydown', handleKeydown)
   if (!props.videoId) return
 
 
@@ -159,7 +170,7 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
-
+  document.removeEventListener('keydown', handleKeydown)
   if (chunkTimer) {
     clearInterval(chunkTimer)
     chunkTimer= null

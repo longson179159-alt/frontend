@@ -1,7 +1,7 @@
 <template>
     <div  class="flex flex-col h-screen">
         <HeaderLing />
-        <div v-if="!loading" class="flex flex-1 h-full min-h-0  pr-5">
+        <div v-if="loading" class="flex flex-1 h-full min-h-0  pr-5">
             <div class="flex flex-1 flex-col">
                 <HeaderReader v-model:currentValue="current" v-model:totalValue="total"/>
                 <div ref="mainRef" class="flex-1 min-h-0 flex px-3 ">
@@ -94,10 +94,10 @@
 
         </div>
     
-        <div v-else class="px-5 py-20 w-1/2  self-center ">
+        <!-- <div v-else class="px-5 py-20 w-1/2  self-center ">
             <LoadingProgressBar />
             
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -111,14 +111,14 @@ import HeaderReader from '~/components/reading/HeaderReader.vue';
 import demoSidebar from './demoSidebar.vue';
 // import Reader from '~/components/reading/middle/Reader.vue';
 import demoSmallReader from './demoSmallReader.vue';
-import LoadingProgressBar from '~/components/LoadingProgressBar.vue';
+// import LoadingProgressBar from '~/components/LoadingProgressBar.vue';
 import data from '~~/server/mock/ReaderMain.json'
 import demoSentenceView from './demoSentenceView.vue';
 
 
 const mainRef = ref(null)
 const boxHeight = ref(0)
-// const loading = ref(true)
+const loading = ref(true)
 const proseMode = ref(false)
 
 
@@ -200,6 +200,8 @@ const onSelected = (data) => {
         global_meanings : statusTagsMeanings.value[data.text]?.global_meanings?? [],
         status : validCurrentPhrase.value ?  statusTagsMeanings.value[data.text]?.status?? 6 : 0,
     }
+
+    // console.log('inside onSelected', currentPhraseData.value)
 
 } 
 
