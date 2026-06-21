@@ -1,0 +1,7 @@
+git push --force-with-lease origin main:checkpoint
+
+git switch checkpoint
+
+git reset --hard origin/checkpoint
+
+git switch main

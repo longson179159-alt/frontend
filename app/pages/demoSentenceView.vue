@@ -178,7 +178,6 @@ const currentTimestampIndex = computed({
 const lessondata = ref(props.lessonData.length? props.lessonData: [])
 const core_data = props.coreData.length? props.coreData : []
 
-const statusTagsMeanings = Object.keys(props.statusTagsMeanings).length !==0 ? props.statusTagsMeanings : {}
 const youtubeData = Object.keys(props.youtubeData).length !== 0 ? props.youtubeData : {}
 
 const visibleDataTimestampText = computed(() => lessondata.value[currentTimestampIndex.value] ?? [])
@@ -189,9 +188,9 @@ const visibleDataWordLevel = computed(() => {
     let wordSet = new Set()
     for (const item of visibleDataTimestampText.value ?? []) {
       if (item.type === 'word') {
-        const yourMeanings = statusTagsMeanings[item.cleaned]?.your_meanings ?? []
+        const yourMeanings = props.statusTagsMeanings[item.cleaned]?.your_meanings ?? []
         
-        const status = statusTagsMeanings[item.cleaned]?.status ?? 0
+        const status = props.statusTagsMeanings[item.cleaned]?.status ?? 0
         if (status === 0 || status === -1 || status === 5 || status === 4) continue
     
          // push item.cleaned, yourMeaning (merge all meaning as a string), status to listWords
@@ -211,11 +210,11 @@ const visibleDataWordLevel = computed(() => {
       else {
         for (const word of item.phrase) {
           
-          // const tags = statusTagsMeanings[word.cleaned].tags ?? []
-          const status = statusTagsMeanings[word.cleaned]?.status ?? 0
+          // const tags = props.statusTagsMeanings[word.cleaned].tags ?? []
+          const status = props.statusTagsMeanings[word.cleaned]?.status ?? 0
           if (status === 0 || status === -1 || status === 5 || status === 4) continue
 
-          const yourMeanings = [...(statusTagsMeanings[word.cleaned]?.your_meanings ?? [])]
+          const yourMeanings = [...(props.statusTagsMeanings[word.cleaned]?.your_meanings ?? [])]
 
           // push word.cleaned, yourMeaning (merge all meaning as a string), status to listWords
           if (!wordSet.has(word.cleaned)) {
@@ -230,8 +229,8 @@ const visibleDataWordLevel = computed(() => {
 
         // create phrase level status
         const phraseCleaned = item.phrase.map(w => w.cleaned).join(' ')
-        const phraseYourMeanings = statusTagsMeanings[phraseCleaned]?.your_meanings
-        const phraseStatus = statusTagsMeanings[phraseCleaned]?.status ?? 0
+        const phraseYourMeanings = props.statusTagsMeanings[phraseCleaned]?.your_meanings
+        const phraseStatus = props.statusTagsMeanings[phraseCleaned]?.status ?? 0
         if (phraseStatus === 0 || phraseStatus === -1 || phraseStatus === 5 || phraseStatus === 4 || phraseStatus === 6) continue
    
         if (phraseYourMeanings && !wordSet.has(phraseCleaned)) {
@@ -316,18 +315,25 @@ const quickChangestatus = (cleaned, currentStatus) => {
   if (currentStatus === 6) {
     const translated = listTranslation.value.word[cleaned]
     if (!translated) return
-    statusTagsMeanings[cleaned].status = 1
-    statusTagsMeanings[cleaned].your_meanings = [listTranslation.value.word[cleaned]]
+    if (!props.statusTagsMeanings[cleaned]) {
+      props.statusTagsMeanings[cleaned] = {
+        status: 1,
+        your_meanings: [translated]
+      }
+    } else {
+      props.statusTagsMeanings[cleaned].status = 1
+      props.statusTagsMeanings[cleaned].your_meanings = [translated]
+    }
   }
 
 }
 
 const newStatusDict = computed(() => {
   const statusDict = {}
-  const listKeys = Object.keys(statusTagsMeanings)
+  const listKeys = Object.keys(props.statusTagsMeanings)
   for (const item of listKeys) {
-    if (item.split(" ").length === 1|| statusTagsMeanings[item].status >0) {
-       statusDict[item] = statusTagsMeanings[item].status
+    if (item.split(" ").length === 1|| props.statusTagsMeanings[item].status >0) {
+       statusDict[item] = props.statusTagsMeanings[item].status
     }
    
   }
