@@ -198,12 +198,20 @@ const findBackwardPointer = (paraIndex, predicate) => {
 
 const handleShiftPageNavigation = (e) => {
   if (e.key === 'ArrowLeft' && e.shiftKey) {
+    const target = e.target
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+      return
+    }
     e.preventDefault();
     changePageByOffset(-1)
     return true
   }
 
   if (e.key === 'ArrowRight' && e.shiftKey) {
+    const target = e.target
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+      return
+    }
     e.preventDefault();
     changePageByOffset(1)
     return true
@@ -213,6 +221,10 @@ const handleShiftPageNavigation = (e) => {
 }
 
 const handleArrowRight = (e) => {
+  const target = e.target
+  if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+    return
+  }
   if (!currentPointer.value || !startPointer.value) return
   const wordIndex = currentPointer.value[0]
   const paraIndex = currentPointer.value[3]
@@ -314,14 +326,27 @@ const moveNextPrevious = (e) => {
     if (handleShiftPageNavigation(e)) return
 
     if (e.key === 'ArrowRight') {
+      const target = e.target
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        return
+      } 
+
       handleArrowRight(e)
     }
 
     if (e.key === 'ArrowLeft') {
+      const target = e.target
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        return
+      }
       handleArrowLeft(e)
     }
 
     if (e.key === 'b' ) {
+      const target = e.target
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        return
+      }
       handleKeyB()
     }
 }

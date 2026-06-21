@@ -136,7 +136,11 @@ const getDataCurrentPage = () => {
 
 
 const changePageStatusByKeyborad = (e) => {
-
+  // guard inpute and textarea
+  const target = e.target
+  if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+    return
+  }
   
   const listKeys = ['x', '1', '2', '3', '4', '5']
   if (!listKeys.includes(e.key)) return
@@ -150,6 +154,10 @@ const changePageStatusByKeyborad = (e) => {
  
   }
 const moveNextPrevious = (e) => {
+    const target = e.target
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+      return
+    }
     if (e.key === 'ArrowLeft' && e.shiftKey) {
       e.preventDefault();
       currentPage.value = Math.max(1, currentPage.value -1)
@@ -162,6 +170,10 @@ const moveNextPrevious = (e) => {
 
     // 
     if (e.key === 'ArrowRight' && !(e.key === 'ArrowRight' && e.shiftKey)) {
+      const target = e.target
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        return
+      }
 
       if (!currentPointer.value || !startPointer.value) return
       const wordIndex = currentPointer.value[0]
@@ -223,6 +235,10 @@ const moveNextPrevious = (e) => {
       
     }
     if (e.key === 'ArrowLeft' && !(e.key === 'ArrowLeft' && e.shiftKey)) {
+      const target = e.target
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        return
+      }
 
       if (!currentPointer.value || !startPointer.value) return
 
@@ -289,6 +305,10 @@ const moveNextPrevious = (e) => {
 
     if (e.key === 'b' ) {
 
+      const target = e.target
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        return
+      }
       if (!currentPointer.value || !startPointer.value) return
       const wordIndex = currentPointer.value[0]
       const paraIndex = currentPointer.value[3]

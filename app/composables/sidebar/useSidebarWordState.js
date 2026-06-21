@@ -15,7 +15,7 @@ export function useSidebarWordState(currentPhraseData, posMap) {
 
   // Promotes a brand-new word to status 1 after user interaction.
   const promoteStatusFromNewWord = () => {
-    if (currentPhraseData.value?.status === 6) {
+    if (currentPhraseData.value?.status === 6 || currentPhraseData.value?.status === 0) {
       currentPhraseData.value.status = 1
     }
   }
@@ -59,6 +59,11 @@ export function useSidebarWordState(currentPhraseData, posMap) {
 
   // Sets the explicit learning status chosen by the user.
   const setStatus = (status) => {
+
+     if (status === 0) {
+        setArray('tags', [])
+        setArray('your_meanings', [])
+      }
     currentPhraseData.value.status = status
   }
 
@@ -75,6 +80,7 @@ export function useSidebarWordState(currentPhraseData, posMap) {
     if (getArray('tags').includes(text)) return false
 
     currentPhraseData.value.tags.push(text)
+    promoteStatusFromNewWord()
     return true
   }
 
