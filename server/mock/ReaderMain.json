@@ -1,0 +1,6384 @@
+{
+    "lesson_data": [
+        [
+            {
+                "word": "Hello,",
+                "cleaned": "hello",
+                "status": 4,
+                "w_idx": 0,
+                "p_idx": 0,
+                "s_idx": 0,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 1,
+                "p_idx": 0,
+                "s_idx": 0,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "is",
+                "cleaned": "is",
+                "status": 1,
+                "w_idx": 2,
+                "p_idx": 0,
+                "s_idx": 0,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "phrase": [
+                    {
+                        "word": "Jack",
+                        "cleaned": "jack",
+                        "status": 0,
+                        "w_idx": 3,
+                        "p_idx": 0,
+                        "s_idx": 0,
+                        "idx_w_in_s": 3,
+                        "type": "word",
+                        "visible_in_phrase": true
+                    },
+                    {
+                        "word": "from",
+                        "cleaned": "from",
+                        "status": 3,
+                        "w_idx": 4,
+                        "p_idx": 0,
+                        "s_idx": 0,
+                        "idx_w_in_s": 4,
+                        "type": "word",
+                        "visible_in_phrase": true
+                    }
+                ],
+                "status": 2,
+                "p_idx": 0,
+                "s_idx": 0,
+                "visible": true,
+                "type": "phrase"
+            },
+            {
+                "word": "tofluency.",
+                "cleaned": "tofluency",
+                "status": 6,
+                "w_idx": 5,
+                "p_idx": 0,
+                "s_idx": 0,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "com",
+                "cleaned": "com",
+                "status": 4,
+                "w_idx": 6,
+                "p_idx": 0,
+                "s_idx": 1,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "and",
+                "cleaned": "and",
+                "status": 1,
+                "w_idx": 7,
+                "p_idx": 1,
+                "s_idx": 2,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "in",
+                "cleaned": "in",
+                "status": 5,
+                "w_idx": 8,
+                "p_idx": 1,
+                "s_idx": 2,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 9,
+                "p_idx": 1,
+                "s_idx": 2,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "English",
+                "cleaned": "english",
+                "status": 2,
+                "w_idx": 10,
+                "p_idx": 1,
+                "s_idx": 2,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "lesson",
+                "cleaned": "lesson",
+                "status": 3,
+                "w_idx": 11,
+                "p_idx": 1,
+                "s_idx": 2,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "we're",
+                "cleaned": "we're",
+                "status": 4,
+                "w_idx": 12,
+                "p_idx": 1,
+                "s_idx": 2,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "going",
+                "cleaned": "going",
+                "status": 5,
+                "w_idx": 13,
+                "p_idx": 1,
+                "s_idx": 2,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "to",
+                "cleaned": "to",
+                "status": 5,
+                "w_idx": 14,
+                "p_idx": 1,
+                "s_idx": 2,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "look",
+                "cleaned": "look",
+                "status": 1,
+                "w_idx": 15,
+                "p_idx": 1,
+                "s_idx": 2,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "at",
+                "cleaned": "at",
+                "status": 1,
+                "w_idx": 16,
+                "p_idx": 2,
+                "s_idx": 3,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "the",
+                "cleaned": "the",
+                "status": 5,
+                "w_idx": 17,
+                "p_idx": 2,
+                "s_idx": 3,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "phrasal",
+                "cleaned": "phrasal",
+                "status": 6,
+                "w_idx": 18,
+                "p_idx": 2,
+                "s_idx": 3,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "verb",
+                "cleaned": "verb",
+                "status": 6,
+                "w_idx": 19,
+                "p_idx": 2,
+                "s_idx": 3,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "drop",
+                "cleaned": "drop",
+                "status": 2,
+                "w_idx": 20,
+                "p_idx": 2,
+                "s_idx": 3,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "someone",
+                "cleaned": "someone",
+                "status": 3,
+                "w_idx": 21,
+                "p_idx": 2,
+                "s_idx": 3,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "off",
+                "cleaned": "off",
+                "status": 5,
+                "w_idx": 22,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "-",
+                "cleaned": "-",
+                "status": -1,
+                "w_idx": 23,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "and",
+                "cleaned": "and",
+                "status": 1,
+                "w_idx": 24,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "I",
+                "cleaned": "i",
+                "status": 5,
+                "w_idx": 25,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "used",
+                "cleaned": "used",
+                "status": 1,
+                "w_idx": 26,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 27,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "in",
+                "cleaned": "in",
+                "status": 5,
+                "w_idx": 28,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "video",
+                "cleaned": "video",
+                "status": 3,
+                "w_idx": 29,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "that",
+                "cleaned": "that",
+                "status": 2,
+                "w_idx": 30,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "I",
+                "cleaned": "i",
+                "status": 5,
+                "w_idx": 31,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 9,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "posted",
+                "cleaned": "posted",
+                "status": 6,
+                "w_idx": 32,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 10,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "on",
+                "cleaned": "on",
+                "status": 5,
+                "w_idx": 33,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 11,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "Facebook",
+                "cleaned": "facebook",
+                "status": 6,
+                "w_idx": 34,
+                "p_idx": 3,
+                "s_idx": 4,
+                "idx_w_in_s": 12,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "and",
+                "cleaned": "and",
+                "status": 1,
+                "w_idx": 35,
+                "p_idx": 4,
+                "s_idx": 5,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "on",
+                "cleaned": "on",
+                "status": 5,
+                "w_idx": 36,
+                "p_idx": 4,
+                "s_idx": 5,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "Google+",
+                "cleaned": "google",
+                "status": 1,
+                "w_idx": 37,
+                "p_idx": 4,
+                "s_idx": 5,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "-",
+                "cleaned": "-",
+                "status": -1,
+                "w_idx": 38,
+                "p_idx": 4,
+                "s_idx": 5,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "so",
+                "cleaned": "so",
+                "status": 5,
+                "w_idx": 39,
+                "p_idx": 4,
+                "s_idx": 5,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "let's",
+                "cleaned": "let's",
+                "status": 1,
+                "w_idx": 40,
+                "p_idx": 4,
+                "s_idx": 5,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "have",
+                "cleaned": "have",
+                "status": 1,
+                "w_idx": 41,
+                "p_idx": 4,
+                "s_idx": 5,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "a",
+                "cleaned": "a",
+                "status": 5,
+                "w_idx": 42,
+                "p_idx": 4,
+                "s_idx": 5,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "look",
+                "cleaned": "look",
+                "status": 1,
+                "w_idx": 43,
+                "p_idx": 4,
+                "s_idx": 5,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "at",
+                "cleaned": "at",
+                "status": 1,
+                "w_idx": 44,
+                "p_idx": 5,
+                "s_idx": 6,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 45,
+                "p_idx": 5,
+                "s_idx": 6,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "short",
+                "cleaned": "short",
+                "status": 5,
+                "w_idx": 46,
+                "p_idx": 5,
+                "s_idx": 6,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "video",
+                "cleaned": "video",
+                "status": 3,
+                "w_idx": 47,
+                "p_idx": 5,
+                "s_idx": 6,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "Hello",
+                "cleaned": "hello",
+                "status": 4,
+                "w_idx": 48,
+                "p_idx": 6,
+                "s_idx": 7,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "everybody",
+                "cleaned": "everybody",
+                "status": 5,
+                "w_idx": 49,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 50,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "is",
+                "cleaned": "is",
+                "status": 1,
+                "w_idx": 51,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "phrase": [
+                    {
+                        "word": "Jack",
+                        "cleaned": "jack",
+                        "status": 0,
+                        "w_idx": 52,
+                        "p_idx": 7,
+                        "s_idx": 8,
+                        "idx_w_in_s": 3,
+                        "type": "word",
+                        "visible_in_phrase": true
+                    },
+                    {
+                        "word": "from",
+                        "cleaned": "from",
+                        "status": 3,
+                        "w_idx": 53,
+                        "p_idx": 7,
+                        "s_idx": 8,
+                        "idx_w_in_s": 4,
+                        "type": "word",
+                        "visible_in_phrase": true
+                    }
+                ],
+                "status": 2,
+                "p_idx": 7,
+                "s_idx": 8,
+                "type": "phrase",
+                "visible": true
+            },
+            {
+                "word": "To",
+                "cleaned": "to",
+                "status": 5,
+                "w_idx": 54,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "Fluency",
+                "cleaned": "fluency",
+                "status": 6,
+                "w_idx": 55,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "-",
+                "cleaned": "-",
+                "status": -1,
+                "w_idx": 56,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "I",
+                "cleaned": "i",
+                "status": 5,
+                "w_idx": 57,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "have",
+                "cleaned": "have",
+                "status": 1,
+                "w_idx": 58,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 9,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "just",
+                "cleaned": "just",
+                "status": 5,
+                "w_idx": 59,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 10,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "dropped",
+                "cleaned": "dropped",
+                "status": 5,
+                "w_idx": 60,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 11,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "off",
+                "cleaned": "off",
+                "status": 5,
+                "w_idx": 61,
+                "p_idx": 7,
+                "s_idx": 8,
+                "idx_w_in_s": 12,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "my",
+                "cleaned": "my",
+                "status": 5,
+                "w_idx": 62,
+                "p_idx": 8,
+                "s_idx": 9,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "son",
+                "cleaned": "son",
+                "status": 5,
+                "w_idx": 63,
+                "p_idx": 8,
+                "s_idx": 9,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "at",
+                "cleaned": "at",
+                "status": 1,
+                "w_idx": 64,
+                "p_idx": 8,
+                "s_idx": 9,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "daycare.",
+                "cleaned": "daycare",
+                "status": 6,
+                "w_idx": 65,
+                "p_idx": 8,
+                "s_idx": 9,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "In",
+                "cleaned": "in",
+                "status": 5,
+                "w_idx": 66,
+                "p_idx": 8,
+                "s_idx": 10,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "the",
+                "cleaned": "the",
+                "status": 5,
+                "w_idx": 67,
+                "p_idx": 8,
+                "s_idx": 10,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "video",
+                "cleaned": "video",
+                "status": 3,
+                "w_idx": 68,
+                "p_idx": 8,
+                "s_idx": 10,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "I",
+                "cleaned": "i",
+                "status": 5,
+                "w_idx": 69,
+                "p_idx": 9,
+                "s_idx": 11,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "said:",
+                "cleaned": "said",
+                "status": 5,
+                "w_idx": 70,
+                "p_idx": 9,
+                "s_idx": 11,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "I",
+                "cleaned": "i",
+                "status": 5,
+                "w_idx": 71,
+                "p_idx": 9,
+                "s_idx": 11,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "have",
+                "cleaned": "have",
+                "status": 1,
+                "w_idx": 72,
+                "p_idx": 9,
+                "s_idx": 11,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "just",
+                "cleaned": "just",
+                "status": 5,
+                "w_idx": 73,
+                "p_idx": 9,
+                "s_idx": 11,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "dropped",
+                "cleaned": "dropped",
+                "status": 5,
+                "w_idx": 74,
+                "p_idx": 9,
+                "s_idx": 11,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "off",
+                "cleaned": "off",
+                "status": 5,
+                "w_idx": 75,
+                "p_idx": 9,
+                "s_idx": 11,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "my",
+                "cleaned": "my",
+                "status": 5,
+                "w_idx": 76,
+                "p_idx": 9,
+                "s_idx": 11,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "son",
+                "cleaned": "son",
+                "status": 5,
+                "w_idx": 77,
+                "p_idx": 9,
+                "s_idx": 11,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "at",
+                "cleaned": "at",
+                "status": 1,
+                "w_idx": 78,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "daycare",
+                "cleaned": "daycare",
+                "status": 6,
+                "w_idx": 79,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "-",
+                "cleaned": "-",
+                "status": -1,
+                "w_idx": 80,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "so",
+                "cleaned": "so",
+                "status": 5,
+                "w_idx": 81,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 82,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "means",
+                "cleaned": "means",
+                "status": 5,
+                "w_idx": 83,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "that",
+                "cleaned": "that",
+                "status": 2,
+                "w_idx": 84,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "I",
+                "cleaned": "i",
+                "status": 5,
+                "w_idx": 85,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "took",
+                "cleaned": "took",
+                "status": 5,
+                "w_idx": 86,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "my",
+                "cleaned": "my",
+                "status": 5,
+                "w_idx": 87,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 9,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "son",
+                "cleaned": "son",
+                "status": 5,
+                "w_idx": 88,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 10,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "to",
+                "cleaned": "to",
+                "status": 5,
+                "w_idx": 89,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 11,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "daycare",
+                "cleaned": "daycare",
+                "status": 6,
+                "w_idx": 90,
+                "p_idx": 10,
+                "s_idx": 12,
+                "idx_w_in_s": 12,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "in",
+                "cleaned": "in",
+                "status": 5,
+                "w_idx": 91,
+                "p_idx": 11,
+                "s_idx": 13,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "the",
+                "cleaned": "the",
+                "status": 5,
+                "w_idx": 92,
+                "p_idx": 11,
+                "s_idx": 13,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "car",
+                "cleaned": "car",
+                "status": 5,
+                "w_idx": 93,
+                "p_idx": 11,
+                "s_idx": 13,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "and",
+                "cleaned": "and",
+                "status": 1,
+                "w_idx": 94,
+                "p_idx": 11,
+                "s_idx": 13,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "left",
+                "cleaned": "left",
+                "status": 5,
+                "w_idx": 95,
+                "p_idx": 11,
+                "s_idx": 13,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "him",
+                "cleaned": "him",
+                "status": 5,
+                "w_idx": 96,
+                "p_idx": 11,
+                "s_idx": 13,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "there.",
+                "cleaned": "there",
+                "status": 5,
+                "w_idx": 97,
+                "p_idx": 11,
+                "s_idx": 13,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "Now,",
+                "cleaned": "now",
+                "status": 5,
+                "w_idx": 98,
+                "p_idx": 11,
+                "s_idx": 14,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "when",
+                "cleaned": "when",
+                "status": 5,
+                "w_idx": 99,
+                "p_idx": 12,
+                "s_idx": 15,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "we",
+                "cleaned": "we",
+                "status": 5,
+                "w_idx": 100,
+                "p_idx": 12,
+                "s_idx": 15,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "use",
+                "cleaned": "use",
+                "status": 5,
+                "w_idx": 101,
+                "p_idx": 12,
+                "s_idx": 15,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "the",
+                "cleaned": "the",
+                "status": 5,
+                "w_idx": 102,
+                "p_idx": 12,
+                "s_idx": 15,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "present",
+                "cleaned": "present",
+                "status": 5,
+                "w_idx": 103,
+                "p_idx": 12,
+                "s_idx": 15,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "perfect",
+                "cleaned": "perfect",
+                "status": 5,
+                "w_idx": 104,
+                "p_idx": 12,
+                "s_idx": 15,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "with",
+                "cleaned": "with",
+                "status": 5,
+                "w_idx": 105,
+                "p_idx": 12,
+                "s_idx": 15,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "just",
+                "cleaned": "just",
+                "status": 5,
+                "w_idx": 106,
+                "p_idx": 12,
+                "s_idx": 15,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "I",
+                "cleaned": "i",
+                "status": 5,
+                "w_idx": 107,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "have",
+                "cleaned": "have",
+                "status": 1,
+                "w_idx": 108,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "just",
+                "cleaned": "just",
+                "status": 5,
+                "w_idx": 109,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "dropped",
+                "cleaned": "dropped",
+                "status": 5,
+                "w_idx": 110,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "off",
+                "cleaned": "off",
+                "status": 5,
+                "w_idx": 111,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "my",
+                "cleaned": "my",
+                "status": 5,
+                "w_idx": 112,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "son",
+                "cleaned": "son",
+                "status": 5,
+                "w_idx": 113,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "-",
+                "cleaned": "-",
+                "status": -1,
+                "w_idx": 114,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "then",
+                "cleaned": "then",
+                "status": 5,
+                "w_idx": 115,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 116,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 9,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "means",
+                "cleaned": "means",
+                "status": 5,
+                "w_idx": 117,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 10,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "it",
+                "cleaned": "it",
+                "status": 5,
+                "w_idx": 118,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 11,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "happened",
+                "cleaned": "happened",
+                "status": 5,
+                "w_idx": 119,
+                "p_idx": 13,
+                "s_idx": 16,
+                "idx_w_in_s": 12,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "very",
+                "cleaned": "very",
+                "status": 5,
+                "w_idx": 120,
+                "p_idx": 14,
+                "s_idx": 17,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "recently.",
+                "cleaned": "recently",
+                "status": 5,
+                "w_idx": 121,
+                "p_idx": 14,
+                "s_idx": 17,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "Now,",
+                "cleaned": "now",
+                "status": 5,
+                "w_idx": 122,
+                "p_idx": 14,
+                "s_idx": 18,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "let's",
+                "cleaned": "let's",
+                "status": 1,
+                "w_idx": 123,
+                "p_idx": 14,
+                "s_idx": 18,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "have",
+                "cleaned": "have",
+                "status": 1,
+                "w_idx": 124,
+                "p_idx": 14,
+                "s_idx": 18,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "a",
+                "cleaned": "a",
+                "status": 5,
+                "w_idx": 125,
+                "p_idx": 14,
+                "s_idx": 18,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "look",
+                "cleaned": "look",
+                "status": 1,
+                "w_idx": 126,
+                "p_idx": 14,
+                "s_idx": 18,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "at",
+                "cleaned": "at",
+                "status": 1,
+                "w_idx": 127,
+                "p_idx": 15,
+                "s_idx": 19,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "some",
+                "cleaned": "some",
+                "status": 5,
+                "w_idx": 128,
+                "p_idx": 15,
+                "s_idx": 19,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "other",
+                "cleaned": "other",
+                "status": 5,
+                "w_idx": 129,
+                "p_idx": 15,
+                "s_idx": 19,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "examples",
+                "cleaned": "examples",
+                "status": 5,
+                "w_idx": 130,
+                "p_idx": 15,
+                "s_idx": 19,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "using",
+                "cleaned": "using",
+                "status": 5,
+                "w_idx": 131,
+                "p_idx": 15,
+                "s_idx": 19,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 132,
+                "p_idx": 16,
+                "s_idx": 20,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "phrasal",
+                "cleaned": "phrasal",
+                "status": 6,
+                "w_idx": 133,
+                "p_idx": 16,
+                "s_idx": 20,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "verb:",
+                "cleaned": "verb",
+                "status": 6,
+                "w_idx": 134,
+                "p_idx": 16,
+                "s_idx": 20,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "My",
+                "cleaned": "my",
+                "status": 5,
+                "w_idx": 135,
+                "p_idx": 16,
+                "s_idx": 20,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "dad",
+                "cleaned": "dad",
+                "status": 6,
+                "w_idx": 136,
+                "p_idx": 16,
+                "s_idx": 20,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "used",
+                "cleaned": "used",
+                "status": 1,
+                "w_idx": 137,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "to",
+                "cleaned": "to",
+                "status": 5,
+                "w_idx": 138,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "drop",
+                "cleaned": "drop",
+                "status": 2,
+                "w_idx": 139,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "me",
+                "cleaned": "me",
+                "status": 5,
+                "w_idx": 140,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "off",
+                "cleaned": "off",
+                "status": 5,
+                "w_idx": 141,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "at",
+                "cleaned": "at",
+                "status": 1,
+                "w_idx": 142,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "school",
+                "cleaned": "school",
+                "status": 5,
+                "w_idx": 143,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "-",
+                "cleaned": "-",
+                "status": -1,
+                "w_idx": 144,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "so,",
+                "cleaned": "so",
+                "status": 5,
+                "w_idx": 145,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 146,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 9,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "means",
+                "cleaned": "means",
+                "status": 5,
+                "w_idx": 147,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 10,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "in",
+                "cleaned": "in",
+                "status": 5,
+                "w_idx": 148,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 11,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "the",
+                "cleaned": "the",
+                "status": 5,
+                "w_idx": 149,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 12,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "past",
+                "cleaned": "past",
+                "status": 5,
+                "w_idx": 150,
+                "p_idx": 17,
+                "s_idx": 21,
+                "idx_w_in_s": 13,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "my",
+                "cleaned": "my",
+                "status": 5,
+                "w_idx": 151,
+                "p_idx": 18,
+                "s_idx": 22,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "dad",
+                "cleaned": "dad",
+                "status": 6,
+                "w_idx": 152,
+                "p_idx": 18,
+                "s_idx": 22,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "dropped",
+                "cleaned": "dropped",
+                "status": 5,
+                "w_idx": 153,
+                "p_idx": 18,
+                "s_idx": 22,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "me",
+                "cleaned": "me",
+                "status": 5,
+                "w_idx": 154,
+                "p_idx": 18,
+                "s_idx": 22,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "off",
+                "cleaned": "off",
+                "status": 5,
+                "w_idx": 155,
+                "p_idx": 18,
+                "s_idx": 22,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "at",
+                "cleaned": "at",
+                "status": 1,
+                "w_idx": 156,
+                "p_idx": 18,
+                "s_idx": 22,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "school.",
+                "cleaned": "school",
+                "status": 5,
+                "w_idx": 157,
+                "p_idx": 18,
+                "s_idx": 22,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "Here",
+                "cleaned": "here",
+                "status": 5,
+                "w_idx": 158,
+                "p_idx": 18,
+                "s_idx": 23,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "is",
+                "cleaned": "is",
+                "status": 1,
+                "w_idx": 159,
+                "p_idx": 18,
+                "s_idx": 23,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "an",
+                "cleaned": "an",
+                "status": 5,
+                "w_idx": 160,
+                "p_idx": 18,
+                "s_idx": 23,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "example",
+                "cleaned": "example",
+                "status": 5,
+                "w_idx": 161,
+                "p_idx": 18,
+                "s_idx": 23,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "of",
+                "cleaned": "of",
+                "status": 5,
+                "w_idx": 162,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "what",
+                "cleaned": "what",
+                "status": 5,
+                "w_idx": 163,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "you",
+                "cleaned": "you",
+                "status": 5,
+                "w_idx": 164,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "might",
+                "cleaned": "might",
+                "status": 5,
+                "w_idx": 165,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "say",
+                "cleaned": "say",
+                "status": 5,
+                "w_idx": 166,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "in",
+                "cleaned": "in",
+                "status": 5,
+                "w_idx": 167,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "a",
+                "cleaned": "a",
+                "status": 5,
+                "w_idx": 168,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "taxi",
+                "cleaned": "taxi",
+                "status": 6,
+                "w_idx": 169,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "-",
+                "cleaned": "-",
+                "status": -1,
+                "w_idx": 170,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "Could",
+                "cleaned": "could",
+                "status": 5,
+                "w_idx": 171,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 9,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "you",
+                "cleaned": "you",
+                "status": 5,
+                "w_idx": 172,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 10,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "drop",
+                "cleaned": "drop",
+                "status": 2,
+                "w_idx": 173,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 11,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "me",
+                "cleaned": "me",
+                "status": 5,
+                "w_idx": 174,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 12,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "off",
+                "cleaned": "off",
+                "status": 5,
+                "w_idx": 175,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 13,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "at",
+                "cleaned": "at",
+                "status": 1,
+                "w_idx": 176,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 14,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "the",
+                "cleaned": "the",
+                "status": 5,
+                "w_idx": 177,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 15,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "station?",
+                "cleaned": "station",
+                "status": 5,
+                "w_idx": 178,
+                "p_idx": 19,
+                "s_idx": 24,
+                "idx_w_in_s": 16,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "now",
+                "cleaned": "now",
+                "status": 5,
+                "w_idx": 179,
+                "p_idx": 20,
+                "s_idx": 25,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "my",
+                "cleaned": "my",
+                "status": 5,
+                "w_idx": 180,
+                "p_idx": 20,
+                "s_idx": 25,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "question",
+                "cleaned": "question",
+                "status": 5,
+                "w_idx": 181,
+                "p_idx": 20,
+                "s_idx": 25,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "for",
+                "cleaned": "for",
+                "status": 5,
+                "w_idx": 182,
+                "p_idx": 20,
+                "s_idx": 25,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "you",
+                "cleaned": "you",
+                "status": 5,
+                "w_idx": 183,
+                "p_idx": 20,
+                "s_idx": 25,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "in",
+                "cleaned": "in",
+                "status": 5,
+                "w_idx": 184,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "this",
+                "cleaned": "this",
+                "status": 2,
+                "w_idx": 185,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "video",
+                "cleaned": "video",
+                "status": 3,
+                "w_idx": 186,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "is:",
+                "cleaned": "is",
+                "status": 1,
+                "w_idx": 187,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "Have",
+                "cleaned": "have",
+                "status": 1,
+                "w_idx": 188,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "you",
+                "cleaned": "you",
+                "status": 5,
+                "w_idx": 189,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "dropped",
+                "cleaned": "dropped",
+                "status": 5,
+                "w_idx": 190,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "someone",
+                "cleaned": "someone",
+                "status": 3,
+                "w_idx": 191,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "off",
+                "cleaned": "off",
+                "status": 5,
+                "w_idx": 192,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 8,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "somewhere",
+                "cleaned": "somewhere",
+                "status": 5,
+                "w_idx": 193,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 9,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "recently?",
+                "cleaned": "recently",
+                "status": 5,
+                "w_idx": 194,
+                "p_idx": 21,
+                "s_idx": 26,
+                "idx_w_in_s": 10,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "Leave",
+                "cleaned": "leave",
+                "status": 5,
+                "w_idx": 195,
+                "p_idx": 22,
+                "s_idx": 27,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "your",
+                "cleaned": "your",
+                "status": 5,
+                "w_idx": 196,
+                "p_idx": 22,
+                "s_idx": 27,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "answers",
+                "cleaned": "answers",
+                "status": 5,
+                "w_idx": 197,
+                "p_idx": 22,
+                "s_idx": 27,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "in",
+                "cleaned": "in",
+                "status": 5,
+                "w_idx": 198,
+                "p_idx": 22,
+                "s_idx": 27,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "the",
+                "cleaned": "the",
+                "status": 5,
+                "w_idx": 199,
+                "p_idx": 22,
+                "s_idx": 27,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "comment",
+                "cleaned": "comment",
+                "status": 5,
+                "w_idx": 200,
+                "p_idx": 22,
+                "s_idx": 27,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "section",
+                "cleaned": "section",
+                "status": 5,
+                "w_idx": 201,
+                "p_idx": 22,
+                "s_idx": 27,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "below",
+                "cleaned": "below",
+                "status": 5,
+                "w_idx": 202,
+                "p_idx": 22,
+                "s_idx": 27,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ],
+        [
+            {
+                "word": "thanks",
+                "cleaned": "thanks",
+                "status": 5,
+                "w_idx": 203,
+                "p_idx": 23,
+                "s_idx": 28,
+                "idx_w_in_s": 0,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "for",
+                "cleaned": "for",
+                "status": 5,
+                "w_idx": 204,
+                "p_idx": 23,
+                "s_idx": 28,
+                "idx_w_in_s": 1,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "watching",
+                "cleaned": "watching",
+                "status": 5,
+                "w_idx": 205,
+                "p_idx": 23,
+                "s_idx": 28,
+                "idx_w_in_s": 2,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "and",
+                "cleaned": "and",
+                "status": 1,
+                "w_idx": 206,
+                "p_idx": 23,
+                "s_idx": 28,
+                "idx_w_in_s": 3,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "see",
+                "cleaned": "see",
+                "status": 5,
+                "w_idx": 207,
+                "p_idx": 23,
+                "s_idx": 28,
+                "idx_w_in_s": 4,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "you",
+                "cleaned": "you",
+                "status": 5,
+                "w_idx": 208,
+                "p_idx": 23,
+                "s_idx": 28,
+                "idx_w_in_s": 5,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "next",
+                "cleaned": "next",
+                "status": 5,
+                "w_idx": 209,
+                "p_idx": 23,
+                "s_idx": 28,
+                "idx_w_in_s": 6,
+                "type": "word",
+                "visible_in_phrase": true
+            },
+            {
+                "word": "time!",
+                "cleaned": "time",
+                "status": 5,
+                "w_idx": 210,
+                "p_idx": 23,
+                "s_idx": 28,
+                "idx_w_in_s": 7,
+                "type": "word",
+                "visible_in_phrase": true
+            }
+        ]
+    ],
+    "list_sentences": [
+        "Hello, this is Jack from tofluency.",
+        "com",
+        "and in this English lesson we're going to look",
+        "at the phrasal verb drop someone",
+        "off - and I used this in video that I posted on Facebook",
+        "and on Google+ - so let's have a look",
+        "at this short video",
+        "Hello",
+        "everybody this is Jack from To Fluency - I have just dropped off",
+        "my son at daycare.",
+        "In the video",
+        "I said: I have just dropped off my son",
+        "at daycare - so this means that I took my son to daycare",
+        "in the car and left him there.",
+        "Now,",
+        "when we use the present perfect with just",
+        "I have just dropped off my son - then this means it happened",
+        "very recently.",
+        "Now, let's have a look",
+        "at some other examples using",
+        "this phrasal verb: My dad",
+        "used to drop me off at school - so, this means in the past",
+        "my dad dropped me off at school.",
+        "Here is an example",
+        "of what you might say in a taxi - Could you drop me off at the station?",
+        "now my question for you",
+        "in this video is: Have you dropped someone off somewhere recently?",
+        "Leave your answers in the comment section below",
+        "thanks for watching and see you next time!"
+    ],
+    "Tags_Meanings": {
+        "son": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "chó",
+                "con trai",
+                "khốn",
+                "thằng"
+            ],
+            "status": 5
+        },
+        "below": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "r"
+            ],
+            "global_meanings": [
+                "dưới",
+                "mức",
+                "nhiệt độ",
+                "sâu",
+                "tầng"
+            ],
+            "status": 5
+        },
+        "daycare": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "ban ngày",
+                "chăm sóc",
+                "nhà trẻ",
+                "thuế",
+                "xếp hàng"
+            ],
+            "status": 6
+        },
+        "in": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "r",
+                "n"
+            ],
+            "global_meanings": [
+                "gặp",
+                "nhất",
+                "năm",
+                "phòng",
+                "xe"
+            ],
+            "status": 5
+        },
+        "recently": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "r"
+            ],
+            "global_meanings": [
+                "gần",
+                "mới đây",
+                "vừa",
+                "vừa mới"
+            ],
+            "status": 5
+        },
+        "i": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "n"
+            ],
+            "global_meanings": [
+                "bố",
+                "cháu",
+                "tao",
+                "tớ",
+                "♪"
+            ],
+            "status": 5
+        },
+        "there": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "r",
+                "n"
+            ],
+            "global_meanings": [
+                "dưới",
+                "kia",
+                "ngay",
+                "ngoài",
+                "vẫn"
+            ],
+            "status": 5
+        },
+        "dad": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "ba",
+                "bố",
+                "cha"
+            ],
+            "status": 6
+        },
+        "said": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "v"
+            ],
+            "global_meanings": [
+                ":",
+                "bảo",
+                "họ",
+                "từng",
+                "vừa"
+            ],
+            "status": 5
+        },
+        "other": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "a"
+            ],
+            "global_meanings": [
+                "bên",
+                "còn",
+                "khác",
+                "kia",
+                "lẫn"
+            ],
+            "status": 5
+        },
+        "examples": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "gương",
+                "làm gương",
+                "nét",
+                "tấm",
+                "ví dụ"
+            ],
+            "status": 5
+        },
+        "phrasal": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [],
+            "status": 6
+        },
+        "google": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [],
+            "status": 1
+        },
+        "it": {
+            "tags": [],
+            "your_meanings": [
+                "Nó"
+            ],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "lên",
+                "mọi",
+                "nó",
+                "thật",
+                "vậy"
+            ],
+            "status": 5
+        },
+        "time": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "lâu",
+                "lúc",
+                "lần",
+                "thời gian",
+                "đầu tiên"
+            ],
+            "status": 5
+        },
+        "dropped": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v"
+            ],
+            "global_meanings": [
+                "ghé",
+                "rơi",
+                "rớt",
+                "thả",
+                "đánh rơi"
+            ],
+            "status": 5
+        },
+        "drop": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "bỏ",
+                "ghé",
+                "giọt",
+                "rơi",
+                "thả"
+            ],
+            "status": 2
+        },
+        "a": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "có",
+                "mới",
+                "tên",
+                "tốt",
+                "đó"
+            ],
+            "status": 5
+        },
+        "somewhere": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "r",
+                "n"
+            ],
+            "global_meanings": [
+                "an toàn",
+                "nơi",
+                "quanh",
+                "đâu đây",
+                "đâu đó"
+            ],
+            "status": 5
+        },
+        "using": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "bằng",
+                "dùng",
+                "hắn",
+                "lợi dụng",
+                "sử dụng"
+            ],
+            "status": 5
+        },
+        "him": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "bắt",
+                "gọi",
+                "đưa",
+                "ảnh",
+                "ổng"
+            ],
+            "status": 5
+        },
+        "say": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                ":",
+                "bảo",
+                "lời",
+                "vừa",
+                "đừng"
+            ],
+            "status": 5
+        },
+        "that": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "chưa",
+                "chứ",
+                "không thể",
+                "rằng",
+                "vậy"
+            ],
+            "status": 2
+        },
+        "everybody": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "hết",
+                "mọi",
+                "tất cả",
+                "đều"
+            ],
+            "status": 5
+        },
+        "com": {
+            "tags": [],
+            "your_meanings": [
+                "com"
+            ],
+            "global_tags": [],
+            "global_meanings": [
+                "bài tiết",
+                "com",
+                "hoàn ...",
+                "luisa",
+                "lúa"
+            ],
+            "status": 4
+        },
+        "the": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "lên",
+                "nhất",
+                "qua",
+                "sau",
+                "sự"
+            ],
+            "status": 5
+        },
+        "we": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "bọn",
+                "chúng tôi",
+                "nhau",
+                "ta"
+            ],
+            "status": 5
+        },
+        "is": {
+            "tags": [],
+            "your_meanings": [
+                "là",
+                "nó"
+            ],
+            "global_tags": [
+                "v"
+            ],
+            "global_meanings": [
+                "cái",
+                "nó",
+                "thật",
+                "đây",
+                "đó"
+            ],
+            "status": 1
+        },
+        "taxi": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "taxi",
+                "trạm",
+                "tài xế",
+                "đón"
+            ],
+            "status": 6
+        },
+        "left": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "n",
+                "r",
+                "v",
+                "a"
+            ],
+            "global_meanings": [
+                "bên",
+                "bỏ",
+                "quên",
+                "rời",
+                "trái"
+            ],
+            "status": 5
+        },
+        "and": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "chúng",
+                "khác",
+                "lên",
+                "sau",
+                "sự"
+            ],
+            "status": 1
+        },
+        "to": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "chúng ta",
+                "cách",
+                "gặp",
+                "nói chuyện",
+                "đưa"
+            ],
+            "status": 5
+        },
+        "you": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "cậu",
+                "gặp",
+                "mày",
+                "nghe",
+                "ngươi"
+            ],
+            "status": 5
+        },
+        "your": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "bố",
+                "cháu",
+                "ngài",
+                "ngươi",
+                "tay"
+            ],
+            "status": 5
+        },
+        "means": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "có nghĩa",
+                "có nghĩa là",
+                "nghĩa là",
+                "ý nghĩa"
+            ],
+            "status": 5
+        },
+        "car": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "chiếc",
+                "ra",
+                "xe",
+                "xe hơi"
+            ],
+            "status": 5
+        },
+        "thanks": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "cám ơn",
+                "cảm ơn",
+                "nhờ",
+                "thanks"
+            ],
+            "status": 5
+        },
+        "used": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "a",
+                "v"
+            ],
+            "global_meanings": [
+                "dùng",
+                "quen",
+                "sử dụng",
+                "thường",
+                "từng"
+            ],
+            "status": 1
+        },
+        "my": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "cha",
+                "chúa",
+                "vợ",
+                "ôi",
+                "ơi"
+            ],
+            "status": 5
+        },
+        "when": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "khi",
+                "lúc",
+                "lần",
+                "nhìn",
+                "nhớ"
+            ],
+            "status": 5
+        },
+        "see": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "gặp",
+                "nhìn",
+                "vui",
+                "xem",
+                "để"
+            ],
+            "status": 5
+        },
+        "on": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "r",
+                "a"
+            ],
+            "global_meanings": [
+                "bên",
+                "nhanh",
+                "thôi",
+                "đi",
+                "đường"
+            ],
+            "status": 5
+        },
+        "have": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "bạn",
+                "chúng ta",
+                "chưa",
+                "khác",
+                "ta"
+            ],
+            "status": 1
+        },
+        "now": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "r",
+                "n"
+            ],
+            "global_meanings": [
+                "bây giờ",
+                "giờ",
+                "ngay"
+            ],
+            "status": 5
+        },
+        "so": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "r",
+                "n"
+            ],
+            "global_meanings": [
+                "lắm",
+                "như vậy",
+                "sao",
+                "thật",
+                "xin lỗi"
+            ],
+            "status": 5
+        },
+        "fluency": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [],
+            "status": 6
+        },
+        "just": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "r",
+                "a"
+            ],
+            "global_meanings": [
+                "chỉ",
+                "cứ",
+                "mới",
+                "vậy",
+                "vừa"
+            ],
+            "status": 5
+        },
+        "jack": {
+            "tags": [],
+            "your_meanings": [
+                "bồi",
+                "giắc cắm"
+            ],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "bồi",
+                "j",
+                "jack",
+                "kích"
+            ],
+            "status": 0
+        },
+        "next": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "r"
+            ],
+            "global_meanings": [
+                "cạnh",
+                "kế",
+                "kế tiếp",
+                "tiếp theo"
+            ],
+            "status": 5
+        },
+        "here": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "r",
+                "n"
+            ],
+            "global_meanings": [
+                "khỏi",
+                "lại",
+                "ngay",
+                "đưa",
+                "ở"
+            ],
+            "status": 5
+        },
+        "video": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "phim",
+                "video",
+                "điện tử",
+                "đoạn"
+            ],
+            "status": 3
+        },
+        "with": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "bằng",
+                "cùng",
+                "khác",
+                "theo",
+                "trên"
+            ],
+            "status": 5
+        },
+        "then": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "r",
+                "n"
+            ],
+            "global_meanings": [
+                "lúc",
+                "rồi",
+                "sau",
+                "vậy",
+                "được"
+            ],
+            "status": 5
+        },
+        "from": {
+            "tags": [],
+            "your_meanings": [
+                "lấy",
+                "từ"
+            ],
+            "global_tags": [],
+            "global_meanings": [
+                "khỏi",
+                "lấy",
+                "nhận",
+                "nơi",
+                "xa"
+            ],
+            "status": 3
+        },
+        "use": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "dùng",
+                "giúp",
+                "lợi dụng",
+                "sử dụng",
+                "ta"
+            ],
+            "status": 5
+        },
+        "perfect": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "a",
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "hoàn hảo",
+                "thật",
+                "tuyệt",
+                "tuyệt vời"
+            ],
+            "status": 5
+        },
+        "school": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "học",
+                "hồi",
+                "trung học",
+                "trường",
+                "trường học"
+            ],
+            "status": 5
+        },
+        "some": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "r",
+                "a"
+            ],
+            "global_meanings": [
+                "chút",
+                "một số",
+                "một vài",
+                "vài",
+                "ít"
+            ],
+            "status": 5
+        },
+        "tofluency": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [],
+            "status": 6
+        },
+        "short": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "n",
+                "r",
+                "v",
+                "a"
+            ],
+            "global_meanings": [
+                "lùn",
+                "ngắn",
+                "ngắn gọn",
+                "ngắn ngủi",
+                "thiếu"
+            ],
+            "status": 5
+        },
+        "leave": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "bỏ",
+                "một mình",
+                "nhắn",
+                "rời",
+                "yên"
+            ],
+            "status": 5
+        },
+        "example": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "gương",
+                "làm gương",
+                "thí dụ",
+                "ví dụ"
+            ],
+            "status": 5
+        },
+        "posted": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "a",
+                "v"
+            ],
+            "global_meanings": [
+                "cập nhật",
+                "dán",
+                "thông báo",
+                "đăng"
+            ],
+            "status": 6
+        },
+        "someone": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "có",
+                "giết",
+                "gặp",
+                "kẻ",
+                "yêu"
+            ],
+            "status": 3
+        },
+        "of": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "chúng",
+                "khỏi",
+                "nhất",
+                "sự",
+                "tất cả"
+            ],
+            "status": 5
+        },
+        "for": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "mọi",
+                "năm",
+                "sự",
+                "tiền",
+                "tốt"
+            ],
+            "status": 5
+        },
+        "answers": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "câu",
+                "cần câu",
+                "trả lời",
+                "tìm kiếm",
+                "đáp án"
+            ],
+            "status": 5
+        },
+        "watching": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "ngắm",
+                "phim",
+                "quan sát",
+                "theo dõi",
+                "trông chừng"
+            ],
+            "status": 5
+        },
+        "could": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "chúng ta",
+                "có thể",
+                "giúp",
+                "không thể",
+                "sao"
+            ],
+            "status": 5
+        },
+        "happened": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v"
+            ],
+            "global_meanings": [
+                "chuyện",
+                "kể",
+                "vừa",
+                "xảy",
+                "đã"
+            ],
+            "status": 5
+        },
+        "very": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "r"
+            ],
+            "global_meanings": [
+                "cám ơn",
+                "cảm ơn",
+                "quan trọng",
+                "rất",
+                "đẹp"
+            ],
+            "status": 5
+        },
+        "comment": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "bình luận",
+                "miễn",
+                "nhận xét",
+                "ý kiến"
+            ],
+            "status": 5
+        },
+        "might": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "có lẽ",
+                "có thể",
+                "giúp",
+                "khác"
+            ],
+            "status": 5
+        },
+        "english": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "a",
+                "n"
+            ],
+            "global_meanings": [
+                "thi",
+                "thế thì",
+                "tiếng",
+                "đâu vậy"
+            ],
+            "status": 2
+        },
+        "present": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "a",
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "giới thiệu",
+                "hiện tại",
+                "món",
+                "quà",
+                "tặng"
+            ],
+            "status": 5
+        },
+        "lesson": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "bài",
+                "bài học",
+                "hôm nay",
+                "rút"
+            ],
+            "status": 3
+        },
+        "took": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v"
+            ],
+            "global_meanings": [
+                "bắt",
+                "cướp",
+                "hắn",
+                "lấy",
+                "nhận"
+            ],
+            "status": 5
+        },
+        "section": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "bộ phận",
+                "khu",
+                "khu vực",
+                "mục"
+            ],
+            "status": 5
+        },
+        "station": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "ga",
+                "nhà ga",
+                "sở",
+                "trạm",
+                "đồn"
+            ],
+            "status": 5
+        },
+        "verb": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "danh từ",
+                "miêu tả",
+                "từ",
+                "động"
+            ],
+            "status": 6
+        },
+        "look": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "kìa",
+                "nhìn",
+                "trông",
+                "vẻ"
+            ],
+            "status": 1
+        },
+        "an": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "cuộc",
+                "giờ",
+                "một",
+                "tiếng",
+                "đây"
+            ],
+            "status": 5
+        },
+        "at": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "nhìn",
+                "tại",
+                "xem",
+                "ít nhất"
+            ],
+            "status": 1
+        },
+        "we're": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [],
+            "status": 4
+        },
+        "off": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "a",
+                "r",
+                "v"
+            ],
+            "global_meanings": [
+                "bỏ",
+                "cắt",
+                "cởi",
+                "tắt"
+            ],
+            "status": 5
+        },
+        "going": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "chuyện",
+                "sắp",
+                "xảy",
+                "đâu vậy",
+                "định"
+            ],
+            "status": 5
+        },
+        "me": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "hãy",
+                "tao",
+                "để",
+                "đừng"
+            ],
+            "status": 5
+        },
+        "facebook": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [],
+            "status": 6
+        },
+        "what": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [
+                "hiểu",
+                "thế nào",
+                "xem",
+                "xảy",
+                "đó"
+            ],
+            "status": 5
+        },
+        "this": {
+            "tags": [],
+            "your_meanings": [
+                "cái này",
+                "chúng ta",
+                "không thể"
+            ],
+            "global_tags": [],
+            "global_meanings": [
+                "chúng ta",
+                "không thể",
+                "nay",
+                "vụ",
+                "đây"
+            ],
+            "status": 2
+        },
+        "hello": {
+            "tags": [],
+            "your_meanings": [
+                "alô",
+                "Xin chào"
+            ],
+            "global_tags": [
+                "n"
+            ],
+            "global_meanings": [
+                "alô",
+                "chào",
+                "chào hỏi",
+                "hello",
+                "xin"
+            ],
+            "status": 4
+        },
+        "past": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "s",
+                "r",
+                "a",
+                "n"
+            ],
+            "global_meanings": [
+                "quá khứ",
+                "suốt",
+                "tương lai",
+                "vượt"
+            ],
+            "status": 5
+        },
+        "question": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [
+                "v",
+                "n"
+            ],
+            "global_meanings": [
+                "câu",
+                "hỏi",
+                "thắc mắc"
+            ],
+            "status": 5
+        },
+        "let's": {
+            "tags": [],
+            "your_meanings": [],
+            "global_tags": [],
+            "global_meanings": [],
+            "status": 1
+        },
+        "jack from": {
+            "tags": [],
+            "your_meanings": [
+                "jack từ"
+            ],
+            "global_tags": [],
+            "global_meanings": [],
+            "status": 2
+        }
+    },
+    "youtube_data": {
+        "youtube_id": "M0lSKceg_fs",
+        "youtube_start_time": 0.36,
+        "youtube_duration": 94
+    },
+    "core_data": [
+        [
+            [
+                {
+                    "word": "Hello,",
+                    "cleaned": "hello",
+                    "status": 4,
+                    "w_idx": 0,
+                    "p_idx": 0,
+                    "s_idx": 0,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 1,
+                    "p_idx": 0,
+                    "s_idx": 0,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "is",
+                    "cleaned": "is",
+                    "status": 1,
+                    "w_idx": 2,
+                    "p_idx": 0,
+                    "s_idx": 0,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "Jack",
+                    "cleaned": "jack",
+                    "status": 0,
+                    "w_idx": 3,
+                    "p_idx": 0,
+                    "s_idx": 0,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "from",
+                    "cleaned": "from",
+                    "status": 3,
+                    "w_idx": 4,
+                    "p_idx": 0,
+                    "s_idx": 0,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "tofluency.",
+                    "cleaned": "tofluency",
+                    "status": 6,
+                    "w_idx": 5,
+                    "p_idx": 0,
+                    "s_idx": 0,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ],
+            [
+                {
+                    "word": "com",
+                    "cleaned": "com",
+                    "status": 4,
+                    "w_idx": 6,
+                    "p_idx": 0,
+                    "s_idx": 1,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "and",
+                    "cleaned": "and",
+                    "status": 1,
+                    "w_idx": 7,
+                    "p_idx": 1,
+                    "s_idx": 2,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "in",
+                    "cleaned": "in",
+                    "status": 5,
+                    "w_idx": 8,
+                    "p_idx": 1,
+                    "s_idx": 2,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 9,
+                    "p_idx": 1,
+                    "s_idx": 2,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "English",
+                    "cleaned": "english",
+                    "status": 2,
+                    "w_idx": 10,
+                    "p_idx": 1,
+                    "s_idx": 2,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "lesson",
+                    "cleaned": "lesson",
+                    "status": 3,
+                    "w_idx": 11,
+                    "p_idx": 1,
+                    "s_idx": 2,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "we're",
+                    "cleaned": "we're",
+                    "status": 4,
+                    "w_idx": 12,
+                    "p_idx": 1,
+                    "s_idx": 2,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "going",
+                    "cleaned": "going",
+                    "status": 5,
+                    "w_idx": 13,
+                    "p_idx": 1,
+                    "s_idx": 2,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "to",
+                    "cleaned": "to",
+                    "status": 5,
+                    "w_idx": 14,
+                    "p_idx": 1,
+                    "s_idx": 2,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "look",
+                    "cleaned": "look",
+                    "status": 1,
+                    "w_idx": 15,
+                    "p_idx": 1,
+                    "s_idx": 2,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "at",
+                    "cleaned": "at",
+                    "status": 1,
+                    "w_idx": 16,
+                    "p_idx": 2,
+                    "s_idx": 3,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "the",
+                    "cleaned": "the",
+                    "status": 5,
+                    "w_idx": 17,
+                    "p_idx": 2,
+                    "s_idx": 3,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "phrasal",
+                    "cleaned": "phrasal",
+                    "status": 6,
+                    "w_idx": 18,
+                    "p_idx": 2,
+                    "s_idx": 3,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "verb",
+                    "cleaned": "verb",
+                    "status": 6,
+                    "w_idx": 19,
+                    "p_idx": 2,
+                    "s_idx": 3,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "drop",
+                    "cleaned": "drop",
+                    "status": 2,
+                    "w_idx": 20,
+                    "p_idx": 2,
+                    "s_idx": 3,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "someone",
+                    "cleaned": "someone",
+                    "status": 3,
+                    "w_idx": 21,
+                    "p_idx": 2,
+                    "s_idx": 3,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "off",
+                    "cleaned": "off",
+                    "status": 5,
+                    "w_idx": 22,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "-",
+                    "cleaned": "-",
+                    "status": -1,
+                    "w_idx": 23,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "and",
+                    "cleaned": "and",
+                    "status": 1,
+                    "w_idx": 24,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "I",
+                    "cleaned": "i",
+                    "status": 5,
+                    "w_idx": 25,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "used",
+                    "cleaned": "used",
+                    "status": 1,
+                    "w_idx": 26,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 27,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "in",
+                    "cleaned": "in",
+                    "status": 5,
+                    "w_idx": 28,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "video",
+                    "cleaned": "video",
+                    "status": 3,
+                    "w_idx": 29,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "that",
+                    "cleaned": "that",
+                    "status": 2,
+                    "w_idx": 30,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "I",
+                    "cleaned": "i",
+                    "status": 5,
+                    "w_idx": 31,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 9,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "posted",
+                    "cleaned": "posted",
+                    "status": 6,
+                    "w_idx": 32,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 10,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "on",
+                    "cleaned": "on",
+                    "status": 5,
+                    "w_idx": 33,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 11,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "Facebook",
+                    "cleaned": "facebook",
+                    "status": 6,
+                    "w_idx": 34,
+                    "p_idx": 3,
+                    "s_idx": 4,
+                    "idx_w_in_s": 12,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "and",
+                    "cleaned": "and",
+                    "status": 1,
+                    "w_idx": 35,
+                    "p_idx": 4,
+                    "s_idx": 5,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "on",
+                    "cleaned": "on",
+                    "status": 5,
+                    "w_idx": 36,
+                    "p_idx": 4,
+                    "s_idx": 5,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "Google+",
+                    "cleaned": "google",
+                    "status": 1,
+                    "w_idx": 37,
+                    "p_idx": 4,
+                    "s_idx": 5,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "-",
+                    "cleaned": "-",
+                    "status": -1,
+                    "w_idx": 38,
+                    "p_idx": 4,
+                    "s_idx": 5,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "so",
+                    "cleaned": "so",
+                    "status": 5,
+                    "w_idx": 39,
+                    "p_idx": 4,
+                    "s_idx": 5,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "let's",
+                    "cleaned": "let's",
+                    "status": 1,
+                    "w_idx": 40,
+                    "p_idx": 4,
+                    "s_idx": 5,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "have",
+                    "cleaned": "have",
+                    "status": 1,
+                    "w_idx": 41,
+                    "p_idx": 4,
+                    "s_idx": 5,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "a",
+                    "cleaned": "a",
+                    "status": 5,
+                    "w_idx": 42,
+                    "p_idx": 4,
+                    "s_idx": 5,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "look",
+                    "cleaned": "look",
+                    "status": 1,
+                    "w_idx": 43,
+                    "p_idx": 4,
+                    "s_idx": 5,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "at",
+                    "cleaned": "at",
+                    "status": 1,
+                    "w_idx": 44,
+                    "p_idx": 5,
+                    "s_idx": 6,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 45,
+                    "p_idx": 5,
+                    "s_idx": 6,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "short",
+                    "cleaned": "short",
+                    "status": 5,
+                    "w_idx": 46,
+                    "p_idx": 5,
+                    "s_idx": 6,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "video",
+                    "cleaned": "video",
+                    "status": 3,
+                    "w_idx": 47,
+                    "p_idx": 5,
+                    "s_idx": 6,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "Hello",
+                    "cleaned": "hello",
+                    "status": 4,
+                    "w_idx": 48,
+                    "p_idx": 6,
+                    "s_idx": 7,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "everybody",
+                    "cleaned": "everybody",
+                    "status": 5,
+                    "w_idx": 49,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 50,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "is",
+                    "cleaned": "is",
+                    "status": 1,
+                    "w_idx": 51,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "Jack",
+                    "cleaned": "jack",
+                    "status": 0,
+                    "w_idx": 52,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "from",
+                    "cleaned": "from",
+                    "status": 3,
+                    "w_idx": 53,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "To",
+                    "cleaned": "to",
+                    "status": 5,
+                    "w_idx": 54,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "Fluency",
+                    "cleaned": "fluency",
+                    "status": 6,
+                    "w_idx": 55,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "-",
+                    "cleaned": "-",
+                    "status": -1,
+                    "w_idx": 56,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "I",
+                    "cleaned": "i",
+                    "status": 5,
+                    "w_idx": 57,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "have",
+                    "cleaned": "have",
+                    "status": 1,
+                    "w_idx": 58,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 9,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "just",
+                    "cleaned": "just",
+                    "status": 5,
+                    "w_idx": 59,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 10,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "dropped",
+                    "cleaned": "dropped",
+                    "status": 5,
+                    "w_idx": 60,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 11,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "off",
+                    "cleaned": "off",
+                    "status": 5,
+                    "w_idx": 61,
+                    "p_idx": 7,
+                    "s_idx": 8,
+                    "idx_w_in_s": 12,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "my",
+                    "cleaned": "my",
+                    "status": 5,
+                    "w_idx": 62,
+                    "p_idx": 8,
+                    "s_idx": 9,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "son",
+                    "cleaned": "son",
+                    "status": 5,
+                    "w_idx": 63,
+                    "p_idx": 8,
+                    "s_idx": 9,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "at",
+                    "cleaned": "at",
+                    "status": 1,
+                    "w_idx": 64,
+                    "p_idx": 8,
+                    "s_idx": 9,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "daycare.",
+                    "cleaned": "daycare",
+                    "status": 6,
+                    "w_idx": 65,
+                    "p_idx": 8,
+                    "s_idx": 9,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ],
+            [
+                {
+                    "word": "In",
+                    "cleaned": "in",
+                    "status": 5,
+                    "w_idx": 66,
+                    "p_idx": 8,
+                    "s_idx": 10,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "the",
+                    "cleaned": "the",
+                    "status": 5,
+                    "w_idx": 67,
+                    "p_idx": 8,
+                    "s_idx": 10,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "video",
+                    "cleaned": "video",
+                    "status": 3,
+                    "w_idx": 68,
+                    "p_idx": 8,
+                    "s_idx": 10,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "I",
+                    "cleaned": "i",
+                    "status": 5,
+                    "w_idx": 69,
+                    "p_idx": 9,
+                    "s_idx": 11,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "said:",
+                    "cleaned": "said",
+                    "status": 5,
+                    "w_idx": 70,
+                    "p_idx": 9,
+                    "s_idx": 11,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "I",
+                    "cleaned": "i",
+                    "status": 5,
+                    "w_idx": 71,
+                    "p_idx": 9,
+                    "s_idx": 11,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "have",
+                    "cleaned": "have",
+                    "status": 1,
+                    "w_idx": 72,
+                    "p_idx": 9,
+                    "s_idx": 11,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "just",
+                    "cleaned": "just",
+                    "status": 5,
+                    "w_idx": 73,
+                    "p_idx": 9,
+                    "s_idx": 11,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "dropped",
+                    "cleaned": "dropped",
+                    "status": 5,
+                    "w_idx": 74,
+                    "p_idx": 9,
+                    "s_idx": 11,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "off",
+                    "cleaned": "off",
+                    "status": 5,
+                    "w_idx": 75,
+                    "p_idx": 9,
+                    "s_idx": 11,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "my",
+                    "cleaned": "my",
+                    "status": 5,
+                    "w_idx": 76,
+                    "p_idx": 9,
+                    "s_idx": 11,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "son",
+                    "cleaned": "son",
+                    "status": 5,
+                    "w_idx": 77,
+                    "p_idx": 9,
+                    "s_idx": 11,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "at",
+                    "cleaned": "at",
+                    "status": 1,
+                    "w_idx": 78,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "daycare",
+                    "cleaned": "daycare",
+                    "status": 6,
+                    "w_idx": 79,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "-",
+                    "cleaned": "-",
+                    "status": -1,
+                    "w_idx": 80,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "so",
+                    "cleaned": "so",
+                    "status": 5,
+                    "w_idx": 81,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 82,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "means",
+                    "cleaned": "means",
+                    "status": 5,
+                    "w_idx": 83,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "that",
+                    "cleaned": "that",
+                    "status": 2,
+                    "w_idx": 84,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "I",
+                    "cleaned": "i",
+                    "status": 5,
+                    "w_idx": 85,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "took",
+                    "cleaned": "took",
+                    "status": 5,
+                    "w_idx": 86,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "my",
+                    "cleaned": "my",
+                    "status": 5,
+                    "w_idx": 87,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 9,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "son",
+                    "cleaned": "son",
+                    "status": 5,
+                    "w_idx": 88,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 10,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "to",
+                    "cleaned": "to",
+                    "status": 5,
+                    "w_idx": 89,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 11,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "daycare",
+                    "cleaned": "daycare",
+                    "status": 6,
+                    "w_idx": 90,
+                    "p_idx": 10,
+                    "s_idx": 12,
+                    "idx_w_in_s": 12,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "in",
+                    "cleaned": "in",
+                    "status": 5,
+                    "w_idx": 91,
+                    "p_idx": 11,
+                    "s_idx": 13,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "the",
+                    "cleaned": "the",
+                    "status": 5,
+                    "w_idx": 92,
+                    "p_idx": 11,
+                    "s_idx": 13,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "car",
+                    "cleaned": "car",
+                    "status": 5,
+                    "w_idx": 93,
+                    "p_idx": 11,
+                    "s_idx": 13,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "and",
+                    "cleaned": "and",
+                    "status": 1,
+                    "w_idx": 94,
+                    "p_idx": 11,
+                    "s_idx": 13,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "left",
+                    "cleaned": "left",
+                    "status": 5,
+                    "w_idx": 95,
+                    "p_idx": 11,
+                    "s_idx": 13,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "him",
+                    "cleaned": "him",
+                    "status": 5,
+                    "w_idx": 96,
+                    "p_idx": 11,
+                    "s_idx": 13,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "there.",
+                    "cleaned": "there",
+                    "status": 5,
+                    "w_idx": 97,
+                    "p_idx": 11,
+                    "s_idx": 13,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ],
+            [
+                {
+                    "word": "Now,",
+                    "cleaned": "now",
+                    "status": 5,
+                    "w_idx": 98,
+                    "p_idx": 11,
+                    "s_idx": 14,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "when",
+                    "cleaned": "when",
+                    "status": 5,
+                    "w_idx": 99,
+                    "p_idx": 12,
+                    "s_idx": 15,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "we",
+                    "cleaned": "we",
+                    "status": 5,
+                    "w_idx": 100,
+                    "p_idx": 12,
+                    "s_idx": 15,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "use",
+                    "cleaned": "use",
+                    "status": 5,
+                    "w_idx": 101,
+                    "p_idx": 12,
+                    "s_idx": 15,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "the",
+                    "cleaned": "the",
+                    "status": 5,
+                    "w_idx": 102,
+                    "p_idx": 12,
+                    "s_idx": 15,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "present",
+                    "cleaned": "present",
+                    "status": 5,
+                    "w_idx": 103,
+                    "p_idx": 12,
+                    "s_idx": 15,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "perfect",
+                    "cleaned": "perfect",
+                    "status": 5,
+                    "w_idx": 104,
+                    "p_idx": 12,
+                    "s_idx": 15,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "with",
+                    "cleaned": "with",
+                    "status": 5,
+                    "w_idx": 105,
+                    "p_idx": 12,
+                    "s_idx": 15,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "just",
+                    "cleaned": "just",
+                    "status": 5,
+                    "w_idx": 106,
+                    "p_idx": 12,
+                    "s_idx": 15,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "I",
+                    "cleaned": "i",
+                    "status": 5,
+                    "w_idx": 107,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "have",
+                    "cleaned": "have",
+                    "status": 1,
+                    "w_idx": 108,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "just",
+                    "cleaned": "just",
+                    "status": 5,
+                    "w_idx": 109,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "dropped",
+                    "cleaned": "dropped",
+                    "status": 5,
+                    "w_idx": 110,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "off",
+                    "cleaned": "off",
+                    "status": 5,
+                    "w_idx": 111,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "my",
+                    "cleaned": "my",
+                    "status": 5,
+                    "w_idx": 112,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "son",
+                    "cleaned": "son",
+                    "status": 5,
+                    "w_idx": 113,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "-",
+                    "cleaned": "-",
+                    "status": -1,
+                    "w_idx": 114,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "then",
+                    "cleaned": "then",
+                    "status": 5,
+                    "w_idx": 115,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 116,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 9,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "means",
+                    "cleaned": "means",
+                    "status": 5,
+                    "w_idx": 117,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 10,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "it",
+                    "cleaned": "it",
+                    "status": 5,
+                    "w_idx": 118,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 11,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "happened",
+                    "cleaned": "happened",
+                    "status": 5,
+                    "w_idx": 119,
+                    "p_idx": 13,
+                    "s_idx": 16,
+                    "idx_w_in_s": 12,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "very",
+                    "cleaned": "very",
+                    "status": 5,
+                    "w_idx": 120,
+                    "p_idx": 14,
+                    "s_idx": 17,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "recently.",
+                    "cleaned": "recently",
+                    "status": 5,
+                    "w_idx": 121,
+                    "p_idx": 14,
+                    "s_idx": 17,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ],
+            [
+                {
+                    "word": "Now,",
+                    "cleaned": "now",
+                    "status": 5,
+                    "w_idx": 122,
+                    "p_idx": 14,
+                    "s_idx": 18,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "let's",
+                    "cleaned": "let's",
+                    "status": 1,
+                    "w_idx": 123,
+                    "p_idx": 14,
+                    "s_idx": 18,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "have",
+                    "cleaned": "have",
+                    "status": 1,
+                    "w_idx": 124,
+                    "p_idx": 14,
+                    "s_idx": 18,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "a",
+                    "cleaned": "a",
+                    "status": 5,
+                    "w_idx": 125,
+                    "p_idx": 14,
+                    "s_idx": 18,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "look",
+                    "cleaned": "look",
+                    "status": 1,
+                    "w_idx": 126,
+                    "p_idx": 14,
+                    "s_idx": 18,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "at",
+                    "cleaned": "at",
+                    "status": 1,
+                    "w_idx": 127,
+                    "p_idx": 15,
+                    "s_idx": 19,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "some",
+                    "cleaned": "some",
+                    "status": 5,
+                    "w_idx": 128,
+                    "p_idx": 15,
+                    "s_idx": 19,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "other",
+                    "cleaned": "other",
+                    "status": 5,
+                    "w_idx": 129,
+                    "p_idx": 15,
+                    "s_idx": 19,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "examples",
+                    "cleaned": "examples",
+                    "status": 5,
+                    "w_idx": 130,
+                    "p_idx": 15,
+                    "s_idx": 19,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "using",
+                    "cleaned": "using",
+                    "status": 5,
+                    "w_idx": 131,
+                    "p_idx": 15,
+                    "s_idx": 19,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 132,
+                    "p_idx": 16,
+                    "s_idx": 20,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "phrasal",
+                    "cleaned": "phrasal",
+                    "status": 6,
+                    "w_idx": 133,
+                    "p_idx": 16,
+                    "s_idx": 20,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "verb:",
+                    "cleaned": "verb",
+                    "status": 6,
+                    "w_idx": 134,
+                    "p_idx": 16,
+                    "s_idx": 20,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "My",
+                    "cleaned": "my",
+                    "status": 5,
+                    "w_idx": 135,
+                    "p_idx": 16,
+                    "s_idx": 20,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "dad",
+                    "cleaned": "dad",
+                    "status": 6,
+                    "w_idx": 136,
+                    "p_idx": 16,
+                    "s_idx": 20,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "used",
+                    "cleaned": "used",
+                    "status": 1,
+                    "w_idx": 137,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "to",
+                    "cleaned": "to",
+                    "status": 5,
+                    "w_idx": 138,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "drop",
+                    "cleaned": "drop",
+                    "status": 2,
+                    "w_idx": 139,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "me",
+                    "cleaned": "me",
+                    "status": 5,
+                    "w_idx": 140,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "off",
+                    "cleaned": "off",
+                    "status": 5,
+                    "w_idx": 141,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "at",
+                    "cleaned": "at",
+                    "status": 1,
+                    "w_idx": 142,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "school",
+                    "cleaned": "school",
+                    "status": 5,
+                    "w_idx": 143,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "-",
+                    "cleaned": "-",
+                    "status": -1,
+                    "w_idx": 144,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "so,",
+                    "cleaned": "so",
+                    "status": 5,
+                    "w_idx": 145,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 146,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 9,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "means",
+                    "cleaned": "means",
+                    "status": 5,
+                    "w_idx": 147,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 10,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "in",
+                    "cleaned": "in",
+                    "status": 5,
+                    "w_idx": 148,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 11,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "the",
+                    "cleaned": "the",
+                    "status": 5,
+                    "w_idx": 149,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 12,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "past",
+                    "cleaned": "past",
+                    "status": 5,
+                    "w_idx": 150,
+                    "p_idx": 17,
+                    "s_idx": 21,
+                    "idx_w_in_s": 13,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "my",
+                    "cleaned": "my",
+                    "status": 5,
+                    "w_idx": 151,
+                    "p_idx": 18,
+                    "s_idx": 22,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "dad",
+                    "cleaned": "dad",
+                    "status": 6,
+                    "w_idx": 152,
+                    "p_idx": 18,
+                    "s_idx": 22,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "dropped",
+                    "cleaned": "dropped",
+                    "status": 5,
+                    "w_idx": 153,
+                    "p_idx": 18,
+                    "s_idx": 22,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "me",
+                    "cleaned": "me",
+                    "status": 5,
+                    "w_idx": 154,
+                    "p_idx": 18,
+                    "s_idx": 22,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "off",
+                    "cleaned": "off",
+                    "status": 5,
+                    "w_idx": 155,
+                    "p_idx": 18,
+                    "s_idx": 22,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "at",
+                    "cleaned": "at",
+                    "status": 1,
+                    "w_idx": 156,
+                    "p_idx": 18,
+                    "s_idx": 22,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "school.",
+                    "cleaned": "school",
+                    "status": 5,
+                    "w_idx": 157,
+                    "p_idx": 18,
+                    "s_idx": 22,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ],
+            [
+                {
+                    "word": "Here",
+                    "cleaned": "here",
+                    "status": 5,
+                    "w_idx": 158,
+                    "p_idx": 18,
+                    "s_idx": 23,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "is",
+                    "cleaned": "is",
+                    "status": 1,
+                    "w_idx": 159,
+                    "p_idx": 18,
+                    "s_idx": 23,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "an",
+                    "cleaned": "an",
+                    "status": 5,
+                    "w_idx": 160,
+                    "p_idx": 18,
+                    "s_idx": 23,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "example",
+                    "cleaned": "example",
+                    "status": 5,
+                    "w_idx": 161,
+                    "p_idx": 18,
+                    "s_idx": 23,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "of",
+                    "cleaned": "of",
+                    "status": 5,
+                    "w_idx": 162,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "what",
+                    "cleaned": "what",
+                    "status": 5,
+                    "w_idx": 163,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "you",
+                    "cleaned": "you",
+                    "status": 5,
+                    "w_idx": 164,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "might",
+                    "cleaned": "might",
+                    "status": 5,
+                    "w_idx": 165,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "say",
+                    "cleaned": "say",
+                    "status": 5,
+                    "w_idx": 166,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "in",
+                    "cleaned": "in",
+                    "status": 5,
+                    "w_idx": 167,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "a",
+                    "cleaned": "a",
+                    "status": 5,
+                    "w_idx": 168,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "taxi",
+                    "cleaned": "taxi",
+                    "status": 6,
+                    "w_idx": 169,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "-",
+                    "cleaned": "-",
+                    "status": -1,
+                    "w_idx": 170,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "Could",
+                    "cleaned": "could",
+                    "status": 5,
+                    "w_idx": 171,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 9,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "you",
+                    "cleaned": "you",
+                    "status": 5,
+                    "w_idx": 172,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 10,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "drop",
+                    "cleaned": "drop",
+                    "status": 2,
+                    "w_idx": 173,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 11,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "me",
+                    "cleaned": "me",
+                    "status": 5,
+                    "w_idx": 174,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 12,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "off",
+                    "cleaned": "off",
+                    "status": 5,
+                    "w_idx": 175,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 13,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "at",
+                    "cleaned": "at",
+                    "status": 1,
+                    "w_idx": 176,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 14,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "the",
+                    "cleaned": "the",
+                    "status": 5,
+                    "w_idx": 177,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 15,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "station?",
+                    "cleaned": "station",
+                    "status": 5,
+                    "w_idx": 178,
+                    "p_idx": 19,
+                    "s_idx": 24,
+                    "idx_w_in_s": 16,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "now",
+                    "cleaned": "now",
+                    "status": 5,
+                    "w_idx": 179,
+                    "p_idx": 20,
+                    "s_idx": 25,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "my",
+                    "cleaned": "my",
+                    "status": 5,
+                    "w_idx": 180,
+                    "p_idx": 20,
+                    "s_idx": 25,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "question",
+                    "cleaned": "question",
+                    "status": 5,
+                    "w_idx": 181,
+                    "p_idx": 20,
+                    "s_idx": 25,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "for",
+                    "cleaned": "for",
+                    "status": 5,
+                    "w_idx": 182,
+                    "p_idx": 20,
+                    "s_idx": 25,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "you",
+                    "cleaned": "you",
+                    "status": 5,
+                    "w_idx": 183,
+                    "p_idx": 20,
+                    "s_idx": 25,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "in",
+                    "cleaned": "in",
+                    "status": 5,
+                    "w_idx": 184,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "this",
+                    "cleaned": "this",
+                    "status": 2,
+                    "w_idx": 185,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "video",
+                    "cleaned": "video",
+                    "status": 3,
+                    "w_idx": 186,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "is:",
+                    "cleaned": "is",
+                    "status": 1,
+                    "w_idx": 187,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "Have",
+                    "cleaned": "have",
+                    "status": 1,
+                    "w_idx": 188,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "you",
+                    "cleaned": "you",
+                    "status": 5,
+                    "w_idx": 189,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "dropped",
+                    "cleaned": "dropped",
+                    "status": 5,
+                    "w_idx": 190,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "someone",
+                    "cleaned": "someone",
+                    "status": 3,
+                    "w_idx": 191,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "off",
+                    "cleaned": "off",
+                    "status": 5,
+                    "w_idx": 192,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 8,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "somewhere",
+                    "cleaned": "somewhere",
+                    "status": 5,
+                    "w_idx": 193,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 9,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "recently?",
+                    "cleaned": "recently",
+                    "status": 5,
+                    "w_idx": 194,
+                    "p_idx": 21,
+                    "s_idx": 26,
+                    "idx_w_in_s": 10,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "Leave",
+                    "cleaned": "leave",
+                    "status": 5,
+                    "w_idx": 195,
+                    "p_idx": 22,
+                    "s_idx": 27,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "your",
+                    "cleaned": "your",
+                    "status": 5,
+                    "w_idx": 196,
+                    "p_idx": 22,
+                    "s_idx": 27,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "answers",
+                    "cleaned": "answers",
+                    "status": 5,
+                    "w_idx": 197,
+                    "p_idx": 22,
+                    "s_idx": 27,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "in",
+                    "cleaned": "in",
+                    "status": 5,
+                    "w_idx": 198,
+                    "p_idx": 22,
+                    "s_idx": 27,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "the",
+                    "cleaned": "the",
+                    "status": 5,
+                    "w_idx": 199,
+                    "p_idx": 22,
+                    "s_idx": 27,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "comment",
+                    "cleaned": "comment",
+                    "status": 5,
+                    "w_idx": 200,
+                    "p_idx": 22,
+                    "s_idx": 27,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "section",
+                    "cleaned": "section",
+                    "status": 5,
+                    "w_idx": 201,
+                    "p_idx": 22,
+                    "s_idx": 27,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "below",
+                    "cleaned": "below",
+                    "status": 5,
+                    "w_idx": 202,
+                    "p_idx": 22,
+                    "s_idx": 27,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "word": "thanks",
+                    "cleaned": "thanks",
+                    "status": 5,
+                    "w_idx": 203,
+                    "p_idx": 23,
+                    "s_idx": 28,
+                    "idx_w_in_s": 0,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "for",
+                    "cleaned": "for",
+                    "status": 5,
+                    "w_idx": 204,
+                    "p_idx": 23,
+                    "s_idx": 28,
+                    "idx_w_in_s": 1,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "watching",
+                    "cleaned": "watching",
+                    "status": 5,
+                    "w_idx": 205,
+                    "p_idx": 23,
+                    "s_idx": 28,
+                    "idx_w_in_s": 2,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "and",
+                    "cleaned": "and",
+                    "status": 1,
+                    "w_idx": 206,
+                    "p_idx": 23,
+                    "s_idx": 28,
+                    "idx_w_in_s": 3,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "see",
+                    "cleaned": "see",
+                    "status": 5,
+                    "w_idx": 207,
+                    "p_idx": 23,
+                    "s_idx": 28,
+                    "idx_w_in_s": 4,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "you",
+                    "cleaned": "you",
+                    "status": 5,
+                    "w_idx": 208,
+                    "p_idx": 23,
+                    "s_idx": 28,
+                    "idx_w_in_s": 5,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "next",
+                    "cleaned": "next",
+                    "status": 5,
+                    "w_idx": 209,
+                    "p_idx": 23,
+                    "s_idx": 28,
+                    "idx_w_in_s": 6,
+                    "type": "word",
+                    "visible_in_phrase": true
+                },
+                {
+                    "word": "time!",
+                    "cleaned": "time",
+                    "status": 5,
+                    "w_idx": 210,
+                    "p_idx": 23,
+                    "s_idx": 28,
+                    "idx_w_in_s": 7,
+                    "type": "word",
+                    "visible_in_phrase": true
+                }
+            ]
+        ]
+    ],
+    "timestamp": [
+        {
+            "start": 0.36,
+            "end": 3.61,
+            "text": "Hello, this is Jack from tofluency.com",
+            "ts_idx": 0
+        },
+        {
+            "start": 3.61,
+            "end": 6.91,
+            "text": "and in this English lesson we're going to look",
+            "ts_idx": 1
+        },
+        {
+            "start": 6.91,
+            "end": 10.33,
+            "text": "at the phrasal verb drop someone",
+            "ts_idx": 2
+        },
+        {
+            "start": 10.33,
+            "end": 15.36,
+            "text": "off - and I used this in video that I posted on Facebook",
+            "ts_idx": 3
+        },
+        {
+            "start": 15.36,
+            "end": 18.42,
+            "text": "and on Google+ - so let's have a look",
+            "ts_idx": 4
+        },
+        {
+            "start": 18.42,
+            "end": 24.35,
+            "text": "at this short video",
+            "ts_idx": 5
+        },
+        {
+            "start": 24.35,
+            "end": 24.79,
+            "text": "Hello",
+            "ts_idx": 6
+        },
+        {
+            "start": 24.79,
+            "end": 28.6,
+            "text": "everybody this is Jack from To Fluency - I have just dropped off",
+            "ts_idx": 7
+        },
+        {
+            "start": 28.6,
+            "end": 31.89,
+            "text": "my son at daycare. In the video",
+            "ts_idx": 8
+        },
+        {
+            "start": 31.89,
+            "end": 35.61,
+            "text": "I said: I have just dropped off my son",
+            "ts_idx": 9
+        },
+        {
+            "start": 35.61,
+            "end": 40.13,
+            "text": "at daycare - so this means that I took my son to daycare",
+            "ts_idx": 10
+        },
+        {
+            "start": 40.13,
+            "end": 44.15,
+            "text": "in the car and left him there. Now,",
+            "ts_idx": 11
+        },
+        {
+            "start": 44.15,
+            "end": 47.81,
+            "text": "when we use the present perfect with just",
+            "ts_idx": 12
+        },
+        {
+            "start": 47.81,
+            "end": 52.97,
+            "text": "I have just dropped off my son - then this means it happened",
+            "ts_idx": 13
+        },
+        {
+            "start": 52.97,
+            "end": 56.8,
+            "text": "very recently. Now, let's have a look",
+            "ts_idx": 14
+        },
+        {
+            "start": 56.8,
+            "end": 59.86,
+            "text": "at some other examples using",
+            "ts_idx": 15
+        },
+        {
+            "start": 59.86,
+            "end": 65.19,
+            "text": "this phrasal verb: My dad",
+            "ts_idx": 16
+        },
+        {
+            "start": 65.19,
+            "end": 69.67,
+            "text": "used to drop me off at school - so, this means in the past",
+            "ts_idx": 17
+        },
+        {
+            "start": 69.67,
+            "end": 74.79,
+            "text": "my dad dropped me off at school. Here is an example",
+            "ts_idx": 18
+        },
+        {
+            "start": 74.79,
+            "end": 79.48,
+            "text": "of what you might say in a taxi - Could you drop me off at the station?",
+            "ts_idx": 19
+        },
+        {
+            "start": 81.34,
+            "end": 83.26,
+            "text": "now my question for you",
+            "ts_idx": 20
+        },
+        {
+            "start": 83.27,
+            "end": 88.47,
+            "text": "in this video is: Have you dropped someone off somewhere recently?",
+            "ts_idx": 21
+        },
+        {
+            "start": 88.47,
+            "end": 92.24,
+            "text": "Leave your answers in the comment section below",
+            "ts_idx": 22
+        },
+        {
+            "start": 92.24,
+            "end": 95.18,
+            "text": "thanks for watching and see you next time!",
+            "ts_idx": 23
+        }
+    ],
+    "lastReadWordIdx": 0
+}
