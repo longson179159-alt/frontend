@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
   ? undefined
   : contentType?.includes("application/json")
     ? await readRawBody(event, "utf8")
-    : await readRawBody(event);
+    : await readRawBody(event, false);
 
   try {
     const upstream = await $fetch.raw(upstreamUrl, {
