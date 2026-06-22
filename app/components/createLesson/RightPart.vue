@@ -57,7 +57,7 @@
           <span class=" text-sm">Or</span>
           <div >
             <label class=" border block border-dashed border-blue-800 p-2 rounded-lg">
-              <input type="file" @change="handleUploadText" accept=".txt, .pdf, .epub, .doxc" class="sr-only ">
+              <input type="file" @change="handleUploadText" accept=".txt,.pdf,.epub,.docx" class="sr-only ">
               <div class="flex items-center justify-center flex-wrap text-sm border-[8px] border-blue-300 px-2 py-6">
                 <span class="mr-2 text-center">Drag and drop your file here or </span>
                 <span class="hover:underline text-blue-600">Select File</span>
@@ -69,7 +69,7 @@
 
         <div v-if="textFile" class=" relative px-3 bg-gray-300 rounded-xl py-5">
           <span >{{textFile.name}}</span>
-          <button @click="textFile = null" class="absolute right-2 top-2 flex items-center justify-center rounded-md  h-5 w-5 bg-gray-500"><font-awesome icon="times"/></button>
+          <button @click="textFile = null; emit('sendTextFile', null)" class="absolute right-2 top-2 flex items-center justify-center rounded-md  h-5 w-5 bg-gray-500"><font-awesome icon="times"/></button>
         </div>
       </div>
     </div>
@@ -143,10 +143,12 @@ watch(audioProgress, (newVal) => {
 })
 
 const handleUploadText = (e) => {
-  textFile.value = e.target.files[0]
-  textFileName.value = textFile.value.name
-  console.log("textFileName : ", textFileName.value)
-  emit('sendTextFile', textFile.value)
+  const selectedFile = e.target.files?.[0]
+  if (!selectedFile) return
+
+  textFile.value = selectedFile
+  textFileName.value = selectedFile.name
+  emit('sendTextFile', selectedFile)
 }
 
 const emit = defineEmits(['sendAudioFile', 'sendTextFile', 'sendInputText'])

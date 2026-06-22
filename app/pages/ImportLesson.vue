@@ -180,7 +180,7 @@ const saveAndGenerate = async () => {
   formData.append("language", 'en')
   // formData.append('level', level.value)
   if (pictureFile.value) formData.append('picture', pictureFile.value)
-  if (audioFile.value) formData.append('audiofile', audioFile.value)
+  // if (audioFile.value) formData.append('audiofile', audioFile.value)
 
   
   try {
