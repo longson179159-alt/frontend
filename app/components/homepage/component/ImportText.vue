@@ -20,7 +20,7 @@
       </span>
 
       <label class="cursor-pointer ">
-        <input type="file" accept="application/.pdf, .docx, .txt, .epub" @change="handleFile" class="sr-only">
+        <input type="file" accept=".pdf, .docx, .txt, .epub" @change="handleFile" class="sr-only">
         <div class="border border-dashed w-full h-20 border-blue-300 p-2 flex min-h-60 rounded-md">
           <div class="  border-8 border-blue-300 flex-1 flex items-center justify-center gap-2 px-3">
             <span class="text-xl">Drag and drop your file here or </span>
@@ -80,7 +80,7 @@ const sendToParent = () => {
 const router = useRouter()
 
 const handleFile = async (e) => {
-
+  if (loading.value) return
   message.value = ""
   const file = e.target?.files?.[0]
   if (!file) return
@@ -98,7 +98,7 @@ const handleFile = async (e) => {
   formData.append("language", 'en')
 
   try {
-    const result = await $fetch(`/api/upload_text/`, {
+    const result = await $fetch(`/api/create_lesson_manually/`, {
       method: "POST",
       body: formData,
       credentials: 'include'
@@ -119,12 +119,13 @@ const handleFile = async (e) => {
 
   catch (error) {
     console.error(error)
-    message.value = "Failed to upload : " + uploadFile.value.name
+    message.value = error?.data?.message || ("Failed to upload : " + uploadFile.value.name)
   }
 
   finally {
     loading.value = false
     uploadFile.value = null
+    if (message.value) importing.value = false
 
   }
 
