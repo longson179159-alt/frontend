@@ -90,7 +90,12 @@ const handleFile = async (e) => {
   importing.value = true
   loading.value = true
   const formData = new FormData()
-  formData.append("file", uploadFile.value)
+  formData.append("textfile", uploadFile.value)
+  // extract file name without extetension
+  const lessonName = uploadFile.value.name.split(".").slice(0, -1).join(".")
+  formData.append("lessonName", lessonName)
+  formData.append("courseName", 'Quick Import')
+  formData.append("language", 'en')
 
   try {
     const result = await $fetch(`/api/upload_text/`, {

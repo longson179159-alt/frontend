@@ -73,10 +73,10 @@
           <img src="/icons/header/importText.svg" alt="importText" />
           <span class="text-black">Ebook/File</span>
         </button>
-        <button @click="OpenUpload('audio')" class="flex justify-start items-center gap-4 hover:bg-gray-200 px-2 py-2 ">
+        <!-- <button @click="OpenUpload('audio')" class="flex justify-start items-center gap-4 hover:bg-gray-200 px-2 py-2 ">
           <img src="/icons/header/importAudio.svg" alt="ImportAudio"  class="ml-1"/>
           <span class="text-black">Audio</span>
-        </button>
+        </button> -->
       </div>
 
       <import-text v-if="uploadObject === 'text'" @send-message="uploadObject=$event"/>
@@ -94,7 +94,7 @@ import { useRouter } from 'vue-router'
 import Slider from '@vueform/slider'
 import '@vueform/slider/themes/default.css'
 import ImportText from './component/ImportText.vue'
-import ImportAudio from './component/ImportAudio.vue'
+// import ImportAudio from './component/ImportAudio.vue'
 import importVocabulary from './component/importVocabulary.vue'
 
 const range = ref([3, 5])
