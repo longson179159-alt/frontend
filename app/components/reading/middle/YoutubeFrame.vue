@@ -1,9 +1,21 @@
 <template>
-    <div class="w-full flex flex-col items-center justify-start mt-3">
-          <div v-if="props.videoId" class="w-full h-[200px] flex items-center justify-center my-2">
-            <div ref="videoRef" class="w-full h-full border"></div>
-          </div>
+    <div class="w-full flex  flex-col items-center justify-start mt-3">
+         
+            <div v-if="props.videoId"  class=" w-full max-w-[700px] flex flex-col items-center justify-center">
+              <button @click="showDrag" class="ml-auto z-50 h-8 w-8 hover:bg-gray-200 rounded-full flex items-center justify-center"><font-awesome icon="times"/></button>
+              <div class="relative w-full  h-[180px]  flex flex-col items-center justify-center mb-2">
+                <div ref="videoRef" class="w-full h-full border"></div>
+                <button
+                  class="absolute inset-0 z-10"
+                  @click="playAudio"
+                ></button>
+              </div>
+            </div>
 
+            
+          
+
+          <!-- CHOOSE AND CHANGE SPEED AREA -->
           <div class="relative h-14 w-14 shrink-0 whitespace-none mb-10">
               <button @click="playAudio" class="border border-gray-600  self-center w-full h-full rounded-full flex items-center justify-center">
                   <img src="/icons/reader/volume.svg" class="w-8 h-8">

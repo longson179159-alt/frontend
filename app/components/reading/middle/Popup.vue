@@ -298,3 +298,74 @@ onMounted(async() => {
 }
 
 </style>
+
+<!-- <template>
+    <div class="w-52 rounded-2xl  border border-gray-300 shadow-md p-3 z-10  bg-white flex flex-col ">
+        <div class="w-[240px] flex flex-col rounded-[22px] gap-2 px-2 py-4 shadow-sm">
+            <div
+                v-for="item in actions"
+                :key="item.label"
+                class="mb-4 flex items-center gap-4 last:mb-0"
+            >
+                <div
+                    class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[22px] leading-none"
+                    :class="'status-' + item['status']"
+                >
+                    <img v-if="item.kind === 'trash'" src="/icons/others/trash.svg" alt="trash">
+                    <font-awesome v-else-if="item.kind === 'check'" icon="check" style="color: #86efac"/>
+                    <span v-else>{{ item.index }}</span>
+                </div>
+
+                <span class="flex-1 text-[26px] leading-none text-[#0f2f61] scale-[0.52] origin-left whitespace-nowrap">
+                    {{ item.label }}
+                </span>
+
+                <button
+
+                    class=" h-6 w-6 border flex items-center justify-center rounded border-gray-400 border-r-[2px] border-b-[2px] shadow-[2px_2px_1px_rgba(0,0,0,0.50)]"
+                >
+                    {{ item.shortcut }}
+                </button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+const actions = [
+  {
+    label: 'Ignore',
+    shortcut: 'x',
+    kind: 'trash',
+  },
+  {
+    label: 'New',
+    shortcut: '1',
+    kind: 'number',
+    index: 1,
+  },
+  {
+    label: 'Recognized',
+    shortcut: '2',
+    kind: 'number',
+    index: 2,
+  },
+  {
+    label: 'Familiar',
+    shortcut: '3',
+    kind: 'number',
+    index: 3,
+  },
+  {
+    label: 'Learned',
+    shortcut: '4',
+    kind: 'number',
+    index: 4,
+  },
+  {
+    label: 'Known',
+    shortcut: 'k',
+    kind: 'check',
+  },
+]
+</script> -->

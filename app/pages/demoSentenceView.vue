@@ -1,8 +1,6 @@
 <template>
     <div class="flex flex-col overflow-hidden " :style="{height : readerHeight + 'px'}">
 
-
-
         <youtube-frame
         :currentTimestamp="currentTimestamp"
         :videoId="youtubeData.youtube_id"
@@ -92,7 +90,7 @@
           
                     <div class="flex gap-5">
                       <span class="text-xl font-semibold">{{ item.word }}</span>
-                      <button> <img src='/icons/reader/volume.svg' class="w-[18px]"/> </button>
+                      <button @click="speakEnglish(item.word)"> <img src='/icons/reader/volume.svg' class="w-[18px]"/> </button>
                     </div>          
     
                     <span class="col-start-2 row-start-2 mt-2 text-lg font-semibold italic">
@@ -102,11 +100,11 @@
         
         
                   <div class="ml-auto flex items-center justify-center gap-2">
-                    <button class="h-7 w-7 rounded-full border border-gray-600 flex items-center justify-center">
+                    <button @click="changeToKnow(item.word)" class="h-7 w-7 rounded-full border border-gray-600 flex items-center justify-center">
                       <font-awesome icon="check" class="opacity-50"/>
                     </button>
         
-                    <button class="h-7 w-7 rounded-full border border-gray-600 flex items-center justify-center ">
+                    <button @click="changeToIgnore(item.word)" class="h-7 w-7 rounded-full border border-gray-600 flex items-center justify-center ">
                       <img src="/icons/others/trash.svg" class="opacity-50"/>
                     </button>
                   </div>
@@ -147,7 +145,7 @@ const {
 
 const {cleanWord, isValidWord} = useConvert()
 
-const {onTranslate} = useGooleTranslate()
+const {onTranslate, speakEnglish} = useGooleTranslate()
 
 /* =========================================================
     resize, props, emit: mount/unmount side-effects
@@ -326,6 +324,18 @@ const quickChangestatus = (cleaned, currentStatus) => {
     }
   }
 
+
+
+
+
+}
+
+const changeToKnow = (cleaned) => {
+  props.statusTagsMeanings[cleaned].status = 5
+}
+
+const changeToIgnore = (cleaned) => {
+  props.statusTagsMeanings[cleaned].status = 0
 }
 
 const newStatusDict = computed(() => {
