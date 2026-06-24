@@ -1,7 +1,9 @@
 <template>
   <div class=" relative flex justify-between items-start  px-3 ">
-    <button @click="openAudioBox = true;" :class="(openAudioBox && props.youtubeData?.youtube_id) && 'invisible pointer-events-none'" class="h-12 w-12 mb-5 rounded-full bg-black/80 flex items-center justify-center">
+    <button @click="handleOpenAudioBox" :class="(openAudioBox && props.youtubeData?.youtube_id || !props.youtubeData?.youtube_id || props.isSentenceMode) && 'invisible pointer-events-none'" class=" h-12 w-12 mb-5 rounded-full bg-black/80 flex items-center justify-center">
         <img src="/icons/reader/play.svg" alt="play"/>
+
+     
     </button>
 
     <div v-if="openAudioBox && props.youtubeData?.youtube_id" class="absolute -top-8 left-5 z-10  bg-white">
@@ -35,8 +37,6 @@ import AudioYoutubeBox from './component/AudioYoutubeBox.vue';
 
 
 
-// const audioURL = ref('http://localhost:3000/sounds/demo.mp3')
-
 const props = defineProps({
     youtubeData : {type: Object},
     isSentenceMode: {type : Boolean, default: false}
@@ -45,6 +45,14 @@ const props = defineProps({
 const emit = defineEmits(['sendCurrentTimeToParent', 'isSentenceMode'])
 const openAudioBox = ref(false)
 const isSentenceView = ref(props.isSentenceMode)
+
+
+const handleOpenAudioBox = () => {
+
+    if (!props.youtubeData?.youtube_id || props.isSentenceMode) return
+    openAudioBox.value = true
+    
+}
 const handleKeyDown = (e) => {
     
     const target = e.target
@@ -58,7 +66,7 @@ const handleKeyDown = (e) => {
     if (openAudioBox.value === true) {
         return
     }
-    if (e.key === 'Escape' || e.key === ' ') {
+    if ((e.key === 'Escape' || e.key === ' ') && props.youtubeData?.youtube_id && !props.isSentenceMode) {
        
         openAudioBox.value = true
        
