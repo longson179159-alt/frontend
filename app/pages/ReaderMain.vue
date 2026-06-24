@@ -180,7 +180,7 @@ const getLesson = async () => {
     timestamp.value = data.timestamp ?? []
     lastReadWordIdx.value = data.lastReadWordIdx ?? 0
     personalData.value = data.personalData ?? {
-        isSentenceMode : true
+        isSentenceMode : false
     }
 
 
