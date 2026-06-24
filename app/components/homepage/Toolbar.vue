@@ -80,7 +80,7 @@
       </div>
 
       <import-text v-if="uploadObject === 'text'" @send-message="uploadObject=$event"/>
-      <import-audio v-if="uploadObject === 'audio'" @send-message="uploadObject=$event"/>
+      <!-- <import-audio v-if="uploadObject === 'audio'" @send-message="uploadObject=$event"/> -->
       <import-vocabulary v-if="uploadObject === 'newword' " @send-message="uploadObject=$event"/>
     </div>
 

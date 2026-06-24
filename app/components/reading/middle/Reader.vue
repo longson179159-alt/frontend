@@ -128,8 +128,12 @@ const props = defineProps({
 )
 const lessondata = ref(props.lessonData)
 const core_data = props.coreData
-const lastReadWordIdx = ref(props.lastReadWordIdx)
-// console.log("lastReadWordIdx in reader.vue", lastReadWordIdx.value)
+
+
+const lastReadWordIdx = computed({
+  get: () => props.lastReadWordIdx,
+  set: (v) => emit('update:lastReadWordIdx', v)
+})
 
 const moveToLastReadingPage = () => {
   if (!prose.value) return
@@ -156,7 +160,7 @@ const newStatusDict = computed(() => {
   return statusDict
 })
 
-const emit = defineEmits(['update:currentValue', 'sendTotalPage', 'selected', 'sendStatusFromReader'])
+const emit = defineEmits(['update:currentValue','update:lastReadWordIdx', 'sendTotalPage', 'selected', 'sendStatusFromReader'])
 
 const currentPage = computed({
   get: () => props.currentValue,
@@ -198,8 +202,8 @@ watch(currentPage, (newVal) => {
     scrollNewPage(newVal);
     
 
-    props.lastReadWordIdx = findLastReadWordIdx()
-    saveLastReadWordIdx(props.lastReadWordIdx, props.audioCurrentTime.currentTime)
+    lastReadWordIdx.value = findLastReadWordIdx()
+    saveLastReadWordIdx(lastReadWordIdx.value, props.audioCurrentTime.currentTime)
     
 })
 

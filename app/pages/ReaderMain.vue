@@ -15,7 +15,7 @@
                     </button>
                     <div class="flex-1 min-h-0 ">
                         <Reader  
-                        v-if="boxHeight > 0 && personalData.isSentenceMode"
+                        v-if="boxHeight > 0 && !personalData.isSentenceMode"
                         :lesson-data="lessondata"
                         :list-sentence="listSentence"
                         :readerHeight="boxHeight" 
@@ -23,13 +23,14 @@
                         :status-tags-meanings="statusTagsMeanings"
                         :core-data="core_data"
                         :timestamp="timestamp"
-                        :last-read-word-idx="lastReadWordIdx"
+                    
                         :lesson-and-course-name="{
                             lessonName: lesson_name,
                             courseName: course_name
                         }"
                         :is-youtube-video="youtubeData.youtube_id ? true : false"
                         v-model:current-value="current" 
+                        v-model:last-read-word-idx="lastReadWordIdx"
                         :audio-current-time="audioCurrentTime"
                         @send-total-page="total = $event"
                         @selected="onSelected"
@@ -37,6 +38,8 @@
                         />
 
                         <SentenceView
+
+                        v-else-if="boxHeight > 0  && personalData.isSentenceMode"
                         :lesson-and-course-name="{
                             lessonName: lesson_name,
                             courseName: course_name
@@ -44,7 +47,6 @@
                         :is-youtube-video="youtubeData.youtube_id ? true : false"
                         :readerHeight="boxHeight" 
                         :lesson-data="lessondata"
-                        :last-read-word-idx="lastReadWordIdx"
                         :core-data="core_data"
                         :list-sentence="listSentence"
                         :timestamp="timestamp"
@@ -55,6 +57,7 @@
 
                         :current-phrase-status="currentPhraseData.status"
                         v-model:current-value="current"
+                        v-model:last-read-word-idx="lastReadWordIdx"
                         />
 
 
@@ -83,6 +86,7 @@
                     @pointermove.stop
                     @pointerup.stop
                     :youtube-data="youtubeData"
+                    :is-sentence-mode="personalData.isSentenceMode"
                     @send-current-time-to-parent="audioCurrentTime = $event; "
                     @is-sentence-mode="personalData.isSentenceMode = $event"
                 />
@@ -117,6 +121,7 @@ import HeaderReader from '~/components/reading/HeaderReader.vue';
 import Sidebar from '~/components/reading/middle/Sidebar.vue';
 import Reader from '~/components/reading/middle/Reader.vue';
 import LoadingProgressBar from '~/components/LoadingProgressBar.vue';
+import SentenceView from '~/components/reading/middle/SentenceView.vue';
 
 
 
@@ -162,8 +167,8 @@ const getLesson = async () => {
         credentials : 'include'
     })
 
-    console.log('data', data)
-    window.readerMock = data
+    // console.log('data', data)
+    // window.readerMock = data
     // JSON.stringify(window.readerMock, null, 2)
     
 
@@ -172,10 +177,10 @@ const getLesson = async () => {
     statusTagsMeanings.value = data.Tags_Meanings ?? {}
     core_data.value = data.core_data?? []
     youtubeData.value = data.youtube_data?? []
-    timestamp.value = data.timestamp ?? null
+    timestamp.value = data.timestamp ?? []
     lastReadWordIdx.value = data.lastReadWordIdx ?? 0
     personalData.value = data.personalData ?? {
-        isSentenceMode : false
+        isSentenceMode : true
     }
 
 
@@ -275,6 +280,16 @@ const finishLesson = async () => {
         loading.value = false
    }
 }
+
+watch(
+  [() => personalData.value.isSentenceMode],
+  () => {
+    total.value = personalData.value.isSentenceMode
+      ? timestamp.value.length
+      : total.value
+  },
+  { immediate: true }
+)
 
 
 

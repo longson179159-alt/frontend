@@ -129,7 +129,7 @@ import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import YoutubeFrame from '~~/app/components/reading/middle/YoutubeFrame.vue'
 
 import { useKeyboard } from '~/composables/reading/sentenceView/useKeyboard'
-
+const { getCsrfToken } = useCsrf()
 const showTranslation = ref(false)
 const currentTimestampTranslation = ref('')
 
@@ -165,18 +165,23 @@ const props = defineProps({
   isYoutubeVideo: {type: Boolean, default: false},
 })
 
-const emit = defineEmits(['update:currentValue', 'selected', 'sendStatusFromReader'])
+const emit = defineEmits(['update:currentValue' , 'update:lastReadWordIdx', 'selected', 'sendStatusFromReader'])
 
 const currentTimestampIndex = computed({
   get: () => props.currentValue - 1,
   set: (v) => emit('update:currentValue', v + 1)
 })
 
+const lastReadWordIdx = computed({
+  get: () => props.lastReadWordIdx,
+  set: (v) => emit('update:lastReadWordIdx', v)
+})
+
 // find the truth value of currentTimestampIdx, that is equal with p_idx
 const findCurrentTimestampIndex = () => {
-    const coreDataFlat = core_data.value.flat(Infinity)
-    const findParaIndex = coreDataFlat.find(item => item.w_idx === props.lastReadWordIdx)
-    currentTimestampIndex.value = findParaIndex === -1 ? 0 : findParaIndex
+    const coreDataFlat = core_data.flat(Infinity)
+    const matchedWord = coreDataFlat.find(item => item.w_idx === props.lastReadWordIdx)
+    currentTimestampIndex.value = matchedWord ? matchedWord.p_idx : 0
        
 }
 
@@ -290,7 +295,7 @@ const colorStatus = {
 
 const currentTimestamp = computed(() => props.timestamp[currentTimestampIndex.value] ?? null)
 
-
+import debounce from 'lodash/debounce'
 const saveLastReadWordIdx = debounce(
   async(newLastReadWordIdx, youtubeStartTime) => {
     try {
@@ -304,7 +309,7 @@ const saveLastReadWordIdx = debounce(
       }
 
       if (props.isYoutubeVideo) {
-        payload.youtubeStartTime = props.audioCurrentTime.currentTime
+        payload.youtubeStartTime = currentTimestamp.value.start
         
       }
       await $fetch(`/api/update_last_read_word_idx/`, {
@@ -331,9 +336,9 @@ watch(currentTimestampIndex, async (newVal) => {
         listTranslation.value.timestampText[newVal] = tranlation
       }
 
-    props.lastReadWordIdx = findLastReadWordIdx()
+    lastReadWordIdx.value = findLastReadWordIdx()
 
-    saveLastReadWordIdx(props.lastReadWordIdx, currentTimestamp.start)
+    saveLastReadWordIdx(lastReadWordIdx.value, currentTimestamp.value.start)
 
     // save data to backend
 
@@ -463,6 +468,7 @@ watch([currentTimestampIndex, newStatusDict], () => {
 
 
 onMounted(async() => {
+    console.log('timestamp', props.timestamp.length)
     findCurrentTimestampIndex()
     window.addEventListener('pointerup', pointerUp)
     window.addEventListener('keydown', changePageStatusByKeyborad,)
