@@ -15,7 +15,7 @@
                     </button>
                     <div class="flex-1 min-h-0 ">
                         <Reader  
-                        v-if="boxHeight > 0"
+                        v-if="boxHeight > 0 && personalData.isSentenceMode"
                         :lesson-data="lessondata"
                         :list-sentence="listSentence"
                         :readerHeight="boxHeight" 
@@ -35,6 +35,28 @@
                         @selected="onSelected"
                         @send-status-from-reader="currentPhraseData.status = $event"
                         />
+
+                        <SentenceView
+                        :lesson-and-course-name="{
+                            lessonName: lesson_name,
+                            courseName: course_name
+                        }"
+                        :is-youtube-video="youtubeData.youtube_id ? true : false"
+                        :readerHeight="boxHeight" 
+                        :lesson-data="lessondata"
+                        :last-read-word-idx="lastReadWordIdx"
+                        :core-data="core_data"
+                        :list-sentence="listSentence"
+                        :timestamp="timestamp"
+                        :status-tags-meanings="statusTagsMeanings"
+                        :youtube-data="youtubeData"
+                        @selected="onSelected"
+                        @send-status-from-reader="currentPhraseData.status = $event"
+
+                        :current-phrase-status="currentPhraseData.status"
+                        v-model:current-value="current"
+                        />
+
 
                         
                     </div>
@@ -62,6 +84,7 @@
                     @pointerup.stop
                     :youtube-data="youtubeData"
                     @send-current-time-to-parent="audioCurrentTime = $event; "
+                    @is-sentence-mode="personalData.isSentenceMode = $event"
                 />
             </div>
 
@@ -110,6 +133,7 @@ const messure = () => {
 
 }
 
+const personalData = ref({})
 const lessondata = ref( [])
 const listSentence = ref([])
 const core_data = ref([])
@@ -150,6 +174,9 @@ const getLesson = async () => {
     youtubeData.value = data.youtube_data?? []
     timestamp.value = data.timestamp ?? null
     lastReadWordIdx.value = data.lastReadWordIdx ?? 0
+    personalData.value = data.personalData ?? {
+        isSentenceMode : false
+    }
 
 
 

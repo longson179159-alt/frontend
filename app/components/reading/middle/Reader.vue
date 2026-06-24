@@ -196,16 +196,10 @@ const saveLastReadWordIdx = debounce(
 
 watch(currentPage, (newVal) => {
     scrollNewPage(newVal);
-    if (!prose.value) return
-    // find all word-item elements
-    const wordItems = prose.value.querySelectorAll('.word-item')
+    
 
-    const currentPageOffsetTop = (newVal - 1) * view.value
-    // find the fist word of this page
-    const targetWord = Array.from(wordItems).find(item => item.offsetTop >= currentPageOffsetTop )
-    // interpolate the word index
-    const targetWordIdx = targetWord ? parseInt(targetWord.dataset.wIdx) : 1
-    saveLastReadWordIdx(targetWordIdx, props.audioCurrentTime.currentTime)
+    props.lastReadWordIdx = findLastReadWordIdx()
+    saveLastReadWordIdx(props.lastReadWordIdx, props.audioCurrentTime.currentTime)
     
 })
 
@@ -352,7 +346,7 @@ watch(selected, (newVal) => {
     emit('selected', newVal)
 })
 
-const {changePageStatus,changePageStatusByKeyborad, moveNextPrevious} = useKeyboard(startPointer,currentPointer, prose, view, core_data, newStatusDict , lessondata, currentPage, totalPage,  emitStatus, selected)
+const {findLastReadWordIdx, changePageStatus,changePageStatusByKeyborad, moveNextPrevious} = useKeyboard(startPointer,currentPointer, prose, view, core_data, newStatusDict , lessondata, currentPage, totalPage,  emitStatus, selected)
 
 
 

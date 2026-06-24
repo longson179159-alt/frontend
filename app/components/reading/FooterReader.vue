@@ -14,7 +14,7 @@
     </div>
     
 
-    <button @click="isSentenceView = !isSentenceView" class="hover:bg-gray-300 mt-4 h-8 w-12 rounded-md flex items-center justify-center">
+    <button @click="isSentenceView = !isSentenceView; emit('isSentenceMode', isSentenceView)" class="hover:bg-gray-300 mt-4 h-8 w-12 rounded-md flex items-center justify-center">
         <img  :src="isSentenceView ? '/icons/reader/sentenceView.svg' : '/icons/reader/lessonView.svg'" alt="viewMode">
     </button>
 
@@ -33,17 +33,18 @@ import {ref, onMounted, onBeforeUnmount} from 'vue'
 // import AudioBox from './component/AudioBox.vue';
 import AudioYoutubeBox from './component/AudioYoutubeBox.vue';
 
-const openAudioBox = ref(false)
-const isSentenceView = ref(false)
+
 
 // const audioURL = ref('http://localhost:3000/sounds/demo.mp3')
 
 const props = defineProps({
-    youtubeData : {type: Object}
+    youtubeData : {type: Object},
+    isSentenceMode: {type : Boolean, default: false}
 })
 
-const emit = defineEmits(['sendCurrentTimeToParent'])
-
+const emit = defineEmits(['sendCurrentTimeToParent', 'isSentenceMode'])
+const openAudioBox = ref(false)
+const isSentenceView = ref(props.isSentenceMode)
 const handleKeyDown = (e) => {
     
     const target = e.target

@@ -351,9 +351,25 @@ const moveNextPrevious = (e) => {
     }
 }
 
+const findLastReadWordIdx = () => {
+    const [first, activePage] = getDataCurrentPage()
+    if (!currentPointer.value || !startPointer.value) return first ?? 0
+    const wordIndex = currentPointer.value[0]
+    const paraIndex = currentPointer.value[3]
+
+    if (currentTimestampIndex.value !== activePage) {
+      return first ?? 0
+    }
+
+    else {
+      return startPointer[0]
+    }
+
+}
 
 
     return {
+        findLastReadWordIdx,
         changePageStatus,
         changePageStatusByKeyborad,
         moveNextPrevious
