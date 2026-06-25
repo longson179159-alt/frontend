@@ -33,11 +33,13 @@ export function useSelectedPhrase({
         if (startPointer.value[1] !== currentPointer.value[1]) {
             const realStart = startPointer.value[0] < currentPointer.value[0] ? startPointer.value : currentPointer.value
             const realEnd = startPointer.value[0] < currentPointer.value[0] ? currentPointer.value : startPointer.value
+            const startSentence = listSentence.value[realStart[1]] ?? ''
+            const endSentence = listSentence.value[realEnd[1]] ?? ''
 
-            const firstSentenceChuck = listSentence.value[realStart[1]].split(' ').splice(realStart[2]).join(' ')
+            const firstSentenceChuck = startSentence.split(' ').splice(realStart[2]).join(' ')
 
             const middleSentence = listSentence.value.slice(realStart[1] + 1, realEnd[1]).join(' ')
-            const lastSentenceChuck = listSentence.value[realEnd[1]].split(' ').splice(0, realEnd[2] + 1).join(' ')
+            const lastSentenceChuck = endSentence.split(' ').splice(0, realEnd[2] + 1).join(' ')
             const text = firstSentenceChuck + ' ' + middleSentence + " " + lastSentenceChuck
             return { text: text, valid: false, error: 'cross-sentence' }
         }
@@ -47,6 +49,7 @@ export function useSelectedPhrase({
 
 
         const sentence = listSentence.value[currentPointer.value[1]]
+        if (sentence == null) return { text: '', valid: false, error: 'empty' }
         const listWordInSentence = sentence.split(' ')
         const selected_phrase = listWordInSentence.slice(a, b + 1)
         const cleaned_selected_phrase = selected_phrase.map(item => cleanWord(item))
