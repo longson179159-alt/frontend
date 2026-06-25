@@ -129,6 +129,7 @@ import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import YoutubeFrame from '~~/app/components/reading/middle/YoutubeFrame.vue'
 
 import { useKeyboard } from '~/composables/reading/sentenceView/useKeyboard'
+import { useEventDelegation } from '~/composables/reading/shared/useEventdelegation'
 import { useSelectedPhrase } from '~/composables/reading/shared/useSelectedPhrase'
 import { useStatusMap } from '~/composables/reading/shared/useStatusMap'
 const { getCsrfToken } = useCsrf()

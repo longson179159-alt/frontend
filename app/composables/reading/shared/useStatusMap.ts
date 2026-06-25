@@ -12,8 +12,11 @@ export function useStatusMap(statusTagsMeanings: StatusMapRef) {
         const statusDict: Record<string, number> = {}
         const listKeys = Object.keys(statusTagsMeanings.value)
         for (const item of listKeys) {
-            if (item.split(" ").length === 1 || statusTagsMeanings.value[item].status > 0) {
-                statusDict[item] = statusTagsMeanings.value[item].status
+            const currentItem = statusTagsMeanings.value[item]
+            if (!currentItem) continue
+
+            if (item.split(" ").length === 1 || currentItem.status > 0) {
+                statusDict[item] = currentItem.status
             }
 
         }

@@ -1,3 +1,4 @@
+import { useCreateLesson } from '~/composables/reading/shared/useCreateLesson'
 
 const NAVIGABLE_STATUSES = [1, 2, 3, 4, 6]
 const STATUS_SHORTCUT_KEYS = ['x', '1', '2', '3', '4', '5']

@@ -80,6 +80,9 @@ import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 
 
 import debounce from "lodash/debounce";
+import { pagination } from '~/composables/reading/proseView/pagination'
+import { useKeyboard } from '~/composables/reading/proseView/useKeyboard'
+import { useEventDelegation } from '~/composables/reading/shared/useEventdelegation'
 
 
 

@@ -129,6 +129,7 @@ import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import YoutubeFrame from '~~/app/components/reading/middle/YoutubeFrame.vue'
 
 import { useKeyboard } from '~/composables/reading/sentenceView/useKeyboard'
+import { useEventDelegation } from '~/composables/reading/shared/useEventdelegation'
 
 const showTranslation = ref(false)
 const currentTimestampTranslation = ref('')
