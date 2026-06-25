@@ -79,10 +79,10 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 
 import Popup from './Popup.vue'
-import debounce from "lodash/debounce";
 import { pagination } from '~/composables/reading/proseView/pagination'
 import { useKeyboard } from '~/composables/reading/proseView/useKeyboard'
 import { useEventDelegation } from '~/composables/reading/shared/useEventdelegation'
+import { useLastReadPersistence } from '~/composables/reading/shared/useLastReadPersistence'
 import { useSelectedPhrase } from '~/composables/reading/shared/useSelectedPhrase'
 import { useStatusMap } from '~/composables/reading/shared/useStatusMap'
 const { getCsrfToken } = useCsrf()
@@ -163,35 +163,12 @@ const currentPage = computed({
 })
 
 
-const saveLastReadWordIdx = debounce(
-  async(newLastReadWordIdx, youtubeStartTime) => {
-    try {
-
-      let payload = {
-        lessonName: props.lessonAndCourseName.lessonName,
-        courseName: props.lessonAndCourseName.courseName,
-        lastReadWordIdx: newLastReadWordIdx,
-        isYoutubeVideo: props.isYoutubeVideo,
-        youtubeStartTime: youtubeStartTime
-      }
-
-      if (props.isYoutubeVideo) {
-        payload.youtubeStartTime = props.audioCurrentTime.currentTime
-        
-      }
-      await $fetch(`/api/update_last_read_word_idx/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': getCsrfToken(),
-        },
-        body: JSON.stringify(payload),
-      })
-    } catch (error) {
-      console.error('Failed to update last read word index:', error)
-    }
-  }, 1000
-)
+const { saveLastReadWordIdx, handleVisibilityChange } = useLastReadPersistence({
+  getCsrfToken,
+  getLessonAndCourseName: () => props.lessonAndCourseName,
+  getIsYoutubeVideo: () => props.isYoutubeVideo,
+  resolveYoutubeStartTime: () => props.audioCurrentTime.currentTime
+})
 
 watch(currentPage, (newVal) => {
     scrollNewPage(newVal);
@@ -400,11 +377,6 @@ const itemFirstAndLastOfPage = computed(() => {
    Lifecycle: mount/unmount side-effects
 ========================================================= */
 
-const handleVisibilityChange = () => {
-  if (document.hidden) {
-    saveLastReadWordIdx.flush()
-  }
-}
 onMounted(async () => {
   // Ensure pagination is correct on first render
   await updateTotalPages()

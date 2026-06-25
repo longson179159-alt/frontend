@@ -130,6 +130,7 @@ import YoutubeFrame from '~~/app/components/reading/middle/YoutubeFrame.vue'
 
 import { useKeyboard } from '~/composables/reading/sentenceView/useKeyboard'
 import { useEventDelegation } from '~/composables/reading/shared/useEventdelegation'
+import { useLastReadPersistence } from '~/composables/reading/shared/useLastReadPersistence'
 import { useSelectedPhrase } from '~/composables/reading/shared/useSelectedPhrase'
 import { useStatusMap } from '~/composables/reading/shared/useStatusMap'
 const { getCsrfToken } = useCsrf()
@@ -298,36 +299,12 @@ const colorStatus = {
 
 const currentTimestamp = computed(() => props.timestamp[currentTimestampIndex.value] ?? null)
 
-import debounce from 'lodash/debounce'
-const saveLastReadWordIdx = debounce(
-  async(newLastReadWordIdx, youtubeStartTime) => {
-    try {
-
-      let payload = {
-        lessonName: props.lessonAndCourseName.lessonName,
-        courseName: props.lessonAndCourseName.courseName,
-        lastReadWordIdx: newLastReadWordIdx,
-        isYoutubeVideo: props.isYoutubeVideo,
-        youtubeStartTime: youtubeStartTime
-      }
-
-      if (props.isYoutubeVideo) {
-        payload.youtubeStartTime = currentTimestamp.value.start
-        
-      }
-      await $fetch(`/api/update_last_read_word_idx/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': getCsrfToken(),
-        },
-        body: JSON.stringify(payload),
-      })
-    } catch (error) {
-      console.error('Failed to update last read word index:', error)
-    }
-  }, 1000
-)
+const { saveLastReadWordIdx } = useLastReadPersistence({
+  getCsrfToken,
+  getLessonAndCourseName: () => props.lessonAndCourseName,
+  getIsYoutubeVideo: () => props.isYoutubeVideo,
+  resolveYoutubeStartTime: () => currentTimestamp.value.start
+})
 
 watch(currentTimestampIndex, async (newVal) => {
     if ((newVal in listTranslation.value.timestampText) && listTranslation.value.timestampText[newVal]) return
