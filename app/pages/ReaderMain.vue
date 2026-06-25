@@ -120,6 +120,7 @@ import Sidebar from '~/components/reading/middle/Sidebar.vue';
 import Reader from '~/components/reading/middle/Reader.vue';
 import LoadingProgressBar from '~/components/LoadingProgressBar.vue';
 import SentenceView from '~/components/reading/middle/SentenceView.vue';
+import { useStatusMapMutations } from '~/composables/reading/shared/useStatusMapMutations';
 
 
 const mainRef = ref(null)
@@ -157,6 +158,8 @@ const currentPhraseData = ref({
     global_meanings: [],
     status: validCurrentPhrase.value ? 2 : 0,
 })
+
+const { removeStatusMapEntry, upsertStatusMapEntry } = useStatusMapMutations(statusTagsMeanings)
 
 const messure = () => {
     boxHeight.value = Math.round(mainRef?.value.getBoundingClientRect().height)
@@ -264,20 +267,13 @@ const finishLesson = async () => {
    }
 }
 
-watch(currentPhraseData, (newVal) => {
+watch(currentPhraseData, (newVal, oldVal) => {
   
 
     if (newVal.phrase.split(" ").length > 1 && newVal.status === 6) return
 
-    if (newVal.phrase.split(" ").length > 1 && newVal.status === 0 ) { delete statusTagsMeanings.value[newVal.phrase]}
-    statusTagsMeanings.value[newVal.phrase] = {
-        "tags": newVal.tags,
-        "your_meanings": newVal.your_meanings,
-        "global_tags": newVal.global_tags,
-        "global_meanings": newVal.global_meanings,
-        "status": newVal.status,
-
-    }
+    if (newVal.phrase.split(" ").length > 1 && (newVal.status === 0 || oldVal.status === 0) ) { removeStatusMapEntry(newVal.phrase); return}
+    upsertStatusMapEntry(newVal)
 
 }, {deep: true})
 
