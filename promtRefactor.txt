@@ -1,0 +1,90 @@
+1. Analysis only
+
+Read this file and its child components/imports that are directly relevant.
+
+Rules:
+- Do not change any code.
+- Do not propose a full rewrite.
+- Preserve current behavior.
+- Focus on structure, readability, responsibilities, duplication, risky areas, and refactor opportunities.
+
+What I want:
+1. A concise summary of what this file is doing.
+2. The main refactor problems, ordered by priority.
+3. Which child files are tightly coupled to it.
+4. What can be safely refactored first with low risk.
+5. A step-by-step refactor plan in small stages.
+
+Wait for my approval before suggesting code changes.
+
+2. Turn the plan into phases
+
+Using the analysis above, split the refactor into phases.
+
+Rules:
+- No code changes yet.
+- Each phase must be small, reversible, and behavior-preserving.
+- For each phase, include:
+  - goal
+  - exact files touched
+  - expected benefit
+  - risk level
+  - how to verify nothing broke
+
+Prefer phases that improve clarity before architecture.
+
+3. One phase at a time
+
+Work only on Phase 1.
+
+Rules:
+- Do not modify code yet.
+- Show me exactly what you want to change.
+- Explain why this phase is safe.
+- List the functions/components/sections affected.
+- Mention any assumptions.
+- If the phase is still too large, split it into smaller substeps.
+
+Wait for my approval before writing code.
+
+4. Review-before-edit mode
+
+Before editing, show me the intended diff in plain English.
+
+Rules:
+- No code changes yet.
+- Describe the before/after structure.
+- Confirm what will not change in behavior.
+- Call out any hidden risks or edge cases.
+- Keep the scope limited to this phase only.
+
+Wait for my approval.
+
+5. Minimal edit mode
+
+Now implement only the approved phase.
+
+Rules:
+- Change only the files listed for this phase.
+- Preserve behavior exactly.
+- No opportunistic cleanup outside scope.
+- No renaming unless necessary for clarity.
+- Keep the diff as small as possible.
+
+After editing, provide:
+1. what changed
+2. what did not change
+3. possible risks
+4. how I should review the diff
+
+6. Post-change explanation
+
+Explain this refactor to me like I'm the maintainer coming back in 2 weeks.
+
+Include:
+- why this change was made
+- how the structure is better now
+- what dependencies/couplings still remain
+- what the next safest refactor step is
+
+Do not make more code changes.

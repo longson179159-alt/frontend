@@ -1,51 +1,48 @@
-Do not change any code yet.
+Phase 1: Organize ReaderMain.vue without changing logic
+Goal: make the page easier to read by grouping state, derived state, async actions, watchers, and lifecycle code in a clearer order.
+Exact files touched: [ReaderMain.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/pages/ReaderMain.vue:1)
+Expected benefit: faster onboarding, clearer ownership of page state, easier to spot what belongs in later extractions.
+Risk level: Low
+How to verify nothing broke: load the reader page, confirm lesson data still appears, page buttons still work, sidebar still updates on selection, sentence mode toggle still swaps views, and finish flow still navigates correctly.
 
-Continue the YouTube audio sync task in this repo.
-Dont change anything in my code now
-Context:
-- Current goal: map YouTube current audio time to reading position/page.
-- when user press "m" keyboard, currentTime.value is sent from C:\Users\PC\Desktop\fontend\lingQ\app\components\reading\component\AudioYoutubeBox.vue to C:\Users\PC\Desktop\fontend\lingQ\app\components\reading\middle\Reader.vue
-Then we will find the timestamp clamp this currentTime, then we compute p_idx, and find the first word match idx, from this word, we scroll the lesson to this page
-- Current rule: `timestamp.ts_idx === p_idx` inside each YouTube lesson chunk.
--Current timestamp shape from backend:
+Phase 2: Extract small pure helpers inside ReaderMain.vue
+Goal: pull out behavior-preserving helper functions for response mapping, selected-phrase-to-sidebar-data mapping, and finish-payload building, while keeping them local to the same file.
+Exact files touched: [ReaderMain.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/pages/ReaderMain.vue:1)
+Expected benefit: reduces long inline logic blocks and makes the watcher/action flow easier to scan.
+Risk level: Low
+How to verify nothing broke: compare loaded state before and after for one lesson, select a known word and phrase, confirm sidebar fields still populate the same way, and confirm the finish request payload is unchanged.
 
-timestamp: Array<{
-  start: number
-  end: number
-  ts_idx: number
-}>
-- this ts_idx match with p_idx 
+Phase 3: Clarify component boundaries at the page level
+Goal: make the parent-to-child contracts easier to follow by consolidating repeated payloads and mode-specific props where they are assembled, without changing component behavior.
+Exact files touched: [ReaderMain.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/pages/ReaderMain.vue:1), [FooterReader.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/FooterReader.vue:1), [Sidebar.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/middle/Sidebar.vue:1), [Reader.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/middle/Reader.vue:1), [SentenceView.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/middle/SentenceView.vue:1)
+Expected benefit: the page becomes easier to reason about before any deeper refactor, and later extractions have cleaner seams.
+Risk level: Low to Medium
+How to verify nothing broke: smoke test both reader modes, confirm props still drive the same UI, confirm emitted events still update current page, last-read word, sidebar state, and audio sync.
 
+Phase 4: Extract duplicated pure selection/status logic shared by Reader and SentenceView
+Goal: move shared, side-effect-free logic into one shared helper/composable, especially phrase selection validation and derived status-dict building.
+Exact files touched: [Reader.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/middle/Reader.vue:1), [SentenceView.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/middle/SentenceView.vue:1), lingQ/app/composables/reading/shared/useSelectedPhrase.ts, lingQ/app/composables/reading/shared/useStatusMap.ts
+Expected benefit: removes the highest-value duplication while preserving current UI structure.
+Risk level: Medium
+How to verify nothing broke: in both modes, test single-word selection, valid multi-word phrase selection, cross-sentence selection, punctuation-heavy selection, and selection longer than 8 words; confirm the sidebar receives the same text and validity result as before.
 
+Phase 5: Extract shared last-read persistence logic
+Goal: unify the duplicated debounced /api/update_last_read_word_idx/ behavior into one shared helper while keeping each mode’s page/timestamp behavior unchanged.
+Exact files touched: [Reader.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/middle/Reader.vue:1), [SentenceView.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/middle/SentenceView.vue:1), lingQ/app/composables/reading/shared/useLastReadPersistence.ts
+Expected benefit: one place to maintain debounce, flush, visibility-change handling, and request payload rules.
+Risk level: Medium
+How to verify nothing broke: move to a new page/timestamp, refresh, confirm resume position is preserved, confirm YouTube-backed lessons still save with time info, and confirm tab hide/unmount still flushes pending state.
 
-Frontend event chain already exists:
-- `AudioYoutubeBox.vue` emits current time on keyboard shortcut
-- `FooterReader.vue` forwards it
-- `ReaderMain.vue` receives it and passes `audioCurrentTime` to `Reader.vue`
-- `Reader.vue` already has an `audioCurrentTime` prop but does not use it yet
+Phase 6: Centralize writes to statusTagsMeanings
+Goal: reduce hidden mutation paths by routing status-map updates through named functions instead of spreading direct object mutation across parent and child components.
+Exact files touched: [ReaderMain.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/pages/ReaderMain.vue:1), [SentenceView.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/middle/SentenceView.vue:1), [Sidebar.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/middle/Sidebar.vue:1), lingQ/app/composables/reading/shared/useStatusMapMutations.ts
+Expected benefit: easier debugging, clearer write ownership, safer future refactors around status/state sync.
+Risk level: Medium
+How to verify nothing broke: change status from sidebar buttons, sentence quick actions, and keyboard shortcuts; confirm colors, meanings, and phrase state still update immediately and finish payload still matches prior behavior.
 
-What to do:
-1. Read the relevant frontend files carefully before proposing any edits.
-2. Explain the exact frontend data flow you would implement.
-3. Focus on using existing backend data, not redesigning the API.
-4. The frontend should use `audioCurrentTime` plus `timestamp` to locate the matching subtitle row.
-5. Then use `ts_idx` as the target paragraph index, since `ts_idx === p_idx`.
-6. Update the reading position/page based on that paragraph.
-7. Preserve `ReaderMain.vue` as the source of truth for current page.
-8. Keep changes minimal and focused on real behavior.
-9. Do not make unrelated refactors.
-10. After analysis, summarize the minimal frontend changes needed and any remaining risks.
-
-Likely frontend files:
-- C:\Users\PC\Desktop\fontend\lingQ\app\components\reading\component\AudioYoutubeBox.vue
-- C:\Users\PC\Desktop\fontend\lingQ\app\components\reading\FooterReader.vue
-- C:\Users\PC\Desktop\fontend\lingQ\app\pages\ReaderMain.vue
-- C:\Users\PC\Desktop\fontend\lingQ\app\components\reading\middle\Reader.vue
-- C:\Users\PC\Desktop\fontend\lingQ\app\composables\pagination.js
-- C:\Users\PC\Desktop\fontend\lingQ\app\composables\useKeyboard.js
-- C:\Users\PC\Desktop\fontend\lingQ\app\composables\useCreateLesson.js
-
-Relevant backend files for reference only:
-- C:\Users\PC\Desktop\backend\BackendLingQ\core\views\get_create_delete_lesson.py
-
-tell me if you get enough information, before we do this task
+Phase 7: Centralize sentence-mode switching rules
+Goal: put mode-switch behavior in one place so current, total, footer behavior, and active reader selection stay in sync without scattered rules.
+Exact files touched: [ReaderMain.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/pages/ReaderMain.vue:1), [FooterReader.vue (line 1)](C:/Users/PC/Desktop/fontend/lingQ/app/components/reading/FooterReader.vue:1)
+Expected benefit: cleaner mental model for the biggest page-level toggle, with less brittle watcher logic.
+Risk level: Medium
+How to verify nothing broke: toggle modes repeatedly, confirm page counts stay valid, current page does not jump unexpectedly, audio controls still behave correctly, and finish-state behavior at the end of a lesson remains unchanged.

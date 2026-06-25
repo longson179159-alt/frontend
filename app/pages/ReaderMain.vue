@@ -124,19 +124,19 @@ import LoadingProgressBar from '~/components/LoadingProgressBar.vue';
 import SentenceView from '~/components/reading/middle/SentenceView.vue';
 
 
-
 const mainRef = ref(null)
 const boxHeight = ref(0)
 const loading = ref(true)
 
-
 const current = ref(1)
 const total = ref(1)
 
-const messure = () => {
-    boxHeight.value = Math.round(mainRef?.value.getBoundingClientRect().height)
+const route = useRoute()
+const router = useRouter()
+const {getCsrfToken} = useCsrf()
 
-}
+const lesson_name = computed(() => route.query.lessonName || 'Default lesson')
+const course_name = computed(() => route.query.courseName || 'Quick import')
 
 const personalData = ref({})
 const lessondata = ref( [])
@@ -149,11 +149,36 @@ const lastReadWordIdx = ref(0)
 
 const audioCurrentTime = ref()
 
+const validCurrentPhrase = ref(true)
 
+const currentPhraseData = ref({
+    phrase: 'breakfast',
+    tags: ["demo"],
+    your_meanings: [],
+    global_tags : [],
+    global_meanings: [],
+    status: validCurrentPhrase.value ? 2 : 0,
+})
 
-const route = useRoute()
-const lesson_name = computed(() => route.query.lessonName || 'Default lesson')
-const course_name = computed(() => route.query.courseName || 'Quick import')
+const messure = () => {
+    boxHeight.value = Math.round(mainRef?.value.getBoundingClientRect().height)
+
+}
+
+const onSelected = (data) => {
+
+    validCurrentPhrase.value  = data.valid
+    currentPhraseData.value = {
+        phrase : data.text,
+        tags : statusTagsMeanings.value[data.text]?.tags?? [],
+        your_meanings : statusTagsMeanings.value[data.text]?.your_meanings?? [],
+        global_tags : statusTagsMeanings.value[data.text]?.global_tags?? [],
+        global_meanings : statusTagsMeanings.value[data.text]?.global_meanings?? [],
+        status : validCurrentPhrase.value ?  statusTagsMeanings.value[data.text]?.status?? 6 : 0,
+    }
+
+} 
+
 const getLesson = async () => {
     loading.value = true
     
@@ -167,9 +192,6 @@ const getLesson = async () => {
         credentials : 'include'
     })
 
-    // console.log('data', data)
-    // window.readerMock = data
-    // JSON.stringify(window.readerMock, null, 2)
     
 
     lessondata.value = data.lesson_data ?? []
@@ -193,55 +215,6 @@ const getLesson = async () => {
 
 }
 
-const validCurrentPhrase = ref(true)
-
-const currentPhraseData = ref({
-    phrase: 'breakfast',
-    tags: ["demo"],
-    your_meanings: [],
-    global_tags : [],
-    global_meanings: [],
-    status: validCurrentPhrase.value ? 2 : 0,
-})
-
-
-
-watch(currentPhraseData, (newVal) => {
-  
-
-    if (newVal.phrase.split(" ").length > 1 && newVal.status === 6) return
-
-    if (newVal.phrase.split(" ").length > 1 && newVal.status === 0 ) { delete statusTagsMeanings.value[newVal.phrase]}
-    statusTagsMeanings.value[newVal.phrase] = {
-        "tags": newVal.tags,
-        "your_meanings": newVal.your_meanings,
-        "global_tags": newVal.global_tags,
-        "global_meanings": newVal.global_meanings,
-        "status": newVal.status,
-
-    }
-
-}, {deep: true})
-
-
-
-const onSelected = (data) => {
-
-    validCurrentPhrase.value  = data.valid
-    currentPhraseData.value = {
-        phrase : data.text,
-        tags : statusTagsMeanings.value[data.text]?.tags?? [],
-        your_meanings : statusTagsMeanings.value[data.text]?.your_meanings?? [],
-        global_tags : statusTagsMeanings.value[data.text]?.global_tags?? [],
-        global_meanings : statusTagsMeanings.value[data.text]?.global_meanings?? [],
-        status : validCurrentPhrase.value ?  statusTagsMeanings.value[data.text]?.status?? 6 : 0,
-    }
-
-} 
-
-
-const router = useRouter()
-const {getCsrfToken} = useCsrf()
 const finishLesson = async () => {
     loading.value = true
     
@@ -280,6 +253,23 @@ const finishLesson = async () => {
         loading.value = false
    }
 }
+
+watch(currentPhraseData, (newVal) => {
+  
+
+    if (newVal.phrase.split(" ").length > 1 && newVal.status === 6) return
+
+    if (newVal.phrase.split(" ").length > 1 && newVal.status === 0 ) { delete statusTagsMeanings.value[newVal.phrase]}
+    statusTagsMeanings.value[newVal.phrase] = {
+        "tags": newVal.tags,
+        "your_meanings": newVal.your_meanings,
+        "global_tags": newVal.global_tags,
+        "global_meanings": newVal.global_meanings,
+        "status": newVal.status,
+
+    }
+
+}, {deep: true})
 
 watch(
   [() => personalData.value.isSentenceMode],
