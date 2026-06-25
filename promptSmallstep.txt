@@ -1,0 +1,134 @@
+Phase 3A: Clarify contract assembly in ReaderMain.vue
+Goal:
+- Make the parent-to-child contract easier to read where props and events are assembled.
+
+Exact files touched:
+- C:\Users\PC\Desktop\fontend\lingQ\app\pages\ReaderMain.vue
+
+Exactly what to change:
+- Replace repeated inline values with named computed values:
+  - the repeated `{ lessonName, courseName }` object used for both `Reader` and `SentenceView`
+  - the repeated `youtubeData.youtube_id ? true : false` boolean used for both `Reader` and `SentenceView`
+- Replace inline event assignments with named handlers:
+  - `@send-status-from-reader="currentPhraseData.status = $event"`
+  - `@send-current-time-to-parent="audioCurrentTime = $event"`
+  - `@is-sentence-mode="personalData.isSentenceMode = $event"`
+- Reorder the `Reader` and `SentenceView` prop lists so shared props appear in the same order in both tags.
+
+Suggested additions in script:
+- `lessonAndCourseName`
+- `isYoutubeVideo`
+- `handleReaderStatusUpdate`
+- `handleAudioCurrentTimeUpdate`
+- `handleSentenceModeChange`
+
+Why this is safe:
+- No prop names change.
+- No emit names change.
+- No child behavior changes.
+- No new conditions or side effects are introduced.
+- This is only naming repeated values and replacing inline assignments with pass-through handlers.
+
+How to verify:
+- Load the reader page.
+- Confirm `Reader` mode still renders.
+- Toggle sentence mode and confirm `SentenceView` still renders.
+- Confirm sidebar status still updates from child emits.
+- Confirm audio current time still updates from `FooterReader`.
+
+
+Phase 3B: Align child prop/emits declarations with the parent contract
+Goal:
+- Make each child component API easier to scan by grouping shared props first and mode-specific props after.
+
+Exact files touched:
+- C:\Users\PC\Desktop\fontend\lingQ\app\components\reading\middle\Reader.vue
+- C:\Users\PC\Desktop\fontend\lingQ\app\components\reading\middle\SentenceView.vue
+- C:\Users\PC\Desktop\fontend\lingQ\app\components\reading\FooterReader.vue
+- C:\Users\PC\Desktop\fontend\lingQ\app\components\reading\middle\Sidebar.vue
+
+Exactly what to change:
+- Reorder `defineProps` fields so shared contract props are grouped first.
+- Reorder `defineEmits` arrays to match how the parent uses them.
+- Add short section comments around the contract area only if helpful.
+
+Reader.vue contract grouping:
+- Shared props first:
+  - `readerHeight`
+  - `currentValue`
+  - `lessonData`
+  - `listSentence`
+  - `statusTagsMeanings`
+  - `coreData`
+  - `currentPhraseStatus`
+  - `timestamp`
+  - `lastReadWordIdx`
+  - `lessonAndCourseName`
+  - `isYoutubeVideo`
+- Reader-only prop after shared props:
+  - `audioCurrentTime`
+
+SentenceView.vue contract grouping:
+- Shared props first:
+  - `readerHeight`
+  - `currentValue`
+  - `lessonData`
+  - `listSentence`
+  - `statusTagsMeanings`
+  - `coreData`
+  - `currentPhraseStatus`
+  - `timestamp`
+  - `lastReadWordIdx`
+  - `lessonAndCourseName`
+  - `isYoutubeVideo`
+- SentenceView-only prop after shared props:
+  - `youtubeData`
+
+FooterReader.vue contract grouping:
+- Keep the public props together:
+  - `youtubeData`
+  - `isSentenceMode`
+- Keep the emits together:
+  - `sendCurrentTimeToParent`
+  - `isSentenceMode`
+
+Sidebar.vue contract grouping:
+- Keep the public props together:
+  - `sidebarData`
+  - `validPhrase`
+- Keep the computed bridge immediately below them.
+
+Why this is safe:
+- Prop names, defaults, and emit names stay the same.
+- Internal logic stays the same.
+- This is public-contract formatting only.
+
+How to verify:
+- Smoke test both reader modes.
+- Confirm props still drive the same UI.
+- Confirm emits still update current page, last-read word, sidebar data, and audio sync.
+
+
+Phase 3C: Optional parent-side contract grouping
+Goal:
+- Make shared reader props visually grouped in the parent template without hiding them behind a large `v-bind` object.
+
+Exact files touched:
+- C:\Users\PC\Desktop\fontend\lingQ\app\pages\ReaderMain.vue
+
+Exactly what to change:
+- Keep explicit prop names in the template.
+- Group props by order:
+  - shared reader props first
+  - mode-specific props after
+  - events last
+- Do not replace the contract with a single large `v-bind="readerProps"` object in this phase.
+
+Why this is safe:
+- The template stays explicit.
+- The contract remains easy to review line by line.
+- No behavior changes are introduced.
+
+How to verify:
+- Review the parent template and confirm `Reader` and `SentenceView` are easier to compare side by side.
+- Run the same smoke test as Phase 3A.

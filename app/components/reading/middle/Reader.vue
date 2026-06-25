@@ -80,6 +80,8 @@ import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 
 import Popup from './Popup.vue'
 import debounce from "lodash/debounce";
+import { useSelectedPhrase } from '~/composables/reading/shared/useSelectedPhrase'
+import { useStatusMap } from '~/composables/reading/shared/useStatusMap'
 const { getCsrfToken } = useCsrf()
 
 
@@ -114,10 +116,10 @@ const props = defineProps({
   statusTagsMeanings: {type: Object, default: () => []},
   coreData: {type: Array, default: () => []},
   currentPhraseStatus :{type: Number },
-  isYoutubeVideo: {type: Boolean, default: false},
   timestamp: {type: Array, default: () => []},
   lastReadWordIdx: {type: Number, default: 1},
   lessonAndCourseName: {type: Object, default: () => ({})},
+  isYoutubeVideo: {type: Boolean, default: false},
   audioCurrentTime: {
     type: Object,
     default: () => ({
@@ -148,19 +150,9 @@ const moveToLastReadingPage = () => {
   currentPage.value = page
 }
 
-const newStatusDict = computed(() => {
-  const statusDict = {}
-  const listKeys = Object.keys(props.statusTagsMeanings)
-  for (const item of listKeys) {
-    if (item.split(" ").length === 1|| props.statusTagsMeanings[item].status >0) {
-       statusDict[item] = props.statusTagsMeanings[item].status
-    }
-   
-  }
-  return statusDict
-})
+const { newStatusDict } = useStatusMap(computed(() => props.statusTagsMeanings))
 
-const emit = defineEmits(['update:currentValue','update:lastReadWordIdx', 'sendTotalPage', 'selected', 'sendStatusFromReader'])
+const emit = defineEmits(['update:currentValue','update:lastReadWordIdx', 'selected', 'sendStatusFromReader', 'sendTotalPage'])
 
 const currentPage = computed({
   get: () => props.currentValue,
@@ -302,40 +294,12 @@ const emitStatus = (keyboard) => {
    Derived State (Computed)
    - Keep “what the UI shows” separate from “what actions do”
 ========================================================= */
-const selected = computed(() => {
-  // Guard: selection not started or not updated   
-  if (!startPointer.value || !currentPointer.value) return {text: '', valid: false, error: 'empty'}
-
-  // Guard: do not allow cross-sentence selection
-  if (startPointer.value[1] !== currentPointer.value[1]) {
-    const realStart = startPointer.value[0] <currentPointer.value[0]? startPointer.value : currentPointer.value
-    const realEnd = startPointer.value[0] <currentPointer.value[0]? currentPointer.value : startPointer.value
-
-    const firstSentenceChuck = props.listSentence[realStart[1]].split(' ').splice(realStart[2]).join(' ')
-
-    const middleSentence = props.listSentence.slice(realStart[1] + 1, realEnd[1]).join(' ')
-    const lastSentenceChuck = props.listSentence[realEnd[1]].split(' ').splice(0, realEnd[2] + 1).join(' ')
-    const text = firstSentenceChuck + ' ' + middleSentence +  " "  + lastSentenceChuck
-    return {text: text, valid: false, error: 'cross-sentence'}
-  }
-
-  const a = Math.min(startPointer.value[2], currentPointer.value[2])
-  const b = Math.max(startPointer.value[2], currentPointer.value[2])
-
-
-  const sentence = props.listSentence[currentPointer.value?.[1]]
-  const listWordInSentence = sentence.split(' ')
-  const selected_phrase = listWordInSentence.slice(a, b + 1)
-  const cleaned_selected_phrase = selected_phrase.map( item => cleanWord(item))
-
-  // check if all words of selected phrase are valid
-  if (!cleaned_selected_phrase.every(word => isValidWord(word))) {
-    return {text: cleaned_selected_phrase.join(' '), valid: false, error: 'invalid-word'}
-  }
-
-
-  if (selected_phrase.length > 8) return {text: cleaned_selected_phrase.join(' '), valid: false, error: 'too-long'}
-  return {text: cleaned_selected_phrase.join(' '), valid: true}
+const { selected } = useSelectedPhrase({
+  startPointer,
+  currentPointer,
+  listSentence: computed(() => props.listSentence),
+  cleanWord,
+  isValidWord
 })
 
 watch(selected, (newVal) => {

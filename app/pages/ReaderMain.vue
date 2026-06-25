@@ -16,25 +16,24 @@
                     <div class="flex-1 min-h-0 ">
                         <Reader  
                         v-if="boxHeight > 0 && !personalData.isSentenceMode"
-                        :lesson-data="lessondata"
-                        :list-sentence="listSentence"
-                        :readerHeight="boxHeight" 
-                        :current-phrase-status="currentPhraseData.status"
-                        :status-tags-meanings="statusTagsMeanings"
-                        :core-data="core_data"
-                        :timestamp="timestamp"
-                    
                         :lesson-and-course-name="{
                             lessonName: lesson_name,
                             courseName: course_name
                         }"
                         :is-youtube-video="youtubeData.youtube_id ? true : false"
+                        :readerHeight="boxHeight" 
+                        :lesson-data="lessondata"
+                        :list-sentence="listSentence"
+                        :status-tags-meanings="statusTagsMeanings"
+                        :core-data="core_data"
+                        :timestamp="timestamp"
+                        :current-phrase-status="currentPhraseData.status"
                         v-model:current-value="current" 
                         v-model:last-read-word-idx="lastReadWordIdx"
                         :audio-current-time="audioCurrentTime"
-                        @send-total-page="total = $event"
                         @selected="onSelected"
                         @send-status-from-reader="currentPhraseData.status = $event"
+                        @send-total-page="total = $event"
                         />
 
                         <SentenceView
@@ -47,17 +46,16 @@
                         :is-youtube-video="youtubeData.youtube_id ? true : false"
                         :readerHeight="boxHeight" 
                         :lesson-data="lessondata"
-                        :core-data="core_data"
                         :list-sentence="listSentence"
-                        :timestamp="timestamp"
                         :status-tags-meanings="statusTagsMeanings"
-                        :youtube-data="youtubeData"
-                        @selected="onSelected"
-                        @send-status-from-reader="currentPhraseData.status = $event"
-
+                        :core-data="core_data"
+                        :timestamp="timestamp"
                         :current-phrase-status="currentPhraseData.status"
                         v-model:current-value="current"
                         v-model:last-read-word-idx="lastReadWordIdx"
+                        :youtube-data="youtubeData"
+                        @selected="onSelected"
+                        @send-status-from-reader="currentPhraseData.status = $event"
                         />
 
 
@@ -165,17 +163,44 @@ const messure = () => {
 
 }
 
+const applyLessonResponse = (data) => {
+    lessondata.value = data.lesson_data ?? []
+    listSentence.value = data.list_sentences ?? []
+    statusTagsMeanings.value = data.Tags_Meanings ?? {}
+    core_data.value = data.core_data?? []
+    youtubeData.value = data.youtube_data?? []
+    timestamp.value = data.timestamp ?? []
+    lastReadWordIdx.value = data.lastReadWordIdx ?? 0
+    personalData.value = data.personalData ?? {
+        isSentenceMode : false
+    }
+}
+
+const buildCurrentPhraseData = (data) => ({
+    phrase : data.text,
+    tags : statusTagsMeanings.value[data.text]?.tags?? [],
+    your_meanings : statusTagsMeanings.value[data.text]?.your_meanings?? [],
+    global_tags : statusTagsMeanings.value[data.text]?.global_tags?? [],
+    global_meanings : statusTagsMeanings.value[data.text]?.global_meanings?? [],
+    status : validCurrentPhrase.value ?  statusTagsMeanings.value[data.text]?.status?? 6 : 0,
+})
+
+const buildFinishLessonPayload = () => {
+    const statusDict = {}
+    const listKeys = Object.keys(statusTagsMeanings.value)
+    for (const item of listKeys) {
+
+        if (item.split(' ').length > 1 || statusTagsMeanings.value[item].status !== 6) continue
+        statusDict[item] = statusTagsMeanings.value[item].status
+    }
+
+    return statusDict
+}
+
 const onSelected = (data) => {
 
     validCurrentPhrase.value  = data.valid
-    currentPhraseData.value = {
-        phrase : data.text,
-        tags : statusTagsMeanings.value[data.text]?.tags?? [],
-        your_meanings : statusTagsMeanings.value[data.text]?.your_meanings?? [],
-        global_tags : statusTagsMeanings.value[data.text]?.global_tags?? [],
-        global_meanings : statusTagsMeanings.value[data.text]?.global_meanings?? [],
-        status : validCurrentPhrase.value ?  statusTagsMeanings.value[data.text]?.status?? 6 : 0,
-    }
+    currentPhraseData.value = buildCurrentPhraseData(data)
 
 } 
 
@@ -194,16 +219,7 @@ const getLesson = async () => {
 
     
 
-    lessondata.value = data.lesson_data ?? []
-    listSentence.value = data.list_sentences ?? []
-    statusTagsMeanings.value = data.Tags_Meanings ?? {}
-    core_data.value = data.core_data?? []
-    youtubeData.value = data.youtube_data?? []
-    timestamp.value = data.timestamp ?? []
-    lastReadWordIdx.value = data.lastReadWordIdx ?? 0
-    personalData.value = data.personalData ?? {
-        isSentenceMode : false
-    }
+    applyLessonResponse(data)
 
 
 
@@ -218,13 +234,7 @@ const getLesson = async () => {
 const finishLesson = async () => {
     loading.value = true
     
-    const statusDict = {}
-    const listKeys = Object.keys(statusTagsMeanings.value)
-    for (const item of listKeys) {
-
-        if (item.split(' ').length > 1 || statusTagsMeanings.value[item].status !== 6) continue
-        statusDict[item] = statusTagsMeanings.value[item].status
-    }
+    const statusDict = buildFinishLessonPayload()
 
     console.log("statusDict to send to backend", statusDict)
 
