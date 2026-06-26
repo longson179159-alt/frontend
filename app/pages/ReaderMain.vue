@@ -209,10 +209,6 @@ const onSelected = (data) => {
 
 const handleSentenceModeChange = (nextMode) => {
     personalData.value.isSentenceMode = nextMode
-
-    if (nextMode) {
-        total.value = timestamp.value.length
-    }
 }
 
 const getLesson = async () => {
