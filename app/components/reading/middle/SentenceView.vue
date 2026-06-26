@@ -187,6 +187,15 @@ const findCurrentTimestampIndex = () => {
     const matchedWord = coreDataFlat.find(item => item.w_idx === props.lastReadWordIdx)
     currentTimestampIndex.value = matchedWord ? matchedWord.p_idx : 0
        
+    if (!matchedWord) return
+
+    startPointer.value = [
+      matchedWord.w_idx,
+      matchedWord.s_idx,
+      matchedWord.idx_w_in_s,
+      matchedWord.p_idx
+    ]
+    currentPointer.value = startPointer.value
 }
 
 
@@ -318,11 +327,23 @@ watch(currentTimestampIndex, async (newVal) => {
 
     lastReadWordIdx.value = findLastReadWordIdx()
 
+
     saveLastReadWordIdx(lastReadWordIdx.value, currentTimestamp.value.start)
 
     // save data to backend
 
 }, { immediate: true })
+
+watch(startPointer, (newVal) => {
+  // Guard: if selection cleared, do nothing
+  if (!newVal) return
+  const nextIdx = newVal[0]
+  console.log('nextIdx', nextIdx)
+  lastReadWordIdx.value = nextIdx
+  // console.log('currentTimestamp.value.start', currentTimestamp.value.start)
+  saveLastReadWordIdx(nextIdx, currentTimestamp.value.start)
+  console.log('lastReadWordIdx', lastReadWordIdx.value)
+})
 
 const handleTranslation = async () => {
 
@@ -410,7 +431,7 @@ watch([currentTimestampIndex, newStatusDict], () => {
 
 
 onMounted(async() => {
-    console.log('timestamp', props.timestamp.length)
+
     findCurrentTimestampIndex()
     window.addEventListener('pointerup', pointerUp)
     window.addEventListener('keydown', changePageStatusByKeyborad,)

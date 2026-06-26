@@ -151,6 +151,15 @@ const moveToLastReadingPage = () => {
   // calculate which page this offset top is in
   const page = Math.floor(offsetTop / view.value) + 1
   currentPage.value = page
+
+  const dataWord = targetWord.dataset
+  startPointer.value = [
+    Number(dataWord.wIdx),
+    Number(dataWord.sIdx),
+    Number(dataWord.idxWInS),
+    Number(dataWord.pIdx)
+  ]
+  currentPointer.value = startPointer.value
 }
 
 const { newStatusDict } = useStatusMap(computed(() => props.statusTagsMeanings))
@@ -283,15 +292,8 @@ const { selected } = useSelectedPhrase({
 })
 
 watch(selected, (newVal) => {
-    // console.log('currentPage', currentPage.value)
-    // console.log('startPointer', startPointer.value[0])
-    // // current page of this startPointer
-    // const items = prose.value.querySelectorAll(".word-item")
-    // const firstWordElement = Array.from(items).find(item => parseInt(item.dataset.wIdx) === startPointer.value[0] )
-    // const offsetTop = firstWordElement ? firstWordElement.offsetTop : 0
-    // const page = Math.floor(offsetTop / view.value) + 1
-    // console.log('page of startPointer', page)
     emit('selected', newVal)
+
 })
 
 const {findLastReadWordIdx, changePageStatus,changePageStatusByKeyborad, moveNextPrevious} = useKeyboard(startPointer,currentPointer, prose, view, core_data, newStatusDict , lessondata, currentPage, totalPage,  emitStatus, selected)
@@ -300,7 +302,6 @@ const {findLastReadWordIdx, changePageStatus,changePageStatusByKeyborad, moveNex
 
 
 watch( () => props.currentPhraseStatus,  (newVal) => {
-
   changePageStatus(newVal)
 
 })
@@ -320,6 +321,11 @@ const popupCoordinates = ref({ x: 0, y: 0, downward: true })
 watch(startPointer, (newVal) => {
   // Guard: if selection cleared, do nothing
   if (!newVal) return
+  const nextIdx = newVal[0]
+  // console.log('nextIdx', nextIdx)
+  lastReadWordIdx.value = nextIdx
+  saveLastReadWordIdx(nextIdx, props.audioCurrentTime.currentTime)
+  // console.log('lastReadWordIdx', lastReadWordIdx.value)
 
   const wordIndex = newVal[0]
   popupCoordinates.value.downward = true

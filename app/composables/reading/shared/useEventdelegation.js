@@ -73,6 +73,17 @@ const handlePointerDown = (e) => {
   const itemData = getitemData(e)
 
 
+  const target = e.target
+  if (target instanceof HTMLElement) {
+    const wordEl = target.closest('.word-item')
+
+      if (wordEl) {
+    console.log(`${wordEl.textContent?.trim()} has wIdx: ${Number(wordEl.dataset.wIdx)}`)
+  }
+  }
+
+
+
   if (!itemData) {
      isOpenPopup.value =false
      return
