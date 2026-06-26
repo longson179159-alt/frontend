@@ -86,7 +86,7 @@
                     :youtube-data="youtubeData"
                     :is-sentence-mode="personalData.isSentenceMode"
                     @send-current-time-to-parent="audioCurrentTime = $event; "
-                    @is-sentence-mode="personalData.isSentenceMode = $event"
+                    @is-sentence-mode="handleSentenceModeChange"
                 />
             </div>
 
@@ -206,6 +206,14 @@ const onSelected = (data) => {
     currentPhraseData.value = buildCurrentPhraseData(data)
 
 } 
+
+const handleSentenceModeChange = (nextMode) => {
+    personalData.value.isSentenceMode = nextMode
+
+    if (nextMode) {
+        total.value = timestamp.value.length
+    }
+}
 
 const getLesson = async () => {
     loading.value = true

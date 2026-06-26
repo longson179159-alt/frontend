@@ -16,12 +16,12 @@
     </div>
     
 
-    <button @click="isSentenceView = !isSentenceView; emit('isSentenceMode', isSentenceView)" class="hover:bg-gray-300 mt-4 h-8 w-12 rounded-md flex items-center justify-center">
-        <img  :src="isSentenceView ? '/icons/reader/sentenceView.svg' : '/icons/reader/lessonView.svg'" alt="viewMode">
+    <button @click="emit('isSentenceMode', !props.isSentenceMode)" class="hover:bg-gray-300 mt-4 h-8 w-12 rounded-md flex items-center justify-center">
+        <img  :src="props.isSentenceMode ? '/icons/reader/sentenceView.svg' : '/icons/reader/lessonView.svg'" alt="viewMode">
     </button>
 
     <NuxtLink  class="hover:bg-gray-300 h-10 w-12 rounded-md flex items-end justify-center">
-        <img :src="isSentenceView ? '/icons/reader/reviewSentence.svg' : '/icons/reader/reviewLesson.svg'" alt="reviewMode">
+        <img :src="props.isSentenceMode ? '/icons/reader/reviewSentence.svg' : '/icons/reader/reviewLesson.svg'" alt="reviewMode">
     </NuxtLink>
 
 
@@ -44,7 +44,6 @@ const props = defineProps({
 
 const emit = defineEmits(['sendCurrentTimeToParent', 'isSentenceMode'])
 const openAudioBox = ref(false)
-const isSentenceView = ref(props.isSentenceMode)
 
 
 const handleOpenAudioBox = () => {
