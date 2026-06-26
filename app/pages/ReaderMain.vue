@@ -207,8 +207,16 @@ const onSelected = (data) => {
 
 } 
 
-const handleSentenceModeChange = (nextMode) => {
+const handleSentenceModeChange = async (nextMode) => {
     personalData.value.isSentenceMode = nextMode
+
+    // do it for proseMode (reader.vue)
+    if (!nextMode) {
+        total.value = 1
+        current.value = 1
+        await nextTick();
+        messure();  
+    }
 }
 
 const getLesson = async () => {
@@ -295,8 +303,7 @@ watch(
 
 onMounted(async () => {
     await getLesson()
-    messure();
-    
+    messure();  
     await nextTick();
    
     window.addEventListener('resize', messure)
