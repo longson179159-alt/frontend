@@ -3,12 +3,12 @@
         <HeaderLing />
         <div v-if="!loading" class="flex flex-1 h-full min-h-0  pr-5">
             <div class="flex flex-1 flex-col">
-                <HeaderReader v-model:currentValue="current" v-model:totalValue="total"/>
+                <HeaderReader v-model:currentValue="currentPageMain" v-model:totalValue="total"/>
                 <div ref="mainRef" class="flex-1 min-h-0 flex px-3 ">
                     <button
                         type="button"
-                        @click="current = Math.max(1, current -1); $event.currentTarget.blur()"
-                        :class="(current === 1) && 'transparent text-transparent pointer-events-none'"
+                        @click="currentPageMain = Math.max(1, currentPageMain -1); $event.currentTarget.blur()"
+                        :class="(currentPageMain === 1) && 'transparent text-transparent pointer-events-none'"
                         class=" hover:bg-gray-300 px-2 my-20 text-2xl rounded-xl"
                     >
                         <font-awesome icon="chevron-left" />
@@ -28,7 +28,7 @@
                         :core-data="core_data"
                         :timestamp="timestamp"
                         :current-phrase-status="currentPhraseData.status"
-                        v-model:current-value="current" 
+                        v-model:current-value="currentPageMain" 
                         v-model:last-read-word-idx="lastReadWordIdx"
                         :audio-current-time="audioCurrentTime"
                         @selected="onSelected"
@@ -51,7 +51,7 @@
                         :core-data="core_data"
                         :timestamp="timestamp"
                         :current-phrase-status="currentPhraseData.status"
-                        v-model:current-value="current"
+                        v-model:current-value="currentPageMain"
                         v-model:last-read-word-idx="lastReadWordIdx"
                         :youtube-data="youtubeData"
                         @selected="onSelected"
@@ -62,9 +62,9 @@
                         
                     </div>
                     <button
-                        v-if="current !== total"
+                        v-if="currentPageMain !== total"
                         type="button"
-                        @click="current = Math.min(total, current + 1); $event.currentTarget.blur()"
+                        @click="currentPageMain = Math.min(total, currentPageMain + 1); $event.currentTarget.blur()"
                         class=" hover:bg-gray-300 px-2 my-20 text-2xl rounded-xl "
                     >
                         <font-awesome icon="chevron-right" />
@@ -127,8 +127,7 @@ const mainRef = ref(null)
 const boxHeight = ref(0)
 const loading = ref(true)
 
-const current = ref(1)
-const total = ref(1)
+
 
 const route = useRoute()
 const router = useRouter()
@@ -146,6 +145,30 @@ const youtubeData = ref({})
 const timestamp = ref([])
 const lastReadWordIdx = ref(0)
 
+const isSentenceMode = computed(() => personalData.value.isSentenceMode?? false)
+// const current = ref(1)
+const currentPageSentenceMode = ref(1)
+const currentPageProseMode = ref(1)
+
+const currentPageMain = computed( {
+    get: () => isSentenceMode.value ? currentPageSentenceMode.value : currentPageProseMode.value,
+    set: (value) => {
+        if (isSentenceMode.value)  {
+            currentPageSentenceMode.value = value
+        }
+        else {
+            currentPageProseMode.value = value
+        }
+    }
+})
+
+
+const total = ref(1)
+
+
+
+
+
 const audioCurrentTime = ref()
 
 const validCurrentPhrase = ref(true)
@@ -162,6 +185,7 @@ const currentPhraseData = ref({
 const { removeStatusMapEntry, upsertStatusMapEntry } = useStatusMapMutations(statusTagsMeanings)
 
 const messure = () => {
+    if (!mainRef.value) return
     boxHeight.value = Math.round(mainRef?.value.getBoundingClientRect().height)
 
 }
@@ -173,10 +197,12 @@ const applyLessonResponse = (data) => {
     core_data.value = data.core_data?? []
     youtubeData.value = data.youtube_data?? []
     timestamp.value = data.timestamp ?? []
-    lastReadWordIdx.value = data.lastReadWordIdx ?? 0
+    
     personalData.value = data.personalData ?? {
         isSentenceMode : false
     }
+
+    lastReadWordIdx.value = data.lastReadWordIdx ?? 0
 }
 
 const buildCurrentPhraseData = (data) => ({
@@ -207,16 +233,10 @@ const onSelected = (data) => {
 
 } 
 
-const handleSentenceModeChange = async (nextMode) => {
+const handleSentenceModeChange = (nextMode) => {
     personalData.value.isSentenceMode = nextMode
 
-    // do it for proseMode (reader.vue)
-    if (!nextMode) {
-        total.value = 1
-        current.value = 1
-        await nextTick();
-        messure();  
-    }
+    
 }
 
 const getLesson = async () => {
@@ -290,15 +310,20 @@ watch(currentPhraseData, (newVal, oldVal) => {
 }, {deep: true})
 
 watch(
-  [() => personalData.value.isSentenceMode],
-  () => {
-    total.value = personalData.value.isSentenceMode
+   isSentenceMode,
+   async (newVal) => {
+    total.value = newVal
       ? timestamp.value.length
       : total.value
+    if (!newVal) {
+        // total.value = 1
+        // currentPageProseMode.value = 1
+        await nextTick();
+        messure();  
+    }
   },
   { immediate: true }
 )
-
 
 
 onMounted(async () => {

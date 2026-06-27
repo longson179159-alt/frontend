@@ -355,8 +355,6 @@ const moveNextPrevious = (e) => {
 const findLastReadWordIdx = () => {
     const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer, firstSixStatus ] = getDataCurrentPage()
     if (!currentPointer.value || !startPointer.value) return first ?? 0
-    const wordIndex = currentPointer.value[0]
-    const paraIndex = currentPointer.value[3]
 
 
     if (currentTimestampIndex.value !== activePage) {
@@ -364,7 +362,7 @@ const findLastReadWordIdx = () => {
     }
 
     else {
-      return startPointer[0]
+      return startPointer.value[0]
     }
 
 }
