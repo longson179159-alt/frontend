@@ -24,7 +24,10 @@ export function useLastReadPersistence({
                     payload.youtubeStartTime = resolveYoutubeStartTime(youtubeStartTime)
                 }
 
-                await updateLastReadWordIdxRequest(payload)
+                await updateLastReadWordIdxRequest({
+                ...payload,
+                csrfToken: getCsrfToken(),
+                })
             } catch (error) {
                 console.error('Failed to update last read word index:', error)
             }
