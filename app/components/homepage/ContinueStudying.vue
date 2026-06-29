@@ -69,6 +69,10 @@ import { useBreakpoints } from '@vueuse/core';
 // import LessonCard from './homepage/component/LessonCard.vue';
 import CourseCard from './component/CourseCard.vue';
 import LessonCard from './component/LessonCard.vue';
+import {
+    getCourseCardsRequest,
+    getLessonCardsRequest,
+} from '~/services/homepage/homepageApi.js'
 
 
 
@@ -98,13 +102,8 @@ const emit = defineEmits(['showCourseInfos'])
 const getLessonCardsData = async () => {
 
     try {
-        const dataBackend = await $fetch(`/api/get_data_lessons_cards/`, {
-        method: "GET", 
-        query: {
-            page : lessonCurrentPage.value
-        },
-        credentials: "include" 
-        
+        const dataBackend = await getLessonCardsRequest({
+            page: lessonCurrentPage.value
         })
 
         dataLessonCards.value = [
@@ -128,13 +127,8 @@ const getLessonCardsData = async () => {
 const getCourseCardsData = async () => {
 
     try {
-        const dataBackend = await $fetch(`/api/get_data_courses_cards/`, {
-        method: "GET", 
-        query: {
-            page : courseCurrentPage.value
-        },
-        credentials: "include" 
-        
+        const dataBackend = await getCourseCardsRequest({
+            page: courseCurrentPage.value
         })
 
         dataCourseCards.value = [

@@ -64,6 +64,7 @@
 
 import { ref } from "vue"
 import Spiner from "./Spiner.vue"
+import { createLessonManuallyRequest } from '~/services/importLesson/importLessonApi'
 // const config = useRuntimeConfig()
 
 
@@ -98,10 +99,8 @@ const handleFile = async (e) => {
   formData.append("language", 'en')
 
   try {
-    const result = await $fetch(`/api/create_lesson_manually/`, {
-      method: "POST",
-      body: formData,
-      credentials: 'include'
+    const result = await createLessonManuallyRequest({
+      formData
     })
 
     const lesson_name = result.lesson_name

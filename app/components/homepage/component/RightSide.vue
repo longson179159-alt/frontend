@@ -128,6 +128,10 @@
 <script setup>
 
 import {ref, computed,  onMounted,  onBeforeUnmount} from "vue"
+import {
+  getProgressDataRequest,
+  logoutRequest
+} from '~/services/homepage/homepageApi'
 const dropdownLangeRef = ref(null)
 const dropdownSettingsRef = ref(null)
 const ProgressRef = ref(null)
@@ -153,10 +157,7 @@ const getBackEndData = async() => {
   let dataBackend = null
   try {
    
-    dataBackend = await $fetch(`/api/get_progress_data/`, {
-    method: "GET",
-    credentials: 'include'
-    })
+    dataBackend = await getProgressDataRequest()
 
   
   }
@@ -237,12 +238,8 @@ const router = useRouter();
 const {getCsrfToken} = useCsrf();
 const logout = async () => {
   try {
-    const response  = await fetch(`/api/logout/`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-                'X-CSRFToken': getCsrfToken()
-            }
+    const response  = await logoutRequest({
+      csrfToken: getCsrfToken()
     })
 
     if (response.ok) {

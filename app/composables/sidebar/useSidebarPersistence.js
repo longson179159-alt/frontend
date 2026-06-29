@@ -1,19 +1,15 @@
 import { watch } from 'vue'
 import debounce from 'lodash/debounce'
-
+import { updateWordRequest } from '~/services/reading/readerApi'
 // Owns debounced backend persistence for Sidebar.vue phrase changes.
 export function useSidebarPersistence(currentPhraseData, getCsrfToken) {
   // Sends the latest changed phrase payload to the backend after a short delay.
   const syncPhrase = debounce(async (payload) => {
     try {
-      await $fetch('/api/update_word/', {
-        method: 'PUT',
-        body: payload,
-        credentials: 'include',
-        headers: {
-          'X-CSRFToken': getCsrfToken(),
-        },
-      })
+      await updateWordRequest({
+      payload,
+      csrfToken: getCsrfToken(),
+    })
     } catch (error) {
       console.log('error with update currentphrase data ', error)
     }

@@ -56,6 +56,7 @@
 <script setup>
 import {ref} from "vue"
 import Spiner from "./Spiner.vue"
+import { uploadNewWordsRequest } from '~/services/importLesson/importLessonApi'
 // const config = useRuntimeConfig()
 const vocabularyFile = ref("")
 const message = ref(null)
@@ -79,9 +80,8 @@ const handleUpload = async () => {
 
     importing.value = true
     try {
-      const result = await $fetch(`/api/uploadNewWords`, {
-        method: 'POST',
-        body: formData
+      const result = await uploadNewWordsRequest({
+        formData
       })
 
       message.value = "uploaded successfully file : " + result.filename

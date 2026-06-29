@@ -121,7 +121,10 @@ import Reader from '~/components/reading/middle/Reader.vue';
 import LoadingProgressBar from '~/components/LoadingProgressBar.vue';
 import SentenceView from '~/components/reading/middle/SentenceView.vue';
 import { useStatusMapMutations } from '~/composables/reading/shared/useStatusMapMutations';
-
+import {
+  getLessonRequest,
+  finishLessonRequest
+} from '~/services/reading/readerApi'
 
 const mainRef = ref(null)
 const boxHeight = ref(0)
@@ -243,13 +246,9 @@ const getLesson = async () => {
     loading.value = true
     
     try {
-        const data = await $fetch(`/api/get_lesson/`, {
-        method : "GET",
-        query: {
-            lesson_name : lesson_name.value,
-            course_name : course_name.value
-        },
-        credentials : 'include'
+        const data = await getLessonRequest({
+      lessonName: lesson_name.value,
+      courseName: course_name.value,
     })
 
     
@@ -274,15 +273,10 @@ const finishLesson = async () => {
     console.log("statusDict to send to backend", statusDict)
 
    try {
-        await $fetch(`/api/finish_lesson/`, {
-            method: "PUT", 
-            body: JSON.stringify(statusDict),
-            credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCsrfToken(),
-                }
-        })
+        await finishLessonRequest({
+            statusDict,
+            csrfToken: getCsrfToken(),
+            })
 
         router.push({
             path: '/ReviewVocabs',

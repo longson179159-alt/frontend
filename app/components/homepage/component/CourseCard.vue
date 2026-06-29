@@ -95,6 +95,8 @@
 <script setup>
 
 import {ref} from 'vue'
+import { deleteCourseRequest } from '~/services/homepage/homepageApi'
+import { normalizeMediaUrl } from '~/utils/media/normalizeMediaUrl'
 // const config = useRuntimeConfig()
 const showUnder = ref(false)
 const showTrash = ref(false)
@@ -109,27 +111,7 @@ const props = defineProps({
 })
 
 const normalizedCourseImgUrl = computed(() => {
-  const input = props.courseImgUrl
-  if (!input || typeof input !== 'string') return '/images/course.png'
-
-  // already relative media path
-  if (input.startsWith('/media/')) {
-    return `/api${input}`
-  }
-
-  // generic absolute URL (http/https) whose path is /media/...
-  if (input.startsWith('http://') || input.startsWith('https://')) {
-    try {
-      const u = new URL(input)
-      if (u.pathname.startsWith('/media/')) {
-        return `/api${u.pathname}${u.search}`
-      }
-    } catch {
-      // invalid URL string -> keep original
-    }
-  }
-
-  return input
+  return normalizeMediaUrl(props.courseImgUrl, '/images/course.png')
 })
 
 
@@ -138,10 +120,8 @@ const emit = defineEmits(['deleteCourse', 'showCourseInfos'])
 
 const deleteCourse = async () => {
     try {
-        const result =  await $fetch(`/api/delete_course/`, {
-            method : "DELETE",
-            body: {course_name : props.courseName},
-            credentials: "include"
+        const result =  await deleteCourseRequest({
+            courseName: props.courseName
         })
 
         emit('deleteCourse', props.courseName)

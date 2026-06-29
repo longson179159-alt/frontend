@@ -123,6 +123,7 @@
 <script setup>
 import {ref, computed,  toRefs} from 'vue'
 import LessonInCourse from './component/LessonInCourse.vue'
+import { normalizeMediaUrl } from '~/utils/media/normalizeMediaUrl'
 
 
 const listReferences = ['literature', 'audiobooks', 'books', 'kids', 'children', 'le petit prince']
@@ -153,27 +154,7 @@ const numberUniqueWords = computed(() => props.dataCourse.numberUniqueWords)
 
 
 const normalizedCourseImgUrl = computed(() => {
-  const input = courseImgUrl.value
-  if (!input || typeof input !== 'string') return '/images/course.png'
-
-  // already relative media path
-  if (input.startsWith('/media/')) {
-    return `/api${input}`
-  }
-
-  // generic absolute URL (http/https) whose path is /media/...
-  if (input.startsWith('http://') || input.startsWith('https://')) {
-    try {
-      const u = new URL(input)
-      if (u.pathname.startsWith('/media/')) {
-        return `/api${u.pathname}${u.search}`
-      }
-    } catch {
-      // invalid URL string -> keep original
-    }
-  }
-
-  return input
+  return normalizeMediaUrl(courseImgUrl.value, '/images/course.png')
 })
 
 

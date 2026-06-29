@@ -33,6 +33,7 @@ import ContinueStudying from '~/components/homepage/ContinueStudying.vue'
 import Contents from '~/components/homepage/Contents.vue'
 import ShowCourse from '~/components/homepage/ShowCourse.vue'
 import { ref } from 'vue'
+import { showCourseInfosRequest } from '~/services/homepage/homepageApi'
 const config = useRuntimeConfig()
 const showCourseInfos = ref(false)
 
@@ -45,18 +46,10 @@ const dataLessonCards = ref([])
 
 const showCourse = async (courseName) => {
   try {
-
-    const data = await $fetch(`/api/show_course_infos/`, {
-      method: "GET",
-      query: {
-        course_name: courseName
-      },
-      credentials: "include"
-    })
+    const data = await showCourseInfosRequest({ courseName })
     // console.log('picture Course url', data?.dataCourseCard?.imgUrl?? 'There is no img url')
 
-    console.log('dataCourseCard', dataCourseCard.value)
-    console.log('dataLessonCards', dataLessonCards.value)
+   
     dataCourseCard.value = data?.dataCourseCard ?? dataCourseCardsDemo[0]
     dataLessonCards.value = data?.dataLessonCards ?? dataLessonCardsDemo
 

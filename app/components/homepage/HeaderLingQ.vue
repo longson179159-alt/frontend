@@ -52,6 +52,7 @@
 <script setup>
 import RightSide from "./component/RightSide.vue"
 import {ref} from "vue"
+import { logoutRequest } from '~/services/homepage/homepageApi.js'
 
 
 const emit = defineEmits(['sending-toggle'])
@@ -72,12 +73,8 @@ const router = useRouter();
 const {getCsrfToken} = useCsrf();
 const logout = async () => {
   try {
-    const response  = await fetch(`/api/logout/`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-                'X-CSRFToken': getCsrfToken()
-            }
+    const response  = await logoutRequest({
+      csrfToken: getCsrfToken()
     })
 
     if (response.ok) {

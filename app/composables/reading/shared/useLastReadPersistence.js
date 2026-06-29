@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce'
-
+import { updateLastReadWordIdxRequest } from '~/services/reading/readerApi'
 export function useLastReadPersistence({
     getCsrfToken,
     getLessonAndCourseName,
@@ -24,14 +24,7 @@ export function useLastReadPersistence({
                     payload.youtubeStartTime = resolveYoutubeStartTime(youtubeStartTime)
                 }
 
-                await $fetch(`/api/update_last_read_word_idx/`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCsrfToken(),
-                    },
-                    body: JSON.stringify(payload),
-                })
+                await updateLastReadWordIdxRequest(payload)
             } catch (error) {
                 console.error('Failed to update last read word index:', error)
             }

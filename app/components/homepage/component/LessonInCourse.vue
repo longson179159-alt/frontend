@@ -53,7 +53,8 @@
 
 <script setup>
 
-import {ref, toRefs} from 'vue'
+import {computed, ref, toRefs} from 'vue'
+import { normalizeMediaUrl } from '~/utils/media/normalizeMediaUrl'
 
 const likeLesson = ref(false)
 
@@ -78,27 +79,7 @@ const props = defineProps({
 })
 
 const normalizedLessonImgUrl = computed(() => {
-  const input = props.lessonImgUrl
-  if (!input || typeof input !== 'string') return '/images/lesson.png'
-
-  // already relative media path
-  if (input.startsWith('/media/')) {
-    return `/api${input}`
-  }
-
-  // generic absolute URL (http/https) whose path is /media/...
-  if (input.startsWith('http://') || input.startsWith('https://')) {
-    try {
-      const u = new URL(input)
-      if (u.pathname.startsWith('/media/')) {
-        return `/api${u.pathname}${u.search}`
-      }
-    } catch {
-      // invalid URL string -> keep original
-    }
-  }
-
-  return input
+  return normalizeMediaUrl(props.lessonImgUrl, '/images/lesson.png')
 })
 
 
