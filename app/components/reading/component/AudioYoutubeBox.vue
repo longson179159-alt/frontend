@@ -98,7 +98,7 @@ const props = defineProps({
 })
 
 
-const currentTime = ref(props.youtubeData.youtube_start_time?? 0)
+const currentTime = ref(props.youtubeData.audio_start_time?? 0)
 const duration = ref(0)
 
 const waitForDuration = () => {
@@ -417,7 +417,7 @@ onMounted(async () => {
         player.getIframe()?.setAttribute('tabindex', '-1')
 
         const id = props.youtubeData.youtube_id ?? ''
-        const start = props.youtubeData.youtube_start_time ?? 0
+        const start = props.youtubeData.audio_start_time ?? 0
 
         player.cueVideoById({ videoId: id, startSeconds: start })
 
@@ -425,7 +425,7 @@ onMounted(async () => {
 
         isPlayRready.value = duration.value > 0
 
-        const startTime = props.youtubeData.youtube_start_time ?? 0
+        const startTime = props.youtubeData.audio_start_time ?? 0
         player.seekTo(startTime, true)
         player.pauseVideo()
       },

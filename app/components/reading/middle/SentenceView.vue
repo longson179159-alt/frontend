@@ -167,25 +167,40 @@ const props = defineProps({
   lessonAndCourseName: {type: Object, default: () => ({})},
   isYoutubeVideo: {type: Boolean, default: false},
   youtubeData: {type: Object, default: () => ({})},
+  hasYoubeidOrAudio: {type: Boolean, default: false}
 })
 
 const emit = defineEmits(['update:currentValue' , 'update:lastReadWordIdx', 'selected', 'sendStatusFromReader'])
 
+
+// currentPage is current sentence if isYoutubeVideo is false, if isYoutube is true, currentTimestampIdx is current pare
 const currentTimestampIndex = computed({
   get: () => props.currentValue - 1,
   set: (v) => emit('update:currentValue', v + 1)
 })
+
+
+
+
 
 const lastReadWordIdx = computed({
   get: () => props.lastReadWordIdx,
   set: (v) => emit('update:lastReadWordIdx', v)
 })
 
-// find the truth value of currentTimestampIdx, that is equal with p_idx
+
 const findCurrentTimestampIndex = () => {
     const coreDataFlat = core_data.flat(Infinity)
     const matchedWord = coreDataFlat.find(item => item.w_idx === props.lastReadWordIdx)
-    currentTimestampIndex.value = matchedWord ? matchedWord.p_idx : 0
+
+    if (isYoutubeVideo) {
+      currentTimestampIndex.value = matchedWord ? matchedWord.p_idx : 0
+    }
+
+    else{
+      currentTimestampIndex.value = matchedWord ? matchedWord.w_idx : 0
+    }
+    
        
     if (!matchedWord) return
 
@@ -208,7 +223,17 @@ const core_data = props.coreData.length? props.coreData : []
 
 const youtubeData = Object.keys(props.youtubeData).length !== 0 ? props.youtubeData : {}
 
-const visibleDataTimestampText = computed(() => lessondata.value[currentTimestampIndex.value] ?? [])
+const visibleDataTimestampText = computed(() => {
+
+  const paraData = lessondata.value[currentParaIdx.value] ?? []
+
+  if (isYoutubeVideo) {
+    return paraData
+  }
+  else {
+    return paraData.filter(item => item.s_idx === currentTimestampIndex)
+  }
+})
 
 const visibleDataWordLevel = computed(() => {
     let listWords = []
@@ -305,8 +330,19 @@ const colorStatus = {
 
 }
 
+const currentTimestamp = computed(() => {
+  if (props.hasYoubeidOrAudio) {
+    return props.timestamp?.[currentTimestampIndex.value] ?? null
+  }
 
-const currentTimestamp = computed(() => props.timestamp[currentTimestampIndex.value] ?? null)
+  else {
+    return {
+      text: props.listSentence[currentTimestampIndex.value],
+      start: none ,
+      end: none
+    }
+  }
+})
 
 const { saveLastReadWordIdx } = useLastReadPersistence({
   getCsrfToken,
@@ -318,8 +354,17 @@ const { saveLastReadWordIdx } = useLastReadPersistence({
 watch(currentTimestampIndex, async (newVal) => {
     if ((newVal in listTranslation.value.timestampText) && listTranslation.value.timestampText[newVal]) return
 
+    let text = ''
     // get new translations
-    const text = props.timestamp[newVal]?.text
+    if (hasYoubeidOrAudio) {
+       text = props.timestamp?.[newVal]?.text
+    }
+
+    else {
+       text = props.listSentence?.[newVal]?.text
+    }
+    
+
     if (text) {
         const tranlation = await onTranslate(text)
         listTranslation.value.timestampText[newVal] = tranlation
@@ -416,12 +461,30 @@ const emitStatus = (keyboard) => {
   emit('sendStatusFromReader', keyboard)
 }
 
+const currentParaIdx = computed(() => {
+  if (props.isYoutubeVideo) {
+    return currentTimestampIndex.value
+  } else {
+    const coreDataFlat = core_data.flat(Infinity)
+    const matchedWord = coreDataFlat.find(item => item.s_idx === currentTimestampIndex.value)
+    return matchedWord ? matchedWord.p_idx : 0
+  }
+})
+
+const total = computed(() => {
+  if (props.isYoutubeVideo) {
+    return props.timestamp.length
+  } else {
+    return props.listSentence.length
+  }
+}) 
+
 const {
   findLastReadWordIdx,
   changePageStatus,
   changePageStatusByKeyborad,
   moveNextPrevious
-} = useKeyboard( startPointer,currentPointer,  core_data, newStatusDict , lessondata, currentTimestampIndex, props.timestamp.length,  emitStatus, selected)
+} = useKeyboard( startPointer,currentPointer,  core_data, newStatusDict , lessondata, currentParaIdx, total,  emitStatus, selected)
 
 watch([currentTimestampIndex, newStatusDict], () => {
   changePageStatus()

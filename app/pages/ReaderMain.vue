@@ -54,6 +54,7 @@
                         v-model:current-value="currentPageMain"
                         v-model:last-read-word-idx="lastReadWordIdx"
                         :youtube-data="youtubeData"
+                        :hasAudio="hasAudio"
                         @selected="onSelected"
                         @send-status-from-reader="currentPhraseData.status = $event"
                         />
@@ -147,6 +148,7 @@ const statusTagsMeanings = ref({})
 const youtubeData = ref({})
 const timestamp = ref([])
 const lastReadWordIdx = ref(0)
+const hasAudio = ref(false)
 
 const isSentenceMode = computed(() => personalData.value.isSentenceMode?? false)
 // const current = ref(1)
@@ -204,6 +206,8 @@ const applyLessonResponse = (data) => {
     personalData.value = data.personalData ?? {
         isSentenceMode : false
     }
+
+    hasAudio.value = data.has_audio || youtubeData.youtube_id
 
     lastReadWordIdx.value = data.lastReadWordIdx ?? 0
 }

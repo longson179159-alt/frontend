@@ -3802,8 +3802,8 @@
     },
     "youtube_data": {
         "youtube_id": "M0lSKceg_fs",
-        "youtube_start_time": 0.36,
-        "youtube_duration": 94
+        "audio_start_time": 0.36,
+        "audio_duration": 94
     },
     "core_data": [
         [
