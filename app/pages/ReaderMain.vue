@@ -206,9 +206,11 @@ const applyLessonResponse = (data) => {
     personalData.value = data.personalData ?? {
         isSentenceMode : false
     }
+     
 
-    hasYoubeidOrAudio.value = data.has_audio || youtubeData.value?.youtube_id
-
+    console.log('data.has_audio', data.has_audio)
+    hasYoubeidOrAudio.value = Boolean(data.has_audio || youtubeData.value?.youtube_id)
+    console.log('hasYoubeidOrAudio.value', hasYoubeidOrAudio.value)
     lastReadWordIdx.value = data.lastReadWordIdx ?? 0
 }
 

@@ -58,7 +58,7 @@
             </span>
         </div>
 
-        <button @click="handleTranslation" class="inline-block self-start my-3">
+        <button @click="handleTranslation" class="inline-block self-start my-3 appearance-none">
           <div  v-if="!showTranslation" class="flex px-3 py-1 hover:bg-gray-200 flex items-center justify-center gap-1 rounded-md">
             <span class="underline text-gray-600">Hiện dịch của câu</span>
             <font-awesome icon="chevron-down" class="text-xs text-gray-500"/>
@@ -70,7 +70,7 @@
               <font-awesome icon="chevron-up" class="text-xs text-gray-500"/>
             </div>
 
-            <span class="italic inline-block ml-3 font-medium text-lg ">{{listTranslation.timestampText[currentTimestampIndex] ?? ''}}</span>
+            <span class="italic inline-flex ml-3 font-medium text-lg text-left ">{{listTranslation.timestampText[currentTimestampIndex] ?? ''}}</span>
           </div>
         </button>
 
@@ -186,6 +186,16 @@ const currentTimestampIndex = computed({
 const lastReadWordIdx = computed({
   get: () => props.lastReadWordIdx,
   set: (v) => emit('update:lastReadWordIdx', v)
+})
+
+const currentParaIdx = computed(() => {
+  if (props.isYoutubeVideo) {
+    return currentTimestampIndex.value
+  } else {
+    const coreDataFlat = core_data.flat(Infinity)
+    const matchedWord = coreDataFlat.find(item => item.s_idx === currentTimestampIndex.value)
+    return matchedWord ? matchedWord.p_idx : 0
+  }
 })
 
 
@@ -464,15 +474,7 @@ const emitStatus = (keyboard) => {
   emit('sendStatusFromReader', keyboard)
 }
 
-const currentParaIdx = computed(() => {
-  if (props.isYoutubeVideo) {
-    return currentTimestampIndex.value
-  } else {
-    const coreDataFlat = core_data.flat(Infinity)
-    const matchedWord = coreDataFlat.find(item => item.s_idx === currentTimestampIndex.value)
-    return matchedWord ? matchedWord.p_idx : 0
-  }
-})
+
 
 const totalPage = computed(() => {
   if (props.isYoutubeVideo) {
