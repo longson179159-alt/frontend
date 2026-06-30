@@ -1,7 +1,7 @@
 
 import { useCreateLesson } from '~/composables/reading/shared/useCreateLesson'
 
-export function useKeyboard( startPointer,currentPointer,  core_data, newStatusDict , lessondata, currentTimestampIndex, totalPage,  emitStatus, selected)  {
+export function useKeyboard( startPointer,currentPointer,  core_data, newStatusDict , lessondata, currentParaIdx,currentTimestampIndex, totalPage,activePage,  emitStatus, selected)  {
 
 
 const changePageStatus = () => {
@@ -9,25 +9,19 @@ const changePageStatus = () => {
   const { lessondataChunk } = useCreateLesson(
     core_data,
     newStatusDict,
-    currentTimestampIndex.value,
-    currentTimestampIndex.value + 1
+    currentParaIdx.value,
+    currentParaIdx.value + 1
   )
  
-  lessondata.value.splice(currentTimestampIndex.value, 1, ...lessondataChunk)
+  lessondata.value.splice(currentParaIdx.value, 1, ...lessondataChunk)
 }
 
 const getDataCurrentPage = () => {
     
-    const paraData = lessondata.value[currentTimestampIndex.value] ?? []
-    const core_para_data = (core_data[currentTimestampIndex.value] ?? []).flat().sort((a, b) => a.w_idx - b.w_idx)
+    const paraData = lessondata.value[currentParaIdx.value] ?? []
+    const core_para_data = (core_data[currentParaIdx.value] ?? []).flat().sort((a, b) => a.w_idx - b.w_idx)
     const first = core_para_data?.[0]?.['w_idx'] ?? null
     const last = core_para_data?.[core_para_data.length - 1]?.['w_idx'] ?? null
-
-    // cacluate page of startPointer
-   
-    const activePage = startPointer?.value[3]
-
-
 
     // find the first 6 status in this page 
     const firstSixStatus = paraData.find(
@@ -40,7 +34,7 @@ const getDataCurrentPage = () => {
 
 
     if (first == null || last == null) {
-      return [null, null, activePage,  null, null, null, null, firstSixStatus]
+      return [null, null,  null, null, null, null, firstSixStatus]
     }
     
 
@@ -103,7 +97,6 @@ const getDataCurrentPage = () => {
     return [
       first,
       last,
-      activePage,
       firstValidStartPointer,
       firstValidCurrentPointer,
       lastValidStartPointer,
@@ -160,7 +153,7 @@ const setPointers = (newStartPointer, newCurrentPointer) => {
 
 const changePageByOffset = (offset) => {
   if (offset > 0) {
-    currentTimestampIndex.value = Math.min(currentTimestampIndex.value + offset, totalPage -1)
+    currentTimestampIndex.value = Math.min(currentTimestampIndex.value + offset, totalPage.value -1)
     return
   }
 
@@ -230,7 +223,7 @@ const handleArrowRight = (e) => {
   const wordIndex = currentPointer.value[0]
   const paraIndex = currentPointer.value[3]
 
-  const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer] = getDataCurrentPage()
+  const [first, last, firstValidStartPointer, firstValidCurrentPointer] = getDataCurrentPage()
 
   // console.log('first', first, 'last', last, 'activePage', activePage, 'firstValidStartPointer', firstValidStartPointer, 'firstValidCurrentPointer', firstValidCurrentPointer)
   const { startPointer: newStartPointer, currentPointer: newCurrentPointer } = findForwardPointer(
@@ -238,7 +231,7 @@ const handleArrowRight = (e) => {
     item => (item['w_idx'] > wordIndex || item['phrase']?.[0]?.['w_idx'] > wordIndex) && [1,2,3,4, 6].includes(item['status'])
   )
 
-  if (currentTimestampIndex.value !== activePage) {
+  if (currentTimestampIndex.value !== activePage.value) {
       if (!firstValidCurrentPointer || !firstValidStartPointer) {
         e.preventDefault();
         changePageByOffset(1)
@@ -265,7 +258,7 @@ const handleArrowRight = (e) => {
 const handleArrowLeft = (e) => {
   if (!currentPointer.value || !startPointer.value) return
 
-  const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer ] = getDataCurrentPage()
+  const [first, last, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer ] = getDataCurrentPage()
   const wordIndex = startPointer.value[0]
   const paraIndex = startPointer.value[3]
   const { startPointer: newStartPointer, currentPointer: newCurrentPointer } = findBackwardPointer(
@@ -273,7 +266,7 @@ const handleArrowLeft = (e) => {
     item => (item['w_idx'] < wordIndex || item['phrase']?.[0]?.['w_idx'] < wordIndex) && [1,2,3,4,6].includes(item['status'])
   )
 
-  if (currentTimestampIndex.value !== activePage) {
+  if (currentTimestampIndex.value !== activePage.value) {
     if (!lastValidStartPointer || !lastValidCurrentPointer) {
       e.preventDefault();
       changePageByOffset(-1)
@@ -304,13 +297,13 @@ const handleKeyB = () => {
   const wordIndex = currentPointer.value[0]
   const paraIndex = currentPointer.value[3]
 
-  const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer, firstSixStatus ] = getDataCurrentPage()
+  const [first, last, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer, firstSixStatus ] = getDataCurrentPage()
   const { startPointer: newStartPointer, currentPointer: newCurrentPointer } = findForwardPointer(
     paraIndex,
     item => (item['w_idx'] > wordIndex || item['phrase']?.[0]?.['w_idx'] > wordIndex) && item['status'] === 6
   )
 
-  if (currentTimestampIndex.value !== activePage) {
+  if (currentTimestampIndex.value !== activePage.value) {
       if (!firstSixStatus || firstSixStatus['type'] !== 'word') return
       const nextPointer = [firstSixStatus['w_idx'], firstSixStatus['s_idx'], firstSixStatus['idx_w_in_s'], firstSixStatus['p_idx']]
       setPointers(nextPointer, nextPointer)
@@ -353,11 +346,11 @@ const moveNextPrevious = (e) => {
 }
 
 const findLastReadWordIdx = () => {
-    const [first, last, activePage, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer, firstSixStatus ] = getDataCurrentPage()
+    const [first, last, firstValidStartPointer, firstValidCurrentPointer, lastValidStartPointer, lastValidCurrentPointer, firstSixStatus ] = getDataCurrentPage()
     if (!currentPointer.value || !startPointer.value) return first ?? 0
 
 
-    if (currentTimestampIndex.value !== activePage) {
+    if (currentTimestampIndex.value !== activePage.value) {
       return first ?? 0
     }
 

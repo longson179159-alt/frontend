@@ -193,12 +193,12 @@ const findCurrentTimestampIndex = () => {
     const coreDataFlat = core_data.flat(Infinity)
     const matchedWord = coreDataFlat.find(item => item.w_idx === props.lastReadWordIdx)
 
-    if (isYoutubeVideo) {
+    if (props.isYoutubeVideo) {
       currentTimestampIndex.value = matchedWord ? matchedWord.p_idx : 0
     }
 
     else{
-      currentTimestampIndex.value = matchedWord ? matchedWord.w_idx : 0
+      currentTimestampIndex.value = matchedWord ? matchedWord.s_idx : 0
     }
     
        
@@ -227,11 +227,11 @@ const visibleDataTimestampText = computed(() => {
 
   const paraData = lessondata.value[currentParaIdx.value] ?? []
 
-  if (isYoutubeVideo) {
+  if (props.isYoutubeVideo) {
     return paraData
   }
   else {
-    return paraData.filter(item => item.s_idx === currentTimestampIndex)
+    return paraData.filter(item => item.s_idx === currentTimestampIndex.value)
   }
 })
 
@@ -331,15 +331,15 @@ const colorStatus = {
 }
 
 const currentTimestamp = computed(() => {
-  if (props.hasYoubeidOrAudio) {
+  if (props.isYoutubeVideo) {
     return props.timestamp?.[currentTimestampIndex.value] ?? null
   }
 
   else {
     return {
       text: props.listSentence[currentTimestampIndex.value],
-      start: none ,
-      end: none
+      start: null ,
+      end: null
     }
   }
 })
@@ -352,16 +352,20 @@ const { saveLastReadWordIdx } = useLastReadPersistence({
 })
 
 watch(currentTimestampIndex, async (newVal) => {
-    if ((newVal in listTranslation.value.timestampText) && listTranslation.value.timestampText[newVal]) return
+    if ((newVal in listTranslation.value.timestampText) && listTranslation.value.timestampText[newVal]) {
+      lastReadWordIdx.value = findLastReadWordIdx()
+      saveLastReadWordIdx(lastReadWordIdx.value, currentTimestamp.value.start)
+      return
+    }
 
     let text = ''
     // get new translations
-    if (hasYoubeidOrAudio) {
+    if (props.hasYoubeidOrAudio) {
        text = props.timestamp?.[newVal]?.text
     }
 
     else {
-       text = props.listSentence?.[newVal]?.text
+       text = props.listSentence?.[newVal]?? ''
     }
     
 
@@ -376,7 +380,6 @@ watch(currentTimestampIndex, async (newVal) => {
     saveLastReadWordIdx(lastReadWordIdx.value, currentTimestamp.value.start)
 
     // save data to backend
-
 }, { immediate: true })
 
 watch(startPointer, (newVal) => {
@@ -471,7 +474,7 @@ const currentParaIdx = computed(() => {
   }
 })
 
-const total = computed(() => {
+const totalPage = computed(() => {
   if (props.isYoutubeVideo) {
     return props.timestamp.length
   } else {
@@ -479,12 +482,20 @@ const total = computed(() => {
   }
 }) 
 
+const activePage = computed(() => {
+  if (!startPointer.value) return null
+
+  return props.isYoutubeVideo
+    ? startPointer.value[3] // paraIndex
+    : startPointer.value[1] // sentenceIndex
+})
+
 const {
   findLastReadWordIdx,
   changePageStatus,
   changePageStatusByKeyborad,
   moveNextPrevious
-} = useKeyboard( startPointer,currentPointer,  core_data, newStatusDict , lessondata, currentParaIdx, total,  emitStatus, selected)
+} = useKeyboard( startPointer,currentPointer,  core_data, newStatusDict , lessondata, currentParaIdx,currentTimestampIndex, totalPage, activePage, emitStatus, selected)
 
 watch([currentTimestampIndex, newStatusDict], () => {
   changePageStatus()
