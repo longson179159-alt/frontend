@@ -211,7 +211,7 @@ const showPopup = ( item) => {
 
 const showUpdateButton = ref(false)
 const selectedStatuses = ref([1,2,3]) // default show all words with status 1-3 (exclude 0 - deleted)
-const selectSortOption = ref(1)
+const selectSortOption = ref(3)
 const toggleType = ref('words') // default show words, other option is 'phrases'
 
 

@@ -135,7 +135,7 @@ import { useSelectedPhrase } from '~/composables/reading/shared/useSelectedPhras
 import { useStatusMap } from '~/composables/reading/shared/useStatusMap'
 const { getCsrfToken } = useCsrf()
 const showTranslation = ref(false)
-const currentTimestampTranslation = ref('')
+
 
 const isOpenPopup = ref(false)
 const {
